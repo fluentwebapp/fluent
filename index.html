@@ -341,11 +341,11 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 <script>
 "use strict";
 /* =====================================================================
-   1 · COURSE DATA
+   1 · COURSE DATA — PT-BR → EN, gentle progression from zero
 ===================================================================== */
 const COURSE = { units:[
   { id:"u1", num:1, title:"Primeiras palavras", level:"A0 · do zero", lessons:[
-    { id:"g1", num:1, title:"Cumprimentos", skill:"hello · hi · good morning", steps:[
+    { id:"g1", title:"Cumprimentos", skill:"hello · hi · good morning", steps:[
       {kind:"learn", word:"hello", say:"Hello!", pt:"olá", pron:"ré-LÔU"},
       {kind:"learn", word:"hi", say:"Hi!", pt:"oi", pron:"RÁI", note:"mais informal que hello"},
       {kind:"choice", prompt:"O que significa “hello”?", options:["olá","obrigado","adeus"], answer:0},
@@ -358,7 +358,7 @@ const COURSE = { units:[
       {kind:"type", prompt:"Escreva em inglês: “olá”", accept:["Hello","Hi","Hey"], hint:"hello, hi ou hey"},
       {kind:"listen", say:"Goodbye!", prompt:"O que você ouviu?", options:["tchau","olá","obrigado"], answer:0, transcript:"Goodbye!"}
     ]},
-    { id:"g2", num:2, title:"Palavras essenciais", skill:"yes · no · please · thank you", steps:[
+    { id:"g2", title:"Palavras essenciais", skill:"yes · no · please · thank you", steps:[
       {kind:"learn", word:"yes", say:"Yes!", pt:"sim", pron:"IÉSS"},
       {kind:"learn", word:"no", say:"No.", pt:"não", pron:"NÔU"},
       {kind:"choice", prompt:"Como se diz “não” em inglês?", options:["no","yes","please"], answer:0},
@@ -370,7 +370,49 @@ const COURSE = { units:[
       {kind:"type", prompt:"Escreva em inglês: “por favor”", accept:["Please"], hint:"uma palavra só"},
       {kind:"type", prompt:"Agradeça a alguém.", accept:["Thank you","Thanks","Thank you so much","Many thanks"], hint:"thank you ou thanks"}
     ]},
-    { id:"g3", num:3, title:"Apresentações", skill:"I'm · My name's · Nice to meet you", steps:[
+    { id:"p1", title:"Pessoas", skill:"man · woman · boy · girl · I · you", steps:[
+      {kind:"learn", word:"man", say:"Man.", pt:"homem", pron:"MÉN"},
+      {kind:"learn", word:"woman", say:"Woman.", pt:"mulher", pron:"UÍ-man"},
+      {kind:"choice", prompt:"O que significa “woman”?", options:["mulher","homem","menina"], answer:0},
+      {kind:"learn", word:"boy", say:"Boy.", pt:"menino", pron:"BÓI"},
+      {kind:"learn", word:"girl", say:"Girl.", pt:"menina", pron:"GUÔRL"},
+      {kind:"listen", say:"A boy and a girl.", prompt:"O que você ouviu?", options:["um menino e uma menina","um homem e uma mulher","uma menina e um menino"], answer:0, transcript:"A boy and a girl."},
+      {kind:"learn", word:"I", say:"I.", pt:"eu", pron:"ÁI"},
+      {kind:"learn", word:"you", say:"You.", pt:"você", pron:"IÚ"},
+      {kind:"choice", prompt:"Como se diz “eu” em inglês?", options:["I","you","girl"], answer:0},
+      {kind:"build", prompt:"Monte: “você e eu”", bank:["you","and","I","man","the"], accept:["You and I"]},
+      {kind:"type", prompt:"Escreva “menina” em inglês.", accept:["girl","a girl"], hint:"uma palavra — ou duas, com artigo"}
+    ]},
+    { id:"p2", title:"Números 1–10", skill:"one → ten", steps:[
+      {kind:"learn", word:"one (1)", say:"One.", pt:"um", pron:"UÁN"},
+      {kind:"learn", word:"two (2)", say:"Two.", pt:"dois", pron:"TÚ"},
+      {kind:"learn", word:"three (3)", say:"Three.", pt:"três", pron:"THRII", note:"o “th” soa como um “f” suave, língua entre os dentes"},
+      {kind:"learn", word:"four (4)", say:"Four.", pt:"quatro", pron:"FÓR"},
+      {kind:"learn", word:"five (5)", say:"Five.", pt:"cinco", pron:"FÁIV"},
+      {kind:"choice", prompt:"“five” é o número…", options:["5","4","9"], answer:0},
+      {kind:"listen", say:"One, two, three.", prompt:"O que você ouviu?", options:["um, dois, três","um, três, dois","dois, três, quatro"], answer:0, transcript:"One, two, three."},
+      {kind:"learn", word:"six (6)", say:"Six.", pt:"seis", pron:"SÍCS"},
+      {kind:"learn", word:"seven (7)", say:"Seven.", pt:"sete", pron:"SÉ-ven"},
+      {kind:"learn", word:"eight (8)", say:"Eight.", pt:"oito", pron:"ÊIT", note:"o “t” final é quase mudo"},
+      {kind:"learn", word:"nine (9)", say:"Nine.", pt:"nove", pron:"NÁIN"},
+      {kind:"learn", word:"ten (10)", say:"Ten.", pt:"dez", pron:"TÉN"},
+      {kind:"choice", prompt:"Qual destes é o número 8?", options:["eight","six","ten"], answer:0},
+      {kind:"listen", say:"Seven. Eight. Nine. Ten.", prompt:"O que você ouviu?", options:["sete, oito, nove, dez","seis, sete, oito, nove","oito, nove, dez"], answer:0, transcript:"Seven. Eight. Nine. Ten."},
+      {kind:"type", prompt:"Escreva o número 10 em inglês.", accept:["ten"], hint:"começa com “t”"}
+    ]},
+    { id:"p3", title:"Ele e ela", skill:"he · she · he's · she's · name", steps:[
+      {kind:"learn", word:"he", say:"He is Tom.", pt:"ele", pron:"RRÍ"},
+      {kind:"learn", word:"she", say:"She is Anna.", pt:"ela", pron:"XÍ"},
+      {kind:"choice", prompt:"“she” significa…", options:["ela","ele","você"], answer:0},
+      {kind:"learn", word:"name", say:"Name.", pt:"nome", pron:"NÊIM", note:"você vai usar em “My name's…”"},
+      {kind:"note", title:"he's · she's", body:`<em>He is</em> vira <span class="mark">he's</span>; <em>she is</em> vira <span class="mark">she's</span>. Na fala, a forma contraída é quase obrigatória — e este app aceita as duas.`},
+      {kind:"build", prompt:"Monte: “Ela é Anna.”", bank:["She's","She","is","Anna","name","He's"], accept:["She's Anna","She is Anna"]},
+      {kind:"listen", say:"She's Maria.", prompt:"Ouça. Qual é o nome dela?", options:["Maria","Anna","Tom"], answer:0, transcript:"She's Maria."},
+      {kind:"build", prompt:"Monte: “Ele é Tom.”", bank:["He's","He","is","Tom","Anna","She's"], accept:["He's Tom","He is Tom"]},
+      {kind:"choice", prompt:"Como se diz “ela é Maria”?", options:["She's Maria","He's Maria","Maria she"], answer:0, explain:"“She is Maria” também está certo."},
+      {kind:"type", prompt:"Escreva: “Ele é Paul.”", accept:["He's Paul","He is Paul"], hint:"com ou sem contração"}
+    ]},
+    { id:"g3", title:"Apresentações", skill:"I'm · My name's · Nice to meet you", steps:[
       {kind:"note", title:"O inglês falado encolhe as palavras",
        body:`Ao se apresentar, nativos quase sempre contraem o verbo <span class="mark">be</span>: <em>My name is Anna</em> vira <em>My name's Anna</em>. Os dois estão certos — <span class="mark">este app aceita os dois, sempre.</span>`},
       {kind:"listen", say:"Hi! I'm Sarah. Nice to meet you.", prompt:"Ouça. Quem está falando?",
@@ -401,7 +443,7 @@ const COURSE = { units:[
     ]}
   ]},
   { id:"u2", num:2, title:"Sobre você", level:"A1", lessons:[
-    { id:"g4", num:1, title:"Trabalho e estudo", skill:"'m · 's · 're · profissões", steps:[
+    { id:"g4", title:"Trabalho e estudo", skill:"'m · 's · 're · profissões", steps:[
       {kind:"note", title:"Contrair o “be” com todos os pronomes",
        body:`<span class="mark">I'm · you're · he's · she's · it's · we're · they're</span> — na fala e na escrita informal, a forma contraída é o padrão, não a exceção.`},
       {kind:"build", prompt:"Monte a frase.", context:"Falando do trabalho da Maria.",
@@ -423,9 +465,36 @@ const COURSE = { units:[
       {kind:"choice", prompt:"“She's ___ engineer.”",
        options:["an","a"], answer:0, explain:"<b>a</b> ou <b>an</b> depende do <i>som</i>: an engineer."}
     ]},
-    { id:"g5", num:2, title:"Conversa fiada", skill:"clima · perguntas educadas"},
-    { id:"g6", num:3, title:"Rotina diária", skill:"present simple · horas"},
-    { id:"g7", num:4, title:"Opiniões", skill:"I think · because · really"}
+    { id:"c1", title:"Conversa fiada", skill:"How are you? · I'm good · and you?", steps:[
+      {kind:"note", title:"“How are you?” é cumprimento", body:`Em inglês, <em>How are you?</em> funciona como um “tudo bem?”. Responda curto — <span class="mark">e devolva a pergunta</span>.`},
+      {kind:"learn", word:"How are you?", say:"How are you?", pt:"como vai você?", pron:"RRÁU ár IÚ"},
+      {kind:"learn", word:"good", say:"Good!", pt:"bom · bem", pron:"GÚD"},
+      {kind:"learn", word:"I'm good", say:"I'm good!", pt:"estou bem", pron:"áim GÚD"},
+      {kind:"listen", say:"Hi! How are you?", prompt:"Ouça. O que a pessoa está fazendo?", options:["perguntando como você está","se despedindo","agradecendo"], answer:0, transcript:"Hi! How are you?"},
+      {kind:"build", prompt:"Monte: “Como vai você?”", bank:["How","are","you","is","Hello","?"], accept:["How are you"]},
+      {kind:"choice", prompt:"Alguém pergunta “How are you?”. Boa resposta:", options:["I'm good, thanks!","Goodbye!","My name is Tom."], answer:0},
+      {kind:"learn", word:"and you?", say:"And you?", pt:"e você?", pron:"énd IÚ"},
+      {kind:"build", prompt:"Monte: “Estou bem, e você?”", bank:["I'm","good","and","you","no","Please"], accept:["I'm good and you","I am good and you"]},
+      {kind:"learn", word:"fine", say:"I'm fine.", pt:"bem (neutro)", pron:"FÁIN", note:"nem ótimo, nem ruim — só ok"},
+      {kind:"listen", say:"I'm fine, thanks. And you?", prompt:"Ouça. Como a pessoa está?", options:["bem","mal","com sono"], answer:0, transcript:"I'm fine, thanks. And you?"},
+      {kind:"type", prompt:"Responda “How are you?” e devolva a pergunta.",
+       accept:["I'm good and you","I'm fine and you","Good, and you","Fine, and you","I am good and you","I'm good, thanks. And you"],
+       hint:"I'm good / I'm fine + and you?"}
+    ]},
+    { id:"r1", title:"Rotina diária", skill:"work · study · every day", steps:[
+      {kind:"learn", word:"work", say:"I work.", pt:"trabalhar · trabalho", pron:"UÔRK"},
+      {kind:"learn", word:"study", say:"I study.", pt:"estudar", pron:"IS-tú-di"},
+      {kind:"choice", prompt:"“study” significa…", options:["estudar","trabalhar","dormir"], answer:0},
+      {kind:"learn", word:"every day", say:"I work every day.", pt:"todo dia", pron:"É-vri dêi"},
+      {kind:"build", prompt:"Monte: “Eu trabalho todo dia.”", bank:["I","work","every","day","study","and"], accept:["I work every day"]},
+      {kind:"learn", word:"in the morning", say:"I study in the morning.", pt:"de manhã", pron:"in dê MÓR-nin"},
+      {kind:"build", prompt:"Monte: “Eu estudo de manhã.”", bank:["I","study","in","the","morning","work"], accept:["I study in the morning"]},
+      {kind:"listen", say:"I work every day.", prompt:"O que você ouviu?", options:["eu trabalho todo dia","eu estudo de manhã","eu trabalho de manhã"], answer:0, transcript:"I work every day."},
+      {kind:"choice", prompt:"Qual frase fala sobre estudar?", options:["I study in the morning.","I work every day.","Good morning!"], answer:0},
+      {kind:"type", prompt:"Diga: “Eu estudo todo dia.”", accept:["I study every day"], hint:"study + every day"},
+      {kind:"type", prompt:"Agora diga que você trabalha de manhã.", accept:["I work in the morning"], hint:"work + in the morning"}
+    ]},
+    { id:"g7", title:"Opiniões", skill:"I think · because · really"}
   ]}
 ]};
 
@@ -480,10 +549,8 @@ function checkAnswer(input, accepts){
 }
 
 /* =====================================================================
-   3 · AUDIO — three engines with automatic fallback
-   Engine 1: browser speechSynthesis (verified with a watchdog)
-   Engine 2: online TTS (StreamElements / Joanna, US English)
-   Engine 3: online TTS backup (Google) → then show transcript
+   3 · AUDIO — network voice FIRST (works on any hosting, incl. Pages),
+   browser voice as last resort, transcript as final fallback
 ===================================================================== */
 const HAS_TTS = "speechSynthesis" in window;
 const NET_SRC = [
@@ -491,9 +558,9 @@ const NET_SRC = [
   "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q="
 ];
 let voice = null;
-let nativeOK = null;          // null = unknown · true = works · false = broken
+let nativeOK = null;
 let watchdog = null;
-let speakSeq = 0;             // invalidates stale async callbacks
+let speakSeq = 0;
 let currentAudio = null;
 const audioCache = new Map();
 
@@ -522,47 +589,26 @@ function stopAll(){
   if(currentAudio){ try{ currentAudio.pause(); }catch(e){} currentAudio=null; }
 }
 
-/* Engine 1 — native browser voice, with silence watchdog */
-function nativeSpeak(text, rate, btn, seq){
-  try{
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "en-US";
-    if(voice) u.voice = voice;
-    u.rate = rate || .97;
-    ui(btn,true,seq);
-    u.onstart = () => { nativeOK = true; clearTimeout(watchdog); };
-    u.onend   = () => { clearTimeout(watchdog); ui(btn,false,seq); };
-    u.onerror = (ev) => {
-      clearTimeout(watchdog); ui(btn,false,seq);
-      if(ev && (ev.error==="canceled" || ev.error==="interrupted")) return;
-      if(nativeOK !== true) netSpeak(text, rate, btn, seq, 0);
-    };
-    speechSynthesis.speak(u);
-    watchdog = setTimeout(()=>{
-      if(seq !== speakSeq) return;
-      if(speechSynthesis.speaking) return;
-      if(speechSynthesis.pending){
-        watchdog = setTimeout(()=>{
-          if(seq !== speakSeq) return;
-          if(!speechSynthesis.speaking){
-            nativeOK = false; ui(btn,false,seq);
-            try{ speechSynthesis.cancel(); }catch(e){}
-            netSpeak(text, rate, btn, seq, 0);
-          }
-        }, 2200);
-        return;
-      }
-      nativeOK = false; ui(btn,false,seq);
-      netSpeak(text, rate, btn, seq, 0);
-    }, 800);
-  }catch(e){
-    netSpeak(text, rate, btn, seq, 0);
+/* entry point: downloaded voice first (started inside your click) */
+function speak(text, rate, btn){
+  if(!store.sound || !text) return;
+  stopAll();
+  const seq = speakSeq;
+  if(navigator.onLine === false){
+    if(HAS_TTS) nativeSpeak(text, rate, btn, seq, true);
+    else showAudioFallback();
+    return;
   }
+  netSpeak(text, rate, btn, seq, 0);
 }
 
-/* Engines 2 & 3 — online audio, cached for instant replays */
+/* online voices, cached; falls through source 1 → source 2 → native */
 function netSpeak(text, rate, btn, seq, srcIdx){
-  if(srcIdx >= NET_SRC.length){ showAudioFallback(); return; }
+  if(srcIdx >= NET_SRC.length){
+    if(HAS_TTS && nativeOK !== false) nativeSpeak(text, rate, btn, seq, true);
+    else showAudioFallback();
+    return;
+  }
   const url = NET_SRC[srcIdx] + encodeURIComponent(text);
   let a = audioCache.get(url);
   if(!a){ a = new Audio(url); a.preload = "auto"; audioCache.set(url, a); }
@@ -574,14 +620,14 @@ function netSpeak(text, rate, btn, seq, srcIdx){
   const fail = () => {
     if(chained) return; chained = true;
     ui(btn,false,seq);
-    if(srcIdx < NET_SRC.length-1) netSpeak(text, rate, btn, seq, srcIdx+1);
-    else showAudioFallback();
+    if(currentAudio===a) currentAudio=null;
+    netSpeak(text, rate, btn, seq, srcIdx+1);
   };
   a.onplaying = () => ui(btn,true,seq);
   a.onended   = () => { if(currentAudio===a) currentAudio=null; ui(btn,false,seq); };
-  a.onerror   = () => { if(currentAudio===a) currentAudio=null; fail(); };
+  a.onerror   = () => fail();
   ui(btn,true,seq);
-  a.play().catch(()=>{ if(currentAudio===a) currentAudio=null; fail(); });
+  a.play().catch(()=>fail());
 }
 
 function prefetchNet(text){
@@ -591,6 +637,45 @@ function prefetchNet(text){
     const a = new Audio(url); a.preload = "auto";
     audioCache.set(url, a);
   }catch(e){}
+}
+
+/* browser voice — last resort, with silence watchdog */
+function nativeSpeak(text, rate, btn, seq, lastResort){
+  try{
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "en-US";
+    if(voice) u.voice = voice;
+    u.rate = rate || .97;
+    ui(btn,true,seq);
+    const bail = () => { if(lastResort) showAudioFallback(); else netSpeak(text, rate, btn, seq, 0); };
+    u.onstart = () => { nativeOK = true; clearTimeout(watchdog); };
+    u.onend   = () => { clearTimeout(watchdog); ui(btn,false,seq); };
+    u.onerror = (ev) => {
+      clearTimeout(watchdog); ui(btn,false,seq);
+      if(ev && (ev.error==="canceled" || ev.error==="interrupted")) return;
+      if(nativeOK !== true) bail();
+    };
+    speechSynthesis.speak(u);
+    watchdog = setTimeout(()=>{
+      if(seq !== speakSeq) return;
+      if(speechSynthesis.speaking) return;
+      if(speechSynthesis.pending){
+        watchdog = setTimeout(()=>{
+          if(seq !== speakSeq) return;
+          if(!speechSynthesis.speaking){
+            nativeOK = false; ui(btn,false,seq);
+            try{ speechSynthesis.cancel(); }catch(e){}
+            bail();
+          }
+        }, 2200);
+        return;
+      }
+      nativeOK = false; ui(btn,false,seq);
+      bail();
+    }, 800);
+  }catch(e){
+    showAudioFallback();
+  }
 }
 
 function showAudioFallback(){
@@ -607,15 +692,7 @@ function showAudioFallback(){
   }catch(e){}
 }
 
-function speak(text, rate, btn){
-  if(!store.sound || !text) return;
-  stopAll();
-  const seq = speakSeq;
-  if(HAS_TTS && nativeOK !== false) nativeSpeak(text, rate, btn, seq);
-  else netSpeak(text, rate, btn, seq, 0);
-}
-
-/* --- feedback tones (WebAudio) --- */
+/* --- feedback tones --- */
 let AC = null;
 const store = JSON.parse(localStorage.getItem("fluent.v2") || "{}");
 store.done = store.done || {}; store.sound = store.sound !== false;
@@ -641,7 +718,6 @@ function sfx(kind){
   }catch(e){}
 }
 
-/* warm-up: browsers unlock audio only after a user gesture */
 document.addEventListener("pointerdown", ()=>{
   pickVoice();
   try{
@@ -751,7 +827,7 @@ function renderStep(){
   $("#pfill").style.width = (L.step / L.ls.steps.length * 100) + "%";
   $("#stepCount").textContent = `${L.step+1} / ${L.ls.steps.length}`;
   L.sel = null; L.placed = []; L.checked = false;
-  if(nativeOK === false && st.say) prefetchNet(st.say);
+  if(st.say) prefetchNet(st.say);
 
   const holder = document.createElement("div");
   holder.className = "exercise";
@@ -1029,7 +1105,7 @@ function paintSound(){
 }
 $("#sndBtn").onclick = () => {
   store.sound = !store.sound; save(); paintSound();
-  if(store.sound){ sfx("ok"); speak("Hello! Let's practice."); }   // audible test
+  if(store.sound){ sfx("ok"); speak("Hello! Let's practice."); }
 };
 
 const DEMO_TARGET = ["My name's Anna","My name is Anna","I'm Anna","I am Anna"];
