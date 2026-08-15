@@ -4,29 +4,40 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F5F6F2">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="fluent.">
 <title>fluent. — inglês do zero</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&display=swap" rel="stylesheet">
+<script src="https://code.responsivevoice.org/responsivevoice.js"></script>
 <style>
 :root{--paper:#F5F6F2;--card:#FFF;--ink:#20242C;--ink-70:rgba(32,36,44,.7);--ink-45:rgba(32,36,44,.45);--line:rgba(32,36,44,.16);--pen:#2A57D9;--pen-deep:#1C3FAE;--pen-tint:#E9EEFC;--good:#1D9D58;--good-deep:#14763F;--good-tint:#E5F5EB;--bad:#D84848;--bad-deep:#A93434;--bad-tint:#FDECEA;--hl:#FFDE52;--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"Atkinson Hyperlegible","Segoe UI",system-ui,sans-serif;--offScale:1}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:var(--body);color:var(--ink);font-size:17px;line-height:1.55;min-height:100vh;background:radial-gradient(900px 420px at 85% -120px,rgba(42,87,217,.06),transparent 65%),repeating-linear-gradient(0deg,transparent 0 31px,rgba(32,36,44,.05) 31px 32px),var(--paper)}
+body{font-family:var(--body);color:var(--ink);font-size:17px;line-height:1.55;min-height:100vh;overflow-x:clip;-webkit-tap-highlight-color:transparent;background:radial-gradient(900px 420px at 85% -120px,rgba(42,87,217,.06),transparent 65%),repeating-linear-gradient(0deg,transparent 0 31px,rgba(32,36,44,.05) 31px 32px),var(--paper)}
 @media(min-width:900px){body::before{content:"";position:fixed;left:58px;top:0;bottom:0;width:2px;background:rgba(216,72,72,.13);pointer-events:none;z-index:0}}
 ::selection{background:var(--hl);color:var(--ink)}
-button{font-family:inherit;color:inherit}
+button{font-family:inherit;color:inherit;touch-action:manipulation}
 code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
 .topbar{position:sticky;top:0;z-index:40;display:flex;align-items:center;gap:14px;padding:13px clamp(16px,4vw,40px);background:var(--paper);border-bottom:1.5px solid var(--ink)}
 .logo{font-family:var(--display);font-weight:800;font-size:26px;letter-spacing:-.02em;line-height:1}
 .logo b{color:var(--pen)}
 .logo-tag{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-45);border-left:1.5px solid var(--line);padding-left:14px}
 .spacer{flex:1}
+.streak{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-weight:800;font-size:16px;color:#E08A2E}
+.streak.zero{color:var(--ink-45)}
 .link-btn{font-family:var(--display);font-weight:700;font-size:14px;background:none;border:none;cursor:pointer;padding:3px 2px;border-bottom:3px solid var(--hl);transition:.15s}
 .link-btn:hover{border-bottom-color:var(--pen);color:var(--pen)}
 .icon-btn{width:40px;height:40px;flex:none;border:1.5px solid var(--line);border-radius:10px;background:var(--card);cursor:pointer;display:grid;place-items:center;transition:.15s}
 .icon-btn:hover{border-color:var(--ink);transform:translateY(-1px)}
 .icon-btn:active{transform:translateY(1px)}
+.install-btn{display:none;align-items:center;gap:7px;font-family:var(--display);font-weight:700;font-size:13.5px;border:1.5px solid var(--pen-deep);background:var(--pen);color:#fff;border-radius:999px;padding:7px 14px;cursor:pointer;box-shadow:0 3px 0 var(--pen-deep);transition:.12s;white-space:nowrap}
+.install-btn:active{transform:translateY(2px);box-shadow:0 1px 0 var(--pen-deep)}
+.install-btn.show{display:inline-flex}
 .screen{display:none;max-width:1060px;margin:0 auto;padding:38px clamp(16px,4vw,40px) 90px;position:relative;z-index:1}
 .screen.on{display:block;animation:screenIn .35s ease both}
 @keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
@@ -35,7 +46,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .unit-head{max-width:640px;margin:6px auto 40px}
 .kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--pen)}
 .kicker::after{content:"";height:1.5px;width:56px;background:var(--pen);opacity:.35}
-.unit-title{font-family:var(--display);font-weight:800;font-size:clamp(36px,6.4vw,60px);line-height:1.03;letter-spacing:-.02em;margin:12px 0 16px}
+.unit-title{font-family:var(--display);font-weight:800;font-size:clamp(34px,6.4vw,60px);line-height:1.03;letter-spacing:-.02em;margin:12px 0 16px}
 .hl-swipe{position:relative;white-space:nowrap;z-index:0}
 .hl-swipe::before{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:40%;background:var(--hl);z-index:-1;transform:skew(-8deg) scaleX(0);transform-origin:left;animation:swipe .55s .3s cubic-bezier(.6,.05,.2,1) forwards}
 @keyframes swipe{to{transform:skew(-8deg) scaleX(1)}}
@@ -46,11 +57,11 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .course-meta{margin-top:22px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-45)}
 .mini-bar{flex:1;max-width:220px;height:7px;border-radius:99px;background:rgba(32,36,44,.12);overflow:hidden}
 .mini-bar i{display:block;height:100%;background:var(--pen);border-radius:99px;transition:width .5s ease}
-.path{list-style:none;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:40px;padding:8px 0 22px}
+.path{list-style:none;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:36px;padding:8px 0 22px}
 .unit-divider{display:flex;align-items:center;gap:12px;color:var(--ink-45);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
 .unit-divider::before,.unit-divider::after{content:"";flex:1;height:1.5px;background:var(--line)}
 .node{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transform:translateX(calc(var(--off,0px)*var(--offScale)))}
-.node-btn{width:64px;height:64px;border-radius:50%;border:2.5px solid var(--ink);background:var(--card);font-family:var(--display);font-weight:800;font-size:22px;cursor:pointer;display:grid;place-items:center;box-shadow:0 5px 0 rgba(32,36,44,.85);transition:transform .15s, box-shadow .15s;position:relative}
+.node-btn{width:64px;height:64px;border-radius:50%;border:2.5px solid var(--ink);background:var(--card);font-family:var(--display);font-weight:800;font-size:22px;cursor:pointer;display:grid;place-items:center;box-shadow:0 5px 0 rgba(32,36,44,.85);transition:transform .15s, box-shadow .15s;position:relative;user-select:none;-webkit-user-select:none}
 .node-btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 rgba(32,36,44,.85)}
 .node-btn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(32,36,44,.85)}
 .node.done .node-btn{background:var(--good);border-color:var(--good-deep);color:#fff;box-shadow:0 5px 0 var(--good-deep)}
@@ -67,6 +78,9 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .badge-chip.go{background:var(--pen);border-color:var(--pen-deep);color:#fff}
 .badge-chip.ok{background:var(--good-tint);border-color:var(--good-deep);color:var(--good-deep)}
 .foot{max-width:640px;margin:26px auto 0;text-align:center;color:var(--ink-45);font-size:13px}
+.foot .ver{font-weight:800;color:var(--pen)}
+.foot .dbg-btn{background:none;border:none;color:var(--ink-45);text-decoration:underline;cursor:pointer;font-size:12px;padding:2px 4px}
+#dbgBox{display:none;max-width:640px;margin:14px auto 0;background:#10131A;color:#B8F5C9;border-radius:12px;padding:14px 16px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;line-height:1.6;white-space:pre-wrap;text-align:left;box-shadow:0 6px 0 rgba(32,36,44,.25)}
 #scrLesson{max-width:720px;padding-bottom:180px}
 .lesson-top{display:flex;align-items:center;gap:16px;margin-bottom:30px}
 .pbar{flex:1;height:13px;border-radius:99px;background:rgba(32,36,44,.1);overflow:hidden}
@@ -79,7 +93,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .exercise{animation:stepIn .32s ease both;width:100%}
 @keyframes stepIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 .opts{display:flex;flex-direction:column;gap:12px;max-width:580px;margin-top:24px}
-.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font-size:17px;font-weight:600;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;box-shadow:0 2px 0 rgba(32,36,44,.08);transition:.13s}
+.opt{display:flex;align-items:center;gap:14px;width:100%;text-align:left;font-size:17px;font-weight:600;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:14px 16px;cursor:pointer;box-shadow:0 2px 0 rgba(32,36,44,.08);transition:.13s;user-select:none;-webkit-user-select:none}
 .opt:hover:not(:disabled){border-color:var(--ink);transform:translateX(4px)}
 .opt .key{width:27px;height:27px;flex:none;border:1.5px solid var(--line);border-radius:7px;display:grid;place-items:center;font-family:var(--display);font-size:12px;font-weight:700;color:var(--ink-45);transition:.13s}
 .opt.sel{border-color:var(--pen);background:var(--pen-tint);box-shadow:0 2px 0 var(--pen-deep)}
@@ -90,7 +104,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .slot{min-height:76px;max-width:600px;margin:26px 0 30px;padding:10px 2px 14px;border-bottom:2px dashed rgba(32,36,44,.32);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
 .slot .ghost{color:var(--ink-45);font-style:italic;font-size:15px}
 .bank{display:flex;flex-wrap:wrap;gap:10px;max-width:600px}
-.tile{font-family:var(--display);font-weight:700;font-size:17px;background:var(--card);border:2px solid var(--ink);border-radius:10px;padding:9px 16px;cursor:pointer;box-shadow:0 3px 0 rgba(32,36,44,.7);transition:.12s;animation:tileIn .2s ease both}
+.tile{font-family:var(--display);font-weight:700;font-size:17px;background:var(--card);border:2px solid var(--ink);border-radius:10px;padding:9px 16px;cursor:pointer;box-shadow:0 3px 0 rgba(32,36,44,.7);transition:.12s;animation:tileIn .2s ease both;user-select:none;-webkit-user-select:none}
 .tile:hover:not(:disabled){transform:translateY(-2px)}
 .tile:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 rgba(32,36,44,.7)}
 .tile.used{opacity:.22;pointer-events:none;box-shadow:none;transform:none}
@@ -105,7 +119,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .type-in::placeholder{color:rgba(32,36,44,.28)}
 .hint{margin-top:14px;font-size:14px;color:var(--ink-45)}
 .listen-row{display:flex;align-items:center;gap:16px;margin:26px 0 4px;flex-wrap:wrap}
-.play-btn{width:72px;height:72px;border-radius:50%;border:2.5px solid var(--pen-deep);background:var(--pen);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:0 5px 0 var(--pen-deep);transition:.13s;flex:none}
+.play-btn{width:72px;height:72px;border-radius:50%;border:2.5px solid var(--pen-deep);background:var(--pen);color:#fff;cursor:pointer;display:grid;place-items:center;box-shadow:0 5px 0 var(--pen-deep);transition:.13s;flex:none;user-select:none;-webkit-user-select:none}
 .play-btn:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--pen-deep)}
 .play-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--pen-deep)}
 .play-btn.small{width:56px;height:56px}
@@ -150,7 +164,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 #dock.good .t{color:var(--good-deep)}
 #dock.bad{background:var(--bad-tint);border-top-color:var(--bad)}
 #dock.bad .t{color:var(--bad)}
-.btn{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;border:2px solid var(--ink);border-radius:12px;padding:13px 28px;cursor:pointer;background:var(--card);color:var(--ink);box-shadow:0 4px 0 rgba(32,36,44,.85);transition:transform .12s, box-shadow .12s, background .15s;white-space:nowrap}
+.btn{font-family:var(--display);font-weight:700;font-size:16px;letter-spacing:.02em;border:2px solid var(--ink);border-radius:12px;padding:13px 28px;cursor:pointer;background:var(--card);color:var(--ink);box-shadow:0 4px 0 rgba(32,36,44,.85);transition:transform .12s, box-shadow .12s, background .15s;white-space:nowrap;user-select:none;-webkit-user-select:none}
 .btn:hover:not([disabled]){transform:translateY(-1px);box-shadow:0 5px 0 rgba(32,36,44,.85)}
 .btn:active:not([disabled]){transform:translateY(3px);box-shadow:0 1px 0 rgba(32,36,44,.85)}
 .btn.primary{background:var(--pen);border-color:var(--pen-deep);color:#fff;box-shadow:0 4px 0 var(--pen-deep)}
@@ -165,6 +179,14 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .ring-wrap{position:relative;width:92px;margin:0 auto}
 .ring-wrap b{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:19px}
 #ringFg{transition:stroke-dashoffset 1s cubic-bezier(.5,0,.2,1)}
+.streak-banner{display:flex;align-items:center;gap:16px;margin:20px auto 6px;max-width:340px;background:#FFF6E8;border:2px solid #E08A2E;border-radius:14px;padding:14px 18px;box-shadow:0 4px 0 #B26A1B;animation:bannerIn .45s cubic-bezier(.5,1.4,.5,1) .15s both}
+@keyframes bannerIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.sb-flame{color:#E08A2E;flex:none}
+.sb-flame svg{width:40px;height:40px;animation:flameWig 1.6s ease-in-out .6s infinite}
+@keyframes flameWig{0%,100%{transform:scale(1) rotate(0)}30%{transform:scale(1.12) rotate(-4deg)}60%{transform:scale(1.05) rotate(4deg)}}
+.sb-text{display:flex;flex-direction:column;text-align:left}
+.sb-text b{font-family:var(--display);font-size:24px;color:#B26A1B;line-height:1.15}
+.sb-text span{font-size:12.5px;color:var(--ink-70)}
 .stats{display:flex;justify-content:center;gap:38px;margin:28px 0}
 .stat b{font-family:var(--display);font-weight:800;font-size:29px;display:block;line-height:1.1}
 .stat span{font-size:10.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-45)}
@@ -188,7 +210,43 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .verdict .ok{color:var(--good-deep);font-weight:700}
 .verdict .no{color:var(--bad);font-weight:700}
 .verdict .norm{color:var(--ink-45);font-size:13px}
-@media(max-width:640px){:root{--offScale:.5}.logo-tag{display:none}.stats{gap:24px}.dock-in{gap:12px}.btn{padding:12px 22px}}
+@media(max-width:640px){
+:root{--offScale:.45}
+.logo-tag{display:none}
+.logo{font-size:22px}
+.link-btn{font-size:12px}
+.screen{padding:24px 14px 70px}
+.unit-head{margin-bottom:28px}
+.demo-chips .chip{font-size:12.5px;padding:4px 11px}
+.path{gap:30px}
+.node-btn{width:58px;height:58px;font-size:19px}
+.node-meta h3{font-size:17px}
+.node-meta p{font-size:12.5px}
+#scrLesson{padding-bottom:215px}
+.lesson-top{margin-bottom:18px}
+.play-btn{width:64px;height:64px}
+.play-btn.small{width:52px;height:52px}
+.word-card{padding:20px 18px}
+.word-row{gap:14px}
+.listen-hint{display:none}
+.opts{gap:10px}
+.opt{padding:13px 14px}
+.dock-in{flex-direction:column;align-items:stretch;gap:10px}
+.dock-msg{min-width:0}
+#dockBtn{width:100%}
+.stats{gap:22px}
+.done-card{padding:32px 20px}
+.streak-banner{max-width:100%}
+.modal{padding:22px 18px}
+.install-btn{padding:6px 11px;font-size:12.5px}
+}
+@media(max-width:380px){
+.logo{font-size:20px}
+.link-btn{font-size:11px}
+.icon-btn{width:36px;height:36px}
+.node-btn{width:54px;height:54px}
+.streak{font-size:14px}
+}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;transition-duration:.001s!important}}
 </style>
 </head>
@@ -197,6 +255,8 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
   <div class="logo">fluent<b>.</b></div>
   <div class="logo-tag">Inglês · para brasileiros</div>
   <div class="spacer"></div>
+  <button class="install-btn" id="installBtn">⬇ Instalar app</button>
+  <span class="streak zero" id="streakTop" title="Dias seguidos estudando"></span>
   <button class="link-btn" id="howBtn">Como corrigimos</button>
   <button class="icon-btn" id="sndBtn" title="Som ligado/desligado" aria-label="Som ligado/desligado">
     <svg id="icoOn" width="19" height="19" viewBox="0 0 24 24"><path d="M3 9v6h4l5 4.5v-15L7 9H3z" fill="currentColor"/><path d="M15.5 8.6a4.8 4.8 0 0 1 0 6.8M18.2 6a8.6 8.6 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -207,16 +267,17 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
   <section class="unit-head">
     <div class="kicker" id="unitKicker"></div>
     <h1 class="unit-title" id="unitTitle"></h1>
-    <p class="unit-lede">Do zero até falar de verdade: ouça, repita e aprenda sem respostas rígidas. <b>“My name is”</b> e <b>“My name's”</b> valem igual.</p>
+    <p class="unit-lede">Do zero até falar de verdade: ouça, repita e aprenda sem respostas rígidas. <b>"My name is"</b> e <b>"My name's"</b> valem igual.</p>
     <div class="demo-chips">
       <span class="chip">hello → olá ✓</span>
       <span class="chip">hi → oi ✓</span>
-      <span class="chip alt">32 lições completas</span>
+      <span class="chip alt">6 unidades · 32 lições</span>
     </div>
     <div class="course-meta"><span id="courseMeta"></span><div class="mini-bar"><i id="miniFill"></i></div></div>
   </section>
   <ol class="path" id="path"></ol>
-  <p class="foot">Seu progresso fica neste navegador. Sem conta · sem streaks · sem confete.</p>
+  <p class="foot"><span class="ver">v12</span> · seu progresso fica neste navegador · <button class="dbg-btn" id="dbgBtn">testar áudio</button></p>
+  <pre id="dbgBox"></pre>
 </main>
 <main id="scrLesson" class="screen">
   <div class="lesson-top">
@@ -239,6 +300,10 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
     </div>
     <h2>Lição <span class="hl-swipe">concluída</span></h2>
     <p class="done-sub" id="doneSub"></p>
+    <div class="streak-banner" id="streakBanner">
+      <span class="sb-flame"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.78-3.12 1.72-.35 3.35-1.21 4.28-2.55.31 1.31.5 2.76.5 4.07 0 2.6-1.94 4.74-4.34 4.74z"/></svg></span>
+      <div class="sb-text"><b id="sbCount">1 dia</b><span id="sbMsg"></span></div>
+    </div>
     <div class="stats">
       <div class="stat"><b id="dSteps">0</b><span>Passos</span></div>
       <div class="stat"><b id="dNew">0</b><span>Frases</span></div>
@@ -270,470 +335,432 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
       <li><span class="n">04</span><span>Comparada com <b>todas</b> as respostas aceitas</span></li>
     </ol>
     <div class="pairs"><span class="chip">I'm = I am</span><span class="chip">what's = what is</span><span class="chip">won't = will not</span><span class="chip">they're = they are</span></div>
-    <label class="try-label" for="tryIn">Experimente — alvo: “My name's Anna.”</label>
+    <label class="try-label" for="tryIn">Experimente — alvo: "My name's Anna."</label>
     <input id="tryIn" class="type-in" style="margin-top:8px" placeholder="Digite do seu jeito…" autocomplete="off">
     <div class="verdict" id="verdict"></div>
   </div>
 </div>
 <script>
 "use strict";
-const COURSE = { units:[
-  { id:"u1", num:1, title:"Primeiras palavras", level:"A0 · do zero", lessons:[
-    { id:"g1", title:"Cumprimentos", skill:"hello · hi · good morning", steps:[
-      {kind:"learn",word:"hello",say:"Hello!",pt:"olá",pron:"ré-LÔU"},
-      {kind:"learn",word:"hi",say:"Hi!",pt:"oi",pron:"RÁI",note:"mais informal que hello"},
-      {kind:"choice",prompt:"O que significa “hello”?",options:["olá","obrigado","adeus"],answer:0},
-      {kind:"learn",word:"good morning",say:"Good morning!",pt:"bom dia",pron:"gud MÓR-nin",ex:"Good morning, Sarah!"},
-      {kind:"listen",say:"Good morning!",prompt:"O que você ouviu?",options:["bom dia","boa noite","boa tarde"],answer:0,transcript:"Good morning!"},
-      {kind:"learn",word:"good night",say:"Good night!",pt:"boa noite",pron:"gud NÁIT",note:"usado na despedida ou antes de dormir"},
-      {kind:"build",prompt:"Monte: “boa noite”",bank:["Good","good","night","morning","Hello"],accept:["Good night"]},
-      {kind:"choice",prompt:"Você encontra alguém de manhã. O que diz?",options:["Good morning","Good night","Bye"],answer:0,explain:"“good” = bom/boa · “morning” = manhã."},
-      {kind:"learn",word:"goodbye",say:"Goodbye!",pt:"tchau · adeus",pron:"gud-BÁI",note:"“bye” é a versão curta e informal"},
-      {kind:"type",prompt:"Escreva em inglês: “olá”",accept:["Hello","Hi","Hey"],hint:"hello, hi ou hey"},
-      {kind:"listen",say:"Goodbye!",prompt:"O que você ouviu?",options:["tchau","olá","obrigado"],answer:0,transcript:"Goodbye!"}
-    ]},
-    { id:"g2", title:"Palavras essenciais", skill:"yes · no · please · thank you", steps:[
-      {kind:"learn",word:"yes",say:"Yes!",pt:"sim",pron:"IÉSS"},
-      {kind:"learn",word:"no",say:"No.",pt:"não",pron:"NÔU"},
-      {kind:"choice",prompt:"Como se diz “não” em inglês?",options:["no","yes","please"],answer:0},
-      {kind:"learn",word:"please",say:"Please.",pt:"por favor",pron:"PLÍIS"},
-      {kind:"learn",word:"thank you",say:"Thank you!",pt:"obrigado · obrigada",pron:"thênk iú",note:"o “th” soa como um “f” suave, com a língua entre os dentes"},
-      {kind:"listen",say:"Thank you!",prompt:"O que você ouviu?",options:["obrigado","por favor","desculpa"],answer:0,transcript:"Thank you!"},
-      {kind:"learn",word:"sorry",say:"Sorry!",pt:"desculpa · desculpe",pron:"SÓ-ri"},
-      {kind:"choice",prompt:"Você esbarra em alguém sem querer. O que diz?",options:["Sorry!","Yes!","Goodbye!"],answer:0,explain:"“sorry” pede desculpa. “excuse me” chama a atenção educadamente."},
-      {kind:"type",prompt:"Escreva em inglês: “por favor”",accept:["Please"],hint:"uma palavra só"},
-      {kind:"type",prompt:"Agradeça a alguém.",accept:["Thank you","Thanks","Thank you so much","Many thanks"],hint:"thank you ou thanks"}
-    ]},
-    { id:"p1", title:"Pessoas", skill:"man · woman · boy · girl · I · you", steps:[
-      {kind:"learn",word:"man",say:"Man.",pt:"homem",pron:"MÉN"},
-      {kind:"learn",word:"woman",say:"Woman.",pt:"mulher",pron:"UÍ-man"},
-      {kind:"choice",prompt:"O que significa “woman”?",options:["mulher","homem","menina"],answer:0},
-      {kind:"learn",word:"boy",say:"Boy.",pt:"menino",pron:"BÓI"},
-      {kind:"learn",word:"girl",say:"Girl.",pt:"menina",pron:"GUÔRL"},
-      {kind:"listen",say:"A boy and a girl.",prompt:"O que você ouviu?",options:["um menino e uma menina","um homem e uma mulher","uma menina e um menino"],answer:0,transcript:"A boy and a girl."},
-      {kind:"learn",word:"I",say:"I.",pt:"eu",pron:"ÁI"},
-      {kind:"learn",word:"you",say:"You.",pt:"você",pron:"IÚ"},
-      {kind:"choice",prompt:"Como se diz “eu” em inglês?",options:["I","you","girl"],answer:0},
-      {kind:"build",prompt:"Monte: “você e eu”",bank:["you","and","I","man","the"],accept:["You and I"]},
-      {kind:"type",prompt:"Escreva “menina” em inglês.",accept:["girl","a girl"],hint:"uma palavra — ou duas, com artigo"}
-    ]},
-    { id:"fam1", title:"Família", skill:"mother · father · brother · sister", steps:[
-      {kind:"learn",word:"mother",say:"My mother.",pt:"mãe",pron:"MÂ-der",note:"“mom” é a forma curta e informal"},
-      {kind:"learn",word:"father",say:"My father.",pt:"pai",pron:"FÁ-der",note:"“dad” é a forma curta"},
-      {kind:"learn",word:"brother",say:"My brother.",pt:"irmão",pron:"BRÂ-der"},
-      {kind:"learn",word:"sister",say:"My sister.",pt:"irmã",pron:"SÍS-ter"},
-      {kind:"choice",prompt:"“sister” significa…",options:["irmã","mãe","filha"],answer:0},
-      {kind:"listen",say:"I have one brother and two sisters.",prompt:"Quantos irmãos?",options:["um irmão e duas irmãs","dois irmãos","três irmãs"],answer:0,transcript:"I have one brother and two sisters."},
-      {kind:"learn",word:"son",say:"My son.",pt:"filho",pron:"SÂN"},
-      {kind:"learn",word:"daughter",say:"My daughter.",pt:"filha",pron:"DÓ-ter"},
-      {kind:"learn",word:"family",say:"My family.",pt:"família",pron:"FÉ-mi-li"},
-      {kind:"build",prompt:"Monte: “Minha família é grande.”",bank:["My","family","is","big","small","have"],accept:["My family is big"]},
-      {kind:"type",prompt:"Diga: “Eu tenho uma irmã.”",accept:["I have a sister","I have one sister"],hint:"I have + a sister"},
-      {kind:"type",prompt:"Diga: “Meu pai é médico.”",accept:["My father is a doctor","My dad is a doctor","My father is doctor"],hint:"My father + is + a doctor"}
-    ]},
-    { id:"p2", title:"Números 1–10", skill:"one → ten", steps:[
-      {kind:"learn",word:"one (1)",say:"One.",pt:"um",pron:"UÁN"},
-      {kind:"learn",word:"two (2)",say:"Two.",pt:"dois",pron:"TÚ"},
-      {kind:"learn",word:"three (3)",say:"Three.",pt:"três",pron:"THRII",note:"o “th” soa como um “f” suave"},
-      {kind:"learn",word:"four (4)",say:"Four.",pt:"quatro",pron:"FÓR"},
-      {kind:"learn",word:"five (5)",say:"Five.",pt:"cinco",pron:"FÁIV"},
-      {kind:"choice",prompt:"“five” é o número…",options:["5","4","9"],answer:0},
-      {kind:"listen",say:"One, two, three.",prompt:"O que você ouviu?",options:["um, dois, três","um, três, dois","dois, três, quatro"],answer:0,transcript:"One, two, three."},
-      {kind:"learn",word:"six (6)",say:"Six.",pt:"seis",pron:"SÍCS"},
-      {kind:"learn",word:"seven (7)",say:"Seven.",pt:"sete",pron:"SÉ-ven"},
-      {kind:"learn",word:"eight (8)",say:"Eight.",pt:"oito",pron:"ÊIT",note:"o “t” final é quase mudo"},
-      {kind:"learn",word:"nine (9)",say:"Nine.",pt:"nove",pron:"NÁIN"},
-      {kind:"learn",word:"ten (10)",say:"Ten.",pt:"dez",pron:"TÉN"},
-      {kind:"choice",prompt:"Qual destes é o número 8?",options:["eight","six","ten"],answer:0},
-      {kind:"listen",say:"Seven. Eight. Nine. Ten.",prompt:"O que você ouviu?",options:["sete, oito, nove, dez","seis, sete, oito, nove","oito, nove, dez"],answer:0,transcript:"Seven. Eight. Nine. Ten."},
-      {kind:"type",prompt:"Escreva o número 10 em inglês.",accept:["ten"],hint:"começa com “t”"}
-    ]},
-    { id:"p3", title:"Ele e ela", skill:"he · she · he's · she's · name", steps:[
-      {kind:"learn",word:"he",say:"He is Tom.",pt:"ele",pron:"RRÍ"},
-      {kind:"learn",word:"she",say:"She is Anna.",pt:"ela",pron:"XÍ"},
-      {kind:"choice",prompt:"“she” significa…",options:["ela","ele","você"],answer:0},
-      {kind:"learn",word:"name",say:"Name.",pt:"nome",pron:"NÊIM",note:"você vai usar em “My name's…”"},
-      {kind:"note",title:"he's · she's",body:`<em>He is</em> vira <span class="mark">he's</span>; <em>she is</em> vira <span class="mark">she's</span>. Na fala, a forma contraída é quase obrigatória — e este app aceita as duas.`},
-      {kind:"build",prompt:"Monte: “Ela é Anna.”",bank:["She's","She","is","Anna","name","He's"],accept:["She's Anna","She is Anna"]},
-      {kind:"listen",say:"She's Maria.",prompt:"Ouça. Qual é o nome dela?",options:["Maria","Anna","Tom"],answer:0,transcript:"She's Maria."},
-      {kind:"build",prompt:"Monte: “Ele é Tom.”",bank:["He's","He","is","Tom","Anna","She's"],accept:["He's Tom","He is Tom"]},
-      {kind:"choice",prompt:"Como se diz “ela é Maria”?",options:["She's Maria","He's Maria","Maria she"],answer:0,explain:"“She is Maria” também está certo."},
-      {kind:"type",prompt:"Escreva: “Ele é Paul.”",accept:["He's Paul","He is Paul"],hint:"com ou sem contração"}
-    ]},
-    { id:"g3", title:"Apresentações", skill:"I'm · My name's · Nice to meet you", steps:[
-      {kind:"note",title:"O inglês falado encolhe as palavras",body:`Ao se apresentar, nativos quase sempre contraem o verbo <span class="mark">be</span>: <em>My name is Anna</em> vira <em>My name's Anna</em>. Os dois estão certos — <span class="mark">este app aceita os dois, sempre.</span>`},
-      {kind:"listen",say:"Hi! I'm Sarah. Nice to meet you.",prompt:"Ouça. Quem está falando?",options:["Sarah","Anna","Mrs. Lee"],answer:0,transcript:"Hi! I'm Sarah. Nice to meet you."},
-      {kind:"build",prompt:"Monte a frase.",context:"Anna se apresenta.",bank:["My","name's","name","is","Anna","Your","Hello"],accept:["My name's Anna","My name is Anna"]},
-      {kind:"type",prompt:"Anna se apresenta — escreva.",accept:["My name's Anna","My name is Anna","I'm Anna","I am Anna"],hint:"Comece com “My” ou “I”. Contrações são bem-vindas."},
-      {kind:"choice",prompt:"Qual cumprimento serve para uma reunião de trabalho?",options:["Hey! What's up?","Good evening. I'm Daniel Reeves.","Yo — Dan here."],answer:1,explain:"Gírias e formas curtas são para amigos. Frases completas indicam formalidade."},
-      {kind:"build",prompt:"Monte a frase.",context:"Você diz de onde vem.",bank:["I'm","I","am","from","Brazil","is","the"],accept:["I'm from Brazil","I am from Brazil"]},
-      {kind:"type",prompt:"Pergunte o nome de alguém.",accept:["What's your name","What is your name","May I ask your name","And your name"],hint:"“What's …?”"},
-      {kind:"choice",prompt:"“Nice ___ meet you.”",options:["to","for","at","with"],answer:0,explain:"Frase feita: nice <b>to</b> meet you."},
-      {kind:"listen",say:"Nice to meet you too. I'm Tom.",prompt:"Ouça. O que ele disse?",options:["Nice to meet you too. I am Tom.","Nice to meet you two. I'm Tom.","Nice meet you too. I'm Tom."],answer:0,transcript:"Nice to meet you too. I'm Tom."},
-      {kind:"type",prompt:"Alguém diz “Nice to meet you.” Responda.",accept:["Nice to meet you too","Nice to meet you","Likewise","You too","Pleased to meet you too","The pleasure is mine"],hint:"Adicione “too” — ou tente uma alternativa formal."}
-    ]}
-  ]},
-  { id:"u2", num:2, title:"Sobre você", level:"A1", lessons:[
-    { id:"g4", title:"Trabalho e estudo", skill:"'m · 's · 're · profissões", steps:[
-      {kind:"note",title:"Contrair o “be” com todos os pronomes",body:`<span class="mark">I'm · you're · he's · she's · it's · we're · they're</span> — na fala e na escrita informal, a forma contraída é o padrão, não a exceção.`},
-      {kind:"build",prompt:"Monte a frase.",context:"Falando do trabalho da Maria.",bank:["She's","She","is","a","an","nurse","doctor"],accept:["She's a nurse","She is a nurse"]},
-      {kind:"type",prompt:"Diga com contração: “I am a student.”",accept:["I'm a student","I am a student"],hint:"i + am → …?"},
-      {kind:"choice",prompt:"“They're ___ doctors.”",options:["(nada)","a","an"],answer:0,explain:"Sem artigo com profissões no plural: <b>they're doctors</b>."},
-      {kind:"listen",say:"We're engineers. We work in Sao Paulo.",prompt:"Ouça. Onde eles trabalham?",options:["São Paulo","Rio de Janeiro","Lisboa"],answer:0,transcript:"We're engineers. We work in São Paulo."},
-      {kind:"type",prompt:"Contraia: “It is not easy.”",accept:["It's not easy","It isn't easy","It is not easy"],hint:"Duas contrações são possíveis."},
-      {kind:"build",prompt:"Monte a pergunta.",bank:["Are","you","You","a","student","is","?"],accept:["Are you a student"]},
-      {kind:"choice",prompt:"“She's ___ engineer.”",options:["an","a"],answer:0,explain:"<b>a</b> ou <b>an</b> depende do <i>som</i>: an engineer."}
-    ]},
-    { id:"c1", title:"Conversa fiada", skill:"How are you? · I'm good · and you?", steps:[
-      {kind:"note",title:"“How are you?” é cumprimento",body:`Em inglês, <em>How are you?</em> funciona como um “tudo bem?”. Responda curto — <span class="mark">e devolva a pergunta</span>.`},
-      {kind:"learn",word:"How are you?",say:"How are you?",pt:"como vai você?",pron:"RRÁU ár IÚ"},
-      {kind:"learn",word:"good",say:"Good!",pt:"bom · bem",pron:"GÚD"},
-      {kind:"learn",word:"I'm good",say:"I'm good!",pt:"estou bem",pron:"áim GÚD"},
-      {kind:"listen",say:"Hi! How are you?",prompt:"Ouça. O que a pessoa está fazendo?",options:["perguntando como você está","se despedindo","agradecendo"],answer:0,transcript:"Hi! How are you?"},
-      {kind:"build",prompt:"Monte: “Como vai você?”",bank:["How","are","you","is","Hello","?"],accept:["How are you"]},
-      {kind:"choice",prompt:"Alguém pergunta “How are you?”. Boa resposta:",options:["I'm good, thanks!","Goodbye!","My name is Tom."],answer:0},
-      {kind:"learn",word:"and you?",say:"And you?",pt:"e você?",pron:"énd IÚ"},
-      {kind:"build",prompt:"Monte: “Estou bem, e você?”",bank:["I'm","good","and","you","no","Please"],accept:["I'm good and you","I am good and you"]},
-      {kind:"learn",word:"fine",say:"I'm fine.",pt:"bem (neutro)",pron:"FÁIN",note:"nem ótimo, nem ruim — só ok"},
-      {kind:"listen",say:"I'm fine, thanks. And you?",prompt:"Ouça. Como a pessoa está?",options:["bem","mal","com sono"],answer:0,transcript:"I'm fine, thanks. And you?"},
-      {kind:"type",prompt:"Responda “How are you?” e devolva a pergunta.",accept:["I'm good and you","I'm fine and you","Good, and you","Fine, and you","I am good and you","I'm good, thanks. And you"],hint:"I'm good / I'm fine + and you?"}
-    ]},
-    { id:"r1", title:"Rotina diária", skill:"work · study · every day", steps:[
-      {kind:"learn",word:"work",say:"I work.",pt:"trabalhar · trabalho",pron:"UÔRK"},
-      {kind:"learn",word:"study",say:"I study.",pt:"estudar",pron:"IS-tú-di"},
-      {kind:"choice",prompt:"“study” significa…",options:["estudar","trabalhar","dormir"],answer:0},
-      {kind:"learn",word:"every day",say:"I work every day.",pt:"todo dia",pron:"É-vri dêi"},
-      {kind:"build",prompt:"Monte: “Eu trabalho todo dia.”",bank:["I","work","every","day","study","and"],accept:["I work every day"]},
-      {kind:"learn",word:"in the morning",say:"I study in the morning.",pt:"de manhã",pron:"in dê MÓR-nin"},
-      {kind:"build",prompt:"Monte: “Eu estudo de manhã.”",bank:["I","study","in","the","morning","work"],accept:["I study in the morning"]},
-      {kind:"listen",say:"I work every day.",prompt:"O que você ouviu?",options:["eu trabalho todo dia","eu estudo de manhã","eu trabalho de manhã"],answer:0,transcript:"I work every day."},
-      {kind:"choice",prompt:"Qual frase fala sobre estudar?",options:["I study in the morning.","I work every day.","Good morning!"],answer:0},
-      {kind:"type",prompt:"Diga: “Eu estudo todo dia.”",accept:["I study every day"],hint:"study + every day"},
-      {kind:"type",prompt:"Agora diga que você trabalha de manhã.",accept:["I work in the morning"],hint:"work + in the morning"}
-    ]},
-    { id:"o1", title:"Opiniões", skill:"I like · I love · I hate · because", steps:[
-      {kind:"learn",word:"I like",say:"I like coffee.",pt:"eu gosto de",pron:"ái LÁIK"},
-      {kind:"learn",word:"I love",say:"I love pizza.",pt:"eu amo",pron:"ái LÂV",note:"mais forte que “like”"},
-      {kind:"learn",word:"I hate",say:"I hate traffic.",pt:"eu odeio",pron:"ái RÉIT"},
-      {kind:"choice",prompt:"“I love music” significa…",options:["eu amo música","eu odeio música","eu gosto de música"],answer:0},
-      {kind:"listen",say:"I like coffee but I don't like tea.",prompt:"O que ela gosta?",options:["café","chá","os dois"],answer:0,transcript:"I like coffee but I don't like tea."},
-      {kind:"learn",word:"don't like",say:"I don't like it.",pt:"não gosto",pron:"dôunt LÁIK",note:"“don't” é a contração de “do not”"},
-      {kind:"learn",word:"because",say:"I like it because it's fun.",pt:"porque",pron:"bi-CÓZ"},
-      {kind:"build",prompt:"Monte: “Eu amo pizza porque é boa.”",bank:["I","love","like","pizza","because","it's","good"],accept:["I love pizza because it's good","I love pizza because it is good"]},
-      {kind:"choice",prompt:"Como se diz “eu não gosto de futebol”?",options:["I don't like football.","I no like football.","I not like football."],answer:0,explain:"Em inglês, a negação precisa de um auxiliar — aqui, “don't”."},
-      {kind:"type",prompt:"Diga que você ama música.",accept:["I love music","I really love music"],hint:"I love + …"},
-      {kind:"type",prompt:"Agora diga que você não gosta de café.",accept:["I don't like coffee","I do not like coffee"],hint:"use “don't”"}
-    ]}
-  ]},
-  { id:"u3", num:3, title:"Comida e compras", level:"A1", lessons:[
-    { id:"f1", title:"Comida e bebida", skill:"water · bread · coffee · eat · drink", steps:[
-      {kind:"learn",word:"water",say:"Water, please.",pt:"água",pron:"UÓ-ter"},
-      {kind:"learn",word:"bread",say:"Bread.",pt:"pão",pron:"BRÉD"},
-      {kind:"learn",word:"coffee",say:"Coffee.",pt:"café",pron:"KÓ-fi"},
-      {kind:"learn",word:"rice",say:"Rice and beans.",pt:"arroz",pron:"RÁIS",ex:"I like rice and beans."},
-      {kind:"choice",prompt:"“bread” é…",options:["pão","arroz","café"],answer:0},
-      {kind:"listen",say:"I want some water, please.",prompt:"O que a pessoa quer?",options:["água","café","pão"],answer:0,transcript:"I want some water, please."},
-      {kind:"learn",word:"eat",say:"I eat bread.",pt:"comer",pron:"ÍT"},
-      {kind:"learn",word:"drink",say:"I drink water.",pt:"beber",pron:"DRÍNK"},
-      {kind:"build",prompt:"Monte: “Eu bebo café.”",bank:["I","drink","eat","coffee","water","the"],accept:["I drink coffee"]},
-      {kind:"type",prompt:"Diga: “Eu como pão.”",accept:["I eat bread"],hint:"eat + bread"},
-      {kind:"listen",say:"I eat rice every day.",prompt:"O que a pessoa come?",options:["arroz","pão","pizza"],answer:0,transcript:"I eat rice every day."},
-      {kind:"type",prompt:"Peça água educadamente.",accept:["Water, please","Can I have water","I want water please","Water please"],hint:"water + please"}
-    ]},
-    { id:"fv1", title:"Frutas e vegetais", skill:"apple · banana · tomato · carrot", steps:[
-      {kind:"learn",word:"apple",say:"An apple.",pt:"maçã",pron:"É-pol"},
-      {kind:"learn",word:"banana",say:"A banana.",pt:"banana",pron:"be-NÉ-ne"},
-      {kind:"learn",word:"orange",say:"An orange.",pt:"laranja",pron:"Ó-rindj"},
-      {kind:"learn",word:"tomato",say:"A tomato.",pt:"tomate",pron:"tô-MÊI-tôu",note:"nos EUA: “tô-MÊI-tôu” · no Reino Unido: “tô-MA-tôu”"},
-      {kind:"choice",prompt:"“apple” é…",options:["maçã","laranja","banana"],answer:0},
-      {kind:"listen",say:"I eat an apple every day.",prompt:"O que a pessoa come?",options:["maçã","banana","laranja"],answer:0,transcript:"I eat an apple every day."},
-      {kind:"learn",word:"carrot",say:"A carrot.",pt:"cenoura",pron:"KÉ-rot"},
-      {kind:"learn",word:"potato",say:"A potato.",pt:"batata",pron:"pô-TÊI-tôu"},
-      {kind:"build",prompt:"Monte: “Eu gosto de bananas.”",bank:["I","like","love","bananas","apple","an"],accept:["I like bananas","I love bananas"]},
-      {kind:"choice",prompt:"“An orange” ou “A orange”?",options:["An orange","A orange","Orange"],answer:0,explain:"Antes de vogal, usamos <b>an</b>."},
-      {kind:"type",prompt:"Diga: “Eu como uma maçã.”",accept:["I eat an apple","I eat apples"],hint:"eat + an apple"},
-      {kind:"type",prompt:"Diga que você gosta de tomate.",accept:["I like tomatoes","I like tomato","I love tomatoes"],hint:"like + tomato(es)"}
-    ]},
-    { id:"n2", title:"Números 11–100", skill:"eleven → one hundred", steps:[
-      {kind:"learn",word:"eleven (11)",say:"Eleven.",pt:"onze",pron:"i-LÉ-ven"},
-      {kind:"learn",word:"twelve (12)",say:"Twelve.",pt:"doze",pron:"TUÉLV"},
-      {kind:"learn",word:"thirteen (13)",say:"Thirteen.",pt:"treze",pron:"thôr-TÍIN"},
-      {kind:"learn",word:"twenty (20)",say:"Twenty.",pt:"vinte",pron:"TUÉN-ti"},
-      {kind:"choice",prompt:"“twenty” é…",options:["20","12","13"],answer:0},
-      {kind:"listen",say:"Twenty-five.",prompt:"O número é…",options:["25","15","52"],answer:0,transcript:"Twenty-five."},
-      {kind:"learn",word:"thirty (30)",say:"Thirty.",pt:"trinta",pron:"THÔR-ti"},
-      {kind:"learn",word:"forty (40)",say:"Forty.",pt:"quarenta",pron:"FÓR-ti",note:"sem “u”! diferente de “four”"},
-      {kind:"learn",word:"fifty (50)",say:"Fifty.",pt:"cinquenta",pron:"FÍF-ti"},
-      {kind:"learn",word:"hundred (100)",say:"One hundred.",pt:"cem",pron:"RRÂN-dred"},
-      {kind:"build",prompt:"Monte o número 42.",bank:["forty","fifty","two","three","hundred"],accept:["forty-two","forty two","four two"]},
-      {kind:"choice",prompt:"Como se diz “60”?",options:["sixty","sixteen","six"],answer:0},
-      {kind:"type",prompt:"Escreva “cem” em inglês.",accept:["one hundred","hundred"],hint:"one + hundred"},
-      {kind:"listen",say:"I have fifty dollars.",prompt:"Quantos dólares?",options:["50","15","5"],answer:0,transcript:"I have fifty dollars."}
-    ]},
-    { id:"r2", title:"No restaurante", skill:"menu · order · bill", steps:[
-      {kind:"learn",word:"menu",say:"The menu, please.",pt:"cardápio",pron:"MÉ-niu"},
-      {kind:"learn",word:"table",say:"A table for two.",pt:"mesa",pron:"TÊI-bol"},
-      {kind:"learn",word:"bill",say:"The bill, please.",pt:"conta",pron:"BÍL",note:"nos EUA usam mais “check”"},
-      {kind:"listen",say:"A table for two, please.",prompt:"Quantas pessoas?",options:["duas","uma","três"],answer:0,transcript:"A table for two, please."},
-      {kind:"note",title:"Pedindo com educação",body:`Em vez de “I want”, use <span class="mark">Can I have…?</span> ou <span class="mark">I'd like…</span> (“I'd” = “I would”).`},
-      {kind:"learn",word:"Can I have…?",say:"Can I have the menu?",pt:"Pode me trazer…?",pron:"kén ái RÉV"},
-      {kind:"learn",word:"I'd like",say:"I'd like a coffee.",pt:"eu gostaria de",pron:"áid LÁIK"},
-      {kind:"build",prompt:"Monte: “Eu gostaria de um café.”",bank:["I'd","like","want","a","coffee","water"],accept:["I'd like a coffee","I would like a coffee"]},
-      {kind:"choice",prompt:"Como se pede a conta educadamente?",options:["The bill, please.","Give me the bill!","I want bill."],answer:0,explain:"“please” torna o pedido educado."},
-      {kind:"type",prompt:"Peça o cardápio educadamente.",accept:["The menu please","Can I have the menu","Menu please","I'd like the menu"],hint:"menu + please, ou “Can I have…”"},
-      {kind:"listen",say:"Can I have a coffee, please?",prompt:"O que a pessoa quer?",options:["café","água","chá"],answer:0,transcript:"Can I have a coffee, please?"},
-      {kind:"type",prompt:"Peça a conta.",accept:["The bill please","The check please","Can I have the bill","Can I have the check"],hint:"bill ou check + please"}
-    ]},
-    { id:"cl1", title:"Roupas", skill:"shirt · pants · shoes · hat", steps:[
-      {kind:"learn",word:"shirt",say:"A blue shirt.",pt:"camisa",pron:"XÕRT"},
-      {kind:"learn",word:"pants",say:"Black pants.",pt:"calça",pron:"PÉNTS",note:"nos EUA · no Reino Unido usam “trousers”"},
-      {kind:"learn",word:"shoes",say:"My shoes.",pt:"sapatos",pron:"XÚUZ"},
-      {kind:"learn",word:"hat",say:"A red hat.",pt:"chapéu · boné",pron:"RÉT"},
-      {kind:"choice",prompt:"“shoes” é…",options:["sapatos","camisa","calça"],answer:0},
-      {kind:"listen",say:"I'm wearing a blue shirt.",prompt:"O que a pessoa está vestindo?",options:["camisa azul","calça preta","chapéu"],answer:0,transcript:"I'm wearing a blue shirt."},
-      {kind:"learn",word:"dress",say:"A beautiful dress.",pt:"vestido",pron:"DRÉS"},
-      {kind:"learn",word:"jacket",say:"A warm jacket.",pt:"jaqueta",pron:"DJÉ-kit"},
-      {kind:"learn",word:"wearing",say:"I'm wearing…",pt:"estou vestindo",pron:"UÉ-rin"},
-      {kind:"build",prompt:"Monte: “Estou usando sapatos pretos.”",bank:["I'm","wearing","black","shoes","shirt","a"],accept:["I'm wearing black shoes","I am wearing black shoes"]},
-      {kind:"type",prompt:"Diga: “Eu tenho um vestido vermelho.”",accept:["I have a red dress"],hint:"I have + a red dress"},
-      {kind:"type",prompt:"Diga o que você está vestindo agora.",accept:["I'm wearing","I am wearing","I wear"],hint:"I'm wearing + …"}
-    ]},
-    { id:"p4", title:"Preços e compras", skill:"how much · dollars · cheap · expensive", steps:[
-      {kind:"learn",word:"How much?",say:"How much is it?",pt:"Quanto custa?",pron:"RRÁU MÂTCH"},
-      {kind:"learn",word:"dollar",say:"Five dollars.",pt:"dólar",pron:"DÓ-lar"},
-      {kind:"listen",say:"How much is it?",prompt:"O que a pessoa está perguntando?",options:["o preço","a hora","seu nome"],answer:0,transcript:"How much is it?"},
-      {kind:"learn",word:"cheap",say:"It's cheap.",pt:"barato",pron:"TCHÍIP"},
-      {kind:"learn",word:"expensive",say:"It's too expensive.",pt:"caro",pron:"ecs-PÉN-siv"},
-      {kind:"choice",prompt:"“expensive” é…",options:["caro","barato","grande"],answer:0},
-      {kind:"build",prompt:"Monte: “É caro demais.”",bank:["It's","is","too","expensive","cheap","very"],accept:["It's too expensive","It is too expensive"]},
-      {kind:"listen",say:"It's ten dollars.",prompt:"Quanto custa?",options:["10 dólares","10 reais","2 dólares"],answer:0,transcript:"It's ten dollars."},
-      {kind:"type",prompt:"Pergunte o preço de algo.",accept:["How much is it","How much","How much does it cost","What's the price"],hint:"how much…?"},
-      {kind:"type",prompt:"Diga que algo é barato.",accept:["It's cheap","It is cheap","Very cheap","It's very cheap"],hint:"it's + cheap"},
-      {kind:"type",prompt:"Agora diga que está caro demais.",accept:["It's too expensive","It is too expensive","Too expensive"],hint:"too expensive"}
-    ]}
-  ]},
-  { id:"u4", num:4, title:"Descrevendo o mundo", level:"A1-A2", lessons:[
-    { id:"c2", title:"Cores e aparência", skill:"red · blue · big · small", steps:[
-      {kind:"learn",word:"red",say:"A red car.",pt:"vermelho",pron:"RÉD"},
-      {kind:"learn",word:"blue",say:"The sky is blue.",pt:"azul",pron:"BLÚ"},
-      {kind:"learn",word:"green",say:"Green grass.",pt:"verde",pron:"GRÍIN"},
-      {kind:"learn",word:"black",say:"A black cat.",pt:"preto",pron:"BLÉK"},
-      {kind:"learn",word:"white",say:"White paper.",pt:"branco",pron:"UÁIT",note:"o “h” é mudo"},
-      {kind:"choice",prompt:"“white” é a cor…",options:["branca","preta","azul"],answer:0},
-      {kind:"listen",say:"She has a blue car.",prompt:"De que cor é o carro?",options:["azul","vermelho","verde"],answer:0,transcript:"She has a blue car."},
-      {kind:"learn",word:"big",say:"A big house.",pt:"grande",pron:"BIG"},
-      {kind:"learn",word:"small",say:"A small dog.",pt:"pequeno",pron:"SMÓL"},
-      {kind:"choice",prompt:"“big” é o oposto de…",options:["small","big","green"],answer:0},
-      {kind:"build",prompt:"Monte: “Um cachorro pequeno.”",bank:["a","the","small","big","dog","cat"],accept:["a small dog","small dog"]},
-      {kind:"type",prompt:"Diga: “Um carro vermelho.”",accept:["a red car","red car"],hint:"a + cor + carro"},
-      {kind:"type",prompt:"Diga: “Uma casa grande.”",accept:["a big house","big house"],hint:"a + big + house"}
-    ]},
-    { id:"we1", title:"Clima", skill:"It's raining · sunny · windy", steps:[
-      {kind:"note",title:"“It” para o clima",body:`Em inglês, usamos <span class="mark">it</span> para falar do tempo: <em>It's raining</em>, <em>It's sunny</em>, <em>It's cold</em>.`},
-      {kind:"learn",word:"It's raining",say:"It's raining today.",pt:"está chovendo",pron:"íts RÊI-nin"},
-      {kind:"learn",word:"It's sunny",say:"It's sunny today.",pt:"está ensolarado",pron:"íts SÂ-ni"},
-      {kind:"learn",word:"It's windy",say:"It's windy.",pt:"está ventando",pron:"íts UÍN-di"},
-      {kind:"choice",prompt:"“It's sunny” significa…",options:["está ensolarado","está chovendo","está ventando"],answer:0},
-      {kind:"listen",say:"It's raining today. Bring an umbrella.",prompt:"Como está o tempo?",options:["chovendo","ensolarado","frio"],answer:0,transcript:"It's raining today. Bring an umbrella."},
-      {kind:"learn",word:"It's hot",say:"It's hot today.",pt:"está quente",pron:"íts RÓT"},
-      {kind:"learn",word:"It's cold",say:"It's very cold.",pt:"está frio",pron:"íts KÔULD"},
-      {kind:"learn",word:"It's snowing",say:"It's snowing!",pt:"está nevando",pron:"íts SNÔU-in"},
-      {kind:"build",prompt:"Monte: “Está chovendo hoje.”",bank:["It's","It","is","raining","today","sunny"],accept:["It's raining today","It is raining today"]},
-      {kind:"choice",prompt:"Como se diz “está nevando”?",options:["It's snowing.","It's raining.","It's windy."],answer:0},
-      {kind:"type",prompt:"Diga: “Está muito frio hoje.”",accept:["It's very cold today","It is very cold today","It's cold today"],hint:"it's + very cold + today"},
-      {kind:"type",prompt:"Diga: “Está ensolarado.”",accept:["It's sunny","It is sunny","It's sunny today"],hint:"it's + sunny"}
-    ]},
-    { id:"l1", title:"Lugares na cidade", skill:"school · hospital · store · park", steps:[
-      {kind:"learn",word:"school",say:"I go to school.",pt:"escola",pron:"SKÚUL"},
-      {kind:"learn",word:"hospital",say:"The hospital.",pt:"hospital",pron:"RÓS-pi-tal"},
-      {kind:"learn",word:"store",say:"A grocery store.",pt:"loja",pron:"STÓR"},
-      {kind:"learn",word:"park",say:"The park.",pt:"parque",pron:"PÁRK"},
-      {kind:"choice",prompt:"“hospital” é…",options:["hospital","escola","loja"],answer:0},
-      {kind:"listen",say:"I go to school every day.",prompt:"Onde a pessoa vai?",options:["escola","hospital","parque"],answer:0,transcript:"I go to school every day."},
-      {kind:"learn",word:"restaurant",say:"A nice restaurant.",pt:"restaurante",pron:"RÉS-tó-rant"},
-      {kind:"learn",word:"beach",say:"The beach.",pt:"praia",pron:"BÍTCH",note:"cuidado com a pronúncia!"},
-      {kind:"build",prompt:"Monte: “Eu vou ao parque.”",bank:["I","go","to","the","park","school","a"],accept:["I go to the park"]},
-      {kind:"choice",prompt:"Como se diz “eu vou à escola”?",options:["I go to school.","I go school.","I go at school."],answer:0},
-      {kind:"type",prompt:"Diga: “Eu vou ao hospital.”",accept:["I go to the hospital","I'm going to the hospital"],hint:"I go to the…"},
-      {kind:"type",prompt:"Diga que você vai à praia.",accept:["I go to the beach","I'm going to the beach"],hint:"I go to the + beach"}
-    ]},
-    { id:"w1", title:"Onde é?", skill:"in · on · at · under · next to", steps:[
-      {kind:"note",title:"Preposições de lugar",body:`<span class="mark">in</span> = dentro · <span class="mark">on</span> = sobre · <span class="mark">at</span> = em (um ponto) · <span class="mark">under</span> = embaixo · <span class="mark">next to</span> = ao lado.`},
-      {kind:"learn",word:"in",say:"The cat is in the box.",pt:"dentro de",pron:"IN"},
-      {kind:"learn",word:"on",say:"The book is on the table.",pt:"sobre",pron:"ÓN"},
-      {kind:"learn",word:"under",say:"Under the bed.",pt:"embaixo de",pron:"ÂN-der"},
-      {kind:"choice",prompt:"“under” é…",options:["embaixo","sobre","dentro"],answer:0},
-      {kind:"listen",say:"The book is on the table.",prompt:"Onde está o livro?",options:["na mesa","embaixo da mesa","na caixa"],answer:0,transcript:"The book is on the table."},
-      {kind:"learn",word:"next to",say:"The store is next to the bank.",pt:"ao lado de",pron:"nékst TU"},
-      {kind:"learn",word:"at",say:"I'm at home.",pt:"em (lugar)",pron:"ÉT"},
-      {kind:"build",prompt:"Monte: “O gato está na caixa.”",bank:["The","cat","is","in","on","the","box"],accept:["The cat is in the box"]},
-      {kind:"choice",prompt:"Como se diz “eu estou em casa”?",options:["I'm at home.","I'm in home.","I'm on home."],answer:0,explain:"Com “home”, usamos <b>at</b>."},
-      {kind:"type",prompt:"Diga: “O livro está sobre a mesa.”",accept:["The book is on the table"],hint:"book + is + on + the table"},
-      {kind:"type",prompt:"Diga: “Estou em casa.”",accept:["I'm at home","I am at home","I'm home"],hint:"I'm + at + home"}
-    ]},
-    { id:"a1", title:"Adjetivos comuns", skill:"happy · sad · hot · cold · tired", steps:[
-      {kind:"learn",word:"happy",say:"I'm happy!",pt:"feliz",pron:"RRÉ-pi"},
-      {kind:"learn",word:"sad",say:"He's sad.",pt:"triste",pron:"SÉD"},
-      {kind:"learn",word:"tired",say:"I'm tired.",pt:"cansado",pron:"TÁI-erd"},
-      {kind:"choice",prompt:"“tired” é…",options:["cansado","feliz","triste"],answer:0},
-      {kind:"listen",say:"I'm very tired today.",prompt:"Como a pessoa está?",options:["cansada","feliz","triste"],answer:0,transcript:"I'm very tired today."},
-      {kind:"learn",word:"hot",say:"It's hot today.",pt:"quente",pron:"RÓT"},
-      {kind:"learn",word:"cold",say:"It's cold.",pt:"frio",pron:"KÔULD"},
-      {kind:"learn",word:"hungry",say:"I'm hungry.",pt:"com fome",pron:"RRÂN-gri"},
-      {kind:"build",prompt:"Monte: “Estou com fome.”",bank:["I'm","am","I","hungry","tired","happy"],accept:["I'm hungry","I am hungry"]},
-      {kind:"choice",prompt:"Como se diz “está frio hoje”?",options:["It's cold today.","It's hot today.","I'm cold."],answer:0,explain:"Usamos <b>it</b> para clima."},
-      {kind:"type",prompt:"Diga: “Estou cansado.”",accept:["I'm tired","I am tired"],hint:"I'm + tired"},
-      {kind:"type",prompt:"Diga que você está feliz.",accept:["I'm happy","I am happy","I'm very happy"],hint:"I'm + happy"}
-    ]}
-  ]},
-  { id:"u5", num:5, title:"Tempo e passado", level:"A2", lessons:[
-    { id:"d1", title:"Dias da semana", skill:"Monday → Sunday", steps:[
-      {kind:"learn",word:"Monday",say:"On Monday.",pt:"segunda-feira",pron:"MÂN-dei"},
-      {kind:"learn",word:"Tuesday",say:"On Tuesday.",pt:"terça-feira",pron:"TIÚZ-dei"},
-      {kind:"learn",word:"Wednesday",say:"On Wednesday.",pt:"quarta-feira",pron:"UÉNZ-dei",note:"a pronúncia é curta — 2 sílabas"},
-      {kind:"learn",word:"Thursday",say:"On Thursday.",pt:"quinta-feira",pron:"THÔRZ-dei"},
-      {kind:"learn",word:"Friday",say:"On Friday.",pt:"sexta-feira",pron:"FRÁI-dei"},
-      {kind:"choice",prompt:"“Wednesday” é…",options:["quarta-feira","quinta-feira","terça-feira"],answer:0},
-      {kind:"listen",say:"I work on Monday.",prompt:"Em que dia?",options:["segunda","sexta","quarta"],answer:0,transcript:"I work on Monday."},
-      {kind:"learn",word:"Saturday",say:"On Saturday.",pt:"sábado",pron:"SÉ-tur-dei"},
-      {kind:"learn",word:"Sunday",say:"On Sunday.",pt:"domingo",pron:"SÂN-dei"},
-      {kind:"note",title:"Usamos “on” com dias",body:`<span class="mark">on Monday</span>, <span class="mark">on Friday</span>, <span class="mark">on my birthday</span>. Com meses, usamos <em>in</em>.`},
-      {kind:"build",prompt:"Monte: “Eu trabalho na sexta.”",bank:["I","work","on","in","Friday","Monday"],accept:["I work on Friday"]},
-      {kind:"type",prompt:"Diga: “Eu estudo aos sábados.”",accept:["I study on Saturday","I study on Saturdays"],hint:"study + on + Saturday"},
-      {kind:"type",prompt:"Diga que você não trabalha aos domingos.",accept:["I don't work on Sunday","I do not work on Sunday","I don't work on Sundays"],hint:"don't work + on Sunday"}
-    ]},
-    { id:"m1", title:"Meses e estações", skill:"January → December · spring · summer", steps:[
-      {kind:"learn",word:"January",say:"In January.",pt:"janeiro",pron:"DJÉ-niu-éri"},
-      {kind:"learn",word:"June",say:"In June.",pt:"junho",pron:"DJÚUN"},
-      {kind:"learn",word:"December",say:"In December.",pt:"dezembro",pron:"di-CEM-ber"},
-      {kind:"choice",prompt:"“June” é…",options:["junho","julho","janeiro"],answer:0},
-      {kind:"listen",say:"My birthday is in June.",prompt:"Quando é o aniversário?",options:["junho","janeiro","dezembro"],answer:0,transcript:"My birthday is in June."},
-      {kind:"learn",word:"spring",say:"In the spring.",pt:"primavera",pron:"SPRING"},
-      {kind:"learn",word:"summer",say:"In the summer.",pt:"verão",pron:"SÂ-mer"},
-      {kind:"learn",word:"winter",say:"In the winter.",pt:"inverno",pron:"UÍN-ter"},
-      {kind:"note",title:"“in” com meses e estações",body:`<span class="mark">in January</span>, <span class="mark">in summer</span>, <span class="mark">in 2024</span>. Com datas exatas, usamos <em>on</em>.`},
-      {kind:"build",prompt:"Monte: “Meu aniversário é em junho.”",bank:["My","birthday","is","in","on","June","January"],accept:["My birthday is in June"]},
-      {kind:"choice",prompt:"Como se diz “no inverno”?",options:["in the winter","on the winter","at the winter"],answer:0},
-      {kind:"type",prompt:"Diga: “Eu gosto do verão.”",accept:["I like summer","I like the summer","I love summer"],hint:"I like + summer"},
-      {kind:"type",prompt:"Diga: “Está frio no inverno.”",accept:["It's cold in the winter","It is cold in the winter","It's cold in winter"],hint:"it's + cold + in + winter"}
-    ]},
-    { id:"t1", title:"Horas", skill:"What time is it? · o'clock · half past", steps:[
-      {kind:"learn",word:"What time is it?",say:"What time is it?",pt:"Que horas são?",pron:"UÓT TÁIM iz it"},
-      {kind:"learn",word:"o'clock",say:"It's three o'clock.",pt:"em ponto",pron:"ô-KLÓK"},
-      {kind:"listen",say:"It's three o'clock.",prompt:"Que horas são?",options:["3 horas","13 horas","meia-noite"],answer:0,transcript:"It's three o'clock."},
-      {kind:"learn",word:"half past",say:"It's half past two.",pt:"e meia",pron:"réf PÁST"},
-      {kind:"learn",word:"quarter",say:"A quarter past three.",pt:"quinze (minutos)",pron:"KUÓR-ter",note:"quarter = um quarto (de hora)"},
-      {kind:"choice",prompt:"“It's half past four” significa…",options:["4 e meia","4 em ponto","5 e meia"],answer:0},
-      {kind:"listen",say:"It's half past five.",prompt:"Que horas são?",options:["5:30","5:00","4:30"],answer:0,transcript:"It's half past five."},
-      {kind:"build",prompt:"Monte: “São 8 horas.”",bank:["It's","It","is","eight","o'clock","half"],accept:["It's eight o'clock","It is eight o'clock"]},
-      {kind:"choice",prompt:"Como se pergunta as horas em inglês?",options:["What time is it?","How many hours?","When is it?"],answer:0},
-      {kind:"type",prompt:"Diga que são 10 horas.",accept:["It's ten o'clock","It is ten o'clock","Ten o'clock"],hint:"it's + ten + o'clock"},
-      {kind:"type",prompt:"Diga que são 2 e meia.",accept:["It's half past two","It is half past two"],hint:"it's + half past + two"}
-    ]},
-    { id:"v1", title:"Passado regular", skill:"-ed · worked · studied · played", steps:[
-      {kind:"note",title:"Verbos regulares no passado",body:`Adicione <span class="mark">-ed</span> ao verbo: <em>work → worked</em>, <em>study → studied</em>, <em>play → played</em>. Funciona para <b>todas as pessoas</b>.`},
-      {kind:"learn",word:"worked",say:"I worked yesterday.",pt:"trabalhei",pron:"UÔRKT"},
-      {kind:"learn",word:"studied",say:"I studied last night.",pt:"estudei",pron:"IS-tú-did"},
-      {kind:"learn",word:"played",say:"We played soccer.",pt:"jogamos",pron:"PLÊID"},
-      {kind:"choice",prompt:"“I worked” significa…",options:["eu trabalhei","eu trabalho","eu vou trabalhar"],answer:0},
-      {kind:"listen",say:"I studied English last night.",prompt:"O que a pessoa fez?",options:["estudou inglês","trabalhou","jogou"],answer:0,transcript:"I studied English last night."},
-      {kind:"learn",word:"yesterday",say:"I worked yesterday.",pt:"ontem",pron:"IÉS-ter-dei"},
-      {kind:"learn",word:"last night",say:"Last night.",pt:"ontem à noite",pron:"LÁST NÁIT"},
-      {kind:"build",prompt:"Monte: “Eu estudei ontem.”",bank:["I","studied","study","work","yesterday","today"],accept:["I studied yesterday"]},
-      {kind:"choice",prompt:"Como se diz “eu trabalhei ontem à noite”?",options:["I worked last night.","I work last night.","I worked yesterday night."],answer:0},
-      {kind:"type",prompt:"Diga: “Eu joguei futebol ontem.”",accept:["I played soccer yesterday","I played football yesterday"],hint:"played + soccer/football + yesterday"},
-      {kind:"type",prompt:"Diga: “Eu estudei inglês.”",accept:["I studied English","I studied"],hint:"studied + English"}
-    ]},
-    { id:"v2", title:"Passado irregular", skill:"went · saw · had · ate", steps:[
-      {kind:"note",title:"Verbos irregulares — precisam de memória",body:`Estes verbos <b>não</b> terminam em -ed. Cada um tem sua forma: <span class="mark">go → went</span>, <span class="mark">see → saw</span>, <span class="mark">have → had</span>, <span class="mark">eat → ate</span>.`},
-      {kind:"learn",word:"went",say:"I went to the beach.",pt:"fui (go)",pron:"UÉNT"},
-      {kind:"learn",word:"saw",say:"I saw a movie.",pt:"vi (see)",pron:"SÓ"},
-      {kind:"learn",word:"had",say:"I had coffee.",pt:"tive/tomei (have)",pron:"RÉD"},
-      {kind:"learn",word:"ate",say:"I ate pizza.",pt:"comi (eat)",pron:"ÊIT"},
-      {kind:"choice",prompt:"O passado de “go” é…",options:["went","goed","goes"],answer:0},
-      {kind:"listen",say:"I went to the park yesterday.",prompt:"Onde a pessoa foi?",options:["parque","praia","escola"],answer:0,transcript:"I went to the park yesterday."},
-      {kind:"build",prompt:"Monte: “Eu vi um filme.”",bank:["I","saw","see","a","movie","the"],accept:["I saw a movie"]},
-      {kind:"choice",prompt:"“I had coffee” significa…",options:["eu tomei café","eu tomo café","eu vou tomar café"],answer:0},
-      {kind:"build",prompt:"Monte: “Eu comi pizza ontem.”",bank:["I","ate","eat","pizza","yesterday","today"],accept:["I ate pizza yesterday"]},
-      {kind:"type",prompt:"Diga: “Eu fui à praia.”",accept:["I went to the beach"],hint:"I + went + to the beach"},
-      {kind:"type",prompt:"Diga: “Eu vi um filme.”",accept:["I saw a movie","I saw a film"],hint:"I + saw + a movie"}
-    ]}
-  ]},
-  { id:"u6", num:6, title:"Conectando ideias", level:"A2", lessons:[
-    { id:"k1", title:"Conjunções", skill:"and · but · because · so", steps:[
-      {kind:"learn",word:"and",say:"Coffee and bread.",pt:"e",pron:"ÉND"},
-      {kind:"learn",word:"but",say:"I like coffee but I don't like tea.",pt:"mas",pron:"BÂT"},
-      {kind:"listen",say:"I'm tired but happy.",prompt:"Como a pessoa está?",options:["cansada mas feliz","só cansada","só feliz"],answer:0,transcript:"I'm tired but happy."},
-      {kind:"learn",word:"because",say:"I'm studying because I have a test.",pt:"porque",pron:"bi-CÓZ"},
-      {kind:"learn",word:"so",say:"It's late, so I'm going home.",pt:"então",pron:"SÔU"},
-      {kind:"choice",prompt:"“but” em inglês é…",options:["mas","e","porque"],answer:0},
-      {kind:"build",prompt:"Monte: “Estou cansado, então vou pra casa.”",bank:["I'm","tired","so","because","I'm","going","home"],accept:["I'm tired so I'm going home","I am tired so I am going home"]},
-      {kind:"choice",prompt:"Qual conjunção explica um motivo?",options:["because","but","and"],answer:0,explain:"“because” = porque (razão)."},
-      {kind:"type",prompt:"Diga: “Eu gosto de café mas não gosto de chá.”",accept:["I like coffee but I don't like tea","I like coffee but I do not like tea"],hint:"like + but + don't like"},
-      {kind:"type",prompt:"Diga: “Eu estudo porque tenho uma prova.”",accept:["I study because I have a test","I'm studying because I have a test"],hint:"study + because + have a test"},
-      {kind:"type",prompt:"Diga: “Está tarde, então vou embora.”",accept:["It's late so I'm leaving","It's late so I'm going home","It is late so I am leaving"],hint:"it's late + so + …"}
-    ]},
-    { id:"w2", title:"Perguntas WH", skill:"what · where · when · who · why · how", steps:[
-      {kind:"learn",word:"What",say:"What's your name?",pt:"O que · Qual",pron:"UÓT"},
-      {kind:"learn",word:"Where",say:"Where are you from?",pt:"Onde",pron:"UÉR"},
-      {kind:"learn",word:"When",say:"When is your birthday?",pt:"Quando",pron:"UÉN"},
-      {kind:"learn",word:"Who",say:"Who is she?",pt:"Quem",pron:"RRÚ"},
-      {kind:"learn",word:"Why",say:"Why are you sad?",pt:"Por que",pron:"UÁI"},
-      {kind:"learn",word:"How",say:"How old are you?",pt:"Como",pron:"RRÁU"},
-      {kind:"choice",prompt:"“Where” pergunta sobre…",options:["lugar","tempo","pessoa"],answer:0},
-      {kind:"listen",say:"Where are you from?",prompt:"O que está sendo perguntado?",options:["de onde você é","qual seu nome","quantos anos você tem"],answer:0,transcript:"Where are you from?"},
-      {kind:"build",prompt:"Monte: “Quando é seu aniversário?”",bank:["When","Where","is","your","birthday","name","?"],accept:["When is your birthday"]},
-      {kind:"choice",prompt:"Como se pergunta “quem é ela?”",options:["Who is she?","What is she?","Where is she?"],answer:0},
-      {kind:"type",prompt:"Pergunte onde alguém mora.",accept:["Where do you live","Where are you from","Where do you live?"],hint:"where + do you live?"},
-      {kind:"type",prompt:"Pergunte por que alguém está triste.",accept:["Why are you sad","Why are you sad?"],hint:"why + are you + sad?"},
-      {kind:"type",prompt:"Pergunte a idade de alguém.",accept:["How old are you","How old are you?"],hint:"how old + are you?"}
-    ]},
-    { id:"mo1", title:"Modais: can, must, should", skill:"I can · you must · we should", steps:[
-      {kind:"note",title:"Verbos modais — não mudam",body:`<span class="mark">can</span> (poder) · <span class="mark">must</span> (dever) · <span class="mark">should</span> (deveria). Eles <b>nunca</b> mudam: “I can”, “she can”, “we can” — sempre “can”.`},
-      {kind:"learn",word:"can",say:"I can swim.",pt:"posso · sei",pron:"KÉN"},
-      {kind:"learn",word:"can't",say:"I can't drive.",pt:"não posso",pron:"KÉNT",note:"“cannot” é a forma sem contração"},
-      {kind:"learn",word:"must",say:"You must study.",pt:"deve (obrigação)",pron:"MÂST"},
-      {kind:"learn",word:"should",say:"You should rest.",pt:"deveria (conselho)",pron:"XÚD"},
-      {kind:"choice",prompt:"“I can swim” significa…",options:["eu sei nadar","eu devo nadar","eu deveria nadar"],answer:0},
-      {kind:"listen",say:"You must study for the test.",prompt:"É uma…",options:["obrigação","pergunta","sugestão"],answer:0,transcript:"You must study for the test."},
-      {kind:"build",prompt:"Monte: “Eu não posso dirigir.”",bank:["I","can't","cannot","can","drive","swim"],accept:["I can't drive","I cannot drive"]},
-      {kind:"choice",prompt:"Qual modal dá um conselho?",options:["should","must","can"],answer:0,explain:"“should” = deveria (conselho) · “must” = dever (obrigação)."},
-      {kind:"type",prompt:"Diga: “Eu sei nadar.”",accept:["I can swim"],hint:"I can + swim"},
-      {kind:"type",prompt:"Dê um conselho: “Você deveria descansar.”",accept:["You should rest","You should take a rest"],hint:"you should + rest"},
-      {kind:"type",prompt:"Diga uma obrigação: “Você deve estudar.”",accept:["You must study","You have to study"],hint:"you must + study"}
-    ]},
-    { id:"f2", title:"Futuro com going to", skill:"I'm going to · plans", steps:[
-      {kind:"note",title:"Planos com “going to”",body:`Para planos e intenções, use <span class="mark">be + going to + verbo</span>. Ex: <em>I'm going to study</em>, <em>She's going to travel</em>.`},
-      {kind:"learn",word:"going to",say:"I'm going to study.",pt:"vou (fazer algo)",pron:"GÔU-in TU"},
-      {kind:"learn",word:"I'm going to",say:"I'm going to work.",pt:"eu vou",pron:"áim GÔU-in TU"},
-      {kind:"listen",say:"I'm going to travel next month.",prompt:"O que a pessoa vai fazer?",options:["viajar","trabalhar","estudar"],answer:0,transcript:"I'm going to travel next month."},
-      {kind:"build",prompt:"Monte: “Eu vou estudar amanhã.”",bank:["I'm","going","to","study","work","tomorrow","yesterday"],accept:["I'm going to study tomorrow","I am going to study tomorrow"]},
-      {kind:"choice",prompt:"Como se diz “ela vai trabalhar”?",options:["She's going to work.","She going to work.","She will going to work."],answer:0},
-      {kind:"learn",word:"travel",say:"I'm going to travel.",pt:"viajar",pron:"TRÉ-vel"},
-      {kind:"learn",word:"visit",say:"I'm going to visit my family.",pt:"visitar",pron:"VÍ-zit"},
-      {kind:"build",prompt:"Monte: “Nós vamos visitar minha família.”",bank:["We're","going","to","visit","my","family","I'm"],accept:["We're going to visit my family","We are going to visit my family"]},
-      {kind:"type",prompt:"Diga que você vai estudar inglês.",accept:["I'm going to study English","I am going to study English"],hint:"I'm going to + study + English"},
-      {kind:"type",prompt:"Diga que ela vai viajar mês que vem.",accept:["She's going to travel next month","She is going to travel next month"],hint:"she's going to + travel + next month"}
-    ]},
-    { id:"rev", title:"Revisão final", skill:"tudo junto!", steps:[
-      {kind:"note",title:"Parabéns!",body:`Você chegou ao fim do curso básico. Esta lição revisa <span class="mark">tudo que você aprendeu</span> — cumprimentos, apresentações, rotina, opiniões, comida, lugares, passado e futuro. Bora?`},
-      {kind:"listen",say:"Hi! My name's Sarah. I'm from Brazil. I'm a student.",prompt:"O que sabemos sobre Sarah?",options:["é estudante e do Brasil","é professora e dos EUA","trabalha em Londres"],answer:0,transcript:"Hi! My name's Sarah. I'm from Brazil. I'm a student."},
-      {kind:"type",prompt:"Apresente-se: diga seu nome e de onde você é.",accept:["My name is","My name's","I'm from","I am from"],hint:"My name's + … + I'm from + …"},
-      {kind:"choice",prompt:"Como se responde “How are you?” educadamente?",options:["I'm good, thanks. And you?","Yes, I am.","No, I'm not."],answer:0},
-      {kind:"build",prompt:"Monte: “Eu não gosto de café porque é amargo.”",bank:["I","don't","like","coffee","because","it's","bitter"],accept:["I don't like coffee because it's bitter","I do not like coffee because it is bitter"]},
-      {kind:"listen",say:"I worked yesterday and I'm tired now.",prompt:"O que a pessoa fez ontem?",options:["trabalhou","estudou","viajou"],answer:0,transcript:"I worked yesterday and I'm tired now."},
-      {kind:"type",prompt:"Diga o que você fez ontem (use passado).",accept:["I worked yesterday","I studied yesterday","I went","I saw","I ate","I had"],hint:"verbo no passado + yesterday"},
-      {kind:"build",prompt:"Monte: “Vou visitar minha família no domingo.”",bank:["I'm","going","to","visit","my","family","on","Sunday"],accept:["I'm going to visit my family on Sunday","I am going to visit my family on Sunday"]},
-      {kind:"type",prompt:"Peça a conta em um restaurante.",accept:["The bill please","The check please","Can I have the bill","Can I have the check"],hint:"bill ou check + please"},
-      {kind:"listen",say:"Where are you going?",prompt:"O que a pessoa pergunta?",options:["aonde você vai","como você está","o que você quer"],answer:0,transcript:"Where are you going?"},
-      {kind:"type",prompt:"Diga uma coisa que você ama e o motivo.",accept:["I love","because","I really love"],hint:"I love … because …"}
-    ]}
-  ]}
-]};
+const COURSE={units:[
+{id:"u1",num:1,title:"Primeiras palavras",level:"A0 · do zero",lessons:[
+{id:"g1",title:"Cumprimentos",skill:"hello · hi · good morning",steps:[
+{kind:"learn",word:"hello",say:"Hello!",pt:"olá",pron:"ré-LÔU"},
+{kind:"learn",word:"hi",say:"Hi!",pt:"oi",pron:"RÁI",note:"mais informal que hello"},
+{kind:"choice",prompt:"O que significa \"hello\"?",options:["olá","obrigado","adeus"],answer:0},
+{kind:"learn",word:"good morning",say:"Good morning!",pt:"bom dia",pron:"gud MÓR-nin",ex:"Good morning, Sarah!"},
+{kind:"listen",say:"Good morning!",prompt:"O que você ouviu?",options:["bom dia","boa noite","boa tarde"],answer:0,transcript:"Good morning!"},
+{kind:"learn",word:"good night",say:"Good night!",pt:"boa noite",pron:"gud NÁIT",note:"usado na despedida ou antes de dormir"},
+{kind:"build",prompt:"Monte: \"boa noite\"",bank:["Good","good","night","morning","Hello"],accept:["Good night"]},
+{kind:"choice",prompt:"Você encontra alguém de manhã. O que diz?",options:["Good morning","Good night","Bye"],answer:0,explain:"\"good\" = bom/boa · \"morning\" = manhã."},
+{kind:"learn",word:"goodbye",say:"Goodbye!",pt:"tchau · adeus",pron:"gud-BÁI",note:"\"bye\" é a versão curta e informal"},
+{kind:"type",prompt:"Escreva em inglês: \"olá\"",accept:["Hello","Hi","Hey"],hint:"5 letras — ou só 2, na versão informal."},
+{kind:"listen",say:"Goodbye!",prompt:"O que você ouviu?",options:["tchau","olá","obrigado"],answer:0,transcript:"Goodbye!"}]},
+{id:"g2",title:"Palavras essenciais",skill:"yes · no · please · thank you",steps:[
+{kind:"learn",word:"yes",say:"Yes!",pt:"sim",pron:"IÉSS"},
+{kind:"learn",word:"no",say:"No.",pt:"não",pron:"NÔU"},
+{kind:"choice",prompt:"Como se diz \"não\" em inglês?",options:["no","yes","please"],answer:0},
+{kind:"learn",word:"please",say:"Please.",pt:"por favor",pron:"PLÍIS"},
+{kind:"learn",word:"thank you",say:"Thank you!",pt:"obrigado · obrigada",pron:"thênk iú",note:"o \"th\" soa como um \"f\" suave, com a língua entre os dentes"},
+{kind:"listen",say:"Thank you!",prompt:"O que você ouviu?",options:["obrigado","por favor","desculpa"],answer:0,transcript:"Thank you!"},
+{kind:"learn",word:"sorry",say:"Sorry!",pt:"desculpa · desculpe",pron:"SÓ-ri"},
+{kind:"choice",prompt:"Você esbarra em alguém sem querer. O que diz?",options:["Sorry!","Yes!","Goodbye!"],answer:0,explain:"\"sorry\" pede desculpa. \"excuse me\" chama a atenção educadamente."},
+{kind:"type",prompt:"Escreva em inglês: \"por favor\"",accept:["Please"],hint:"1 palavra, 6 letras, começa com P."},
+{kind:"type",prompt:"Agradeça a alguém.",accept:["Thank you","Thanks","Thank you so much","Many thanks"],hint:"2 palavras na forma completa — 1 na curta."}]},
+{id:"p1",title:"Pessoas",skill:"man · woman · boy · girl · I · you",steps:[
+{kind:"learn",word:"man",say:"Man.",pt:"homem",pron:"MÉN"},
+{kind:"learn",word:"woman",say:"Woman.",pt:"mulher",pron:"UÍ-man"},
+{kind:"choice",prompt:"O que significa \"woman\"?",options:["mulher","homem","menina"],answer:0},
+{kind:"learn",word:"boy",say:"Boy.",pt:"menino",pron:"BÓI"},
+{kind:"learn",word:"girl",say:"Girl.",pt:"menina",pron:"GUÔRL"},
+{kind:"listen",say:"A boy and a girl.",prompt:"O que você ouviu?",options:["um menino e uma menina","um homem e uma mulher","uma menina e um menino"],answer:0,transcript:"A boy and a girl."},
+{kind:"learn",word:"I",say:"I.",pt:"eu",pron:"ÁI"},
+{kind:"learn",word:"you",say:"You.",pt:"você",pron:"IÚ"},
+{kind:"choice",prompt:"Como se diz \"eu\" em inglês?",options:["I","you","girl"],answer:0},
+{kind:"build",prompt:"Monte: \"você e eu\"",bank:["you","and","I","man","the"],accept:["You and I"]},
+{kind:"type",prompt:"Escreva \"menina\" em inglês.",accept:["girl","a girl"],hint:"4 letras, começa com G. (O menino é \"boy\".)"}]},
+{id:"fam1",title:"Família",skill:"mother · father · brother · sister",steps:[
+{kind:"learn",word:"mother",say:"My mother.",pt:"mãe",pron:"MÂ-der",note:"\"mom\" é a forma curta e informal"},
+{kind:"learn",word:"father",say:"My father.",pt:"pai",pron:"FÁ-der",note:"\"dad\" é a forma curta"},
+{kind:"learn",word:"brother",say:"My brother.",pt:"irmão",pron:"BRÂ-der"},
+{kind:"learn",word:"sister",say:"My sister.",pt:"irmã",pron:"SÍS-ter"},
+{kind:"choice",prompt:"\"sister\" significa…",options:["irmã","mãe","filha"],answer:0},
+{kind:"listen",say:"I have one brother and two sisters.",prompt:"Quantos irmãos?",options:["um irmão e duas irmãs","dois irmãos","três irmãs"],answer:0,transcript:"I have one brother and two sisters."},
+{kind:"learn",word:"son",say:"My son.",pt:"filho",pron:"SÂN"},
+{kind:"learn",word:"daughter",say:"My daughter.",pt:"filha",pron:"DÓ-ter"},
+{kind:"learn",word:"family",say:"My family.",pt:"família",pron:"FÉ-mi-li"},
+{kind:"build",prompt:"Monte: \"Minha família é grande.\"",bank:["My","family","is","big","small","have"],accept:["My family is big"]},
+{kind:"type",prompt:"Diga: \"Eu tenho uma irmã.\"",accept:["I have a sister","I have one sister"],hint:"\"I ___ a sister\" — qual verbo completa?"},
+{kind:"type",prompt:"Diga: \"Meu pai é médico.\"",accept:["My father is a doctor","My dad is a doctor","My father is doctor"],hint:"\"My father ___ a doctor\" — complete com o verbo \"ser\"."}]},
+{id:"p2",title:"Números 1–10",skill:"one → ten",steps:[
+{kind:"learn",word:"one (1)",say:"One.",pt:"um",pron:"UÁN"},
+{kind:"learn",word:"two (2)",say:"Two.",pt:"dois",pron:"TÚ"},
+{kind:"learn",word:"three (3)",say:"Three.",pt:"três",pron:"THRII",note:"o \"th\" soa como um \"f\" suave"},
+{kind:"learn",word:"four (4)",say:"Four.",pt:"quatro",pron:"FÓR"},
+{kind:"learn",word:"five (5)",say:"Five.",pt:"cinco",pron:"FÁIV"},
+{kind:"choice",prompt:"\"five\" é o número…",options:["5","4","9"],answer:0},
+{kind:"listen",say:"One, two, three.",prompt:"O que você ouviu?",options:["um, dois, três","um, três, dois","dois, três, quatro"],answer:0,transcript:"One, two, three."},
+{kind:"learn",word:"six (6)",say:"Six.",pt:"seis",pron:"SÍCS"},
+{kind:"learn",word:"seven (7)",say:"Seven.",pt:"sete",pron:"SÉ-ven"},
+{kind:"learn",word:"eight (8)",say:"Eight.",pt:"oito",pron:"ÊIT",note:"o \"t\" final é quase mudo"},
+{kind:"learn",word:"nine (9)",say:"Nine.",pt:"nove",pron:"NÁIN"},
+{kind:"learn",word:"ten (10)",say:"Ten.",pt:"dez",pron:"TÉN"},
+{kind:"choice",prompt:"Qual destes é o número 8?",options:["eight","six","ten"],answer:0},
+{kind:"listen",say:"Seven. Eight. Nine. Ten.",prompt:"O que você ouviu?",options:["sete, oito, nove, dez","seis, sete, oito, nove","oito, nove, dez"],answer:0,transcript:"Seven. Eight. Nine. Ten."},
+{kind:"type",prompt:"Escreva o número 10 em inglês.",accept:["ten"],hint:"Vem logo depois do nine."}]},
+{id:"p3",title:"Ele e ela",skill:"he · she · he's · she's · name",steps:[
+{kind:"learn",word:"he",say:"He is Tom.",pt:"ele",pron:"RRÍ"},
+{kind:"learn",word:"she",say:"She is Anna.",pt:"ela",pron:"XÍ"},
+{kind:"choice",prompt:"\"she\" significa…",options:["ela","ele","você"],answer:0},
+{kind:"learn",word:"name",say:"Name.",pt:"nome",pron:"NÊIM",note:"você vai usar em \"My name's…\""},
+{kind:"note",title:"he's · she's",body:`<em>He is</em> vira <span class="mark">he's</span>; <em>she is</em> vira <span class="mark">she's</span>. Na fala, a forma contraída é quase obrigatória — e este app aceita as duas.`},
+{kind:"build",prompt:"Monte: \"Ela é Anna.\"",bank:["She's","She","is","Anna","name","He's"],accept:["She's Anna","She is Anna"]},
+{kind:"listen",say:"She's Maria.",prompt:"Ouça. Qual é o nome dela?",options:["Maria","Anna","Tom"],answer:0,transcript:"She's Maria."},
+{kind:"build",prompt:"Monte: \"Ele é Tom.\"",bank:["He's","He","is","Tom","Anna","She's"],accept:["He's Tom","He is Tom"]},
+{kind:"choice",prompt:"Como se diz \"ela é Maria\"?",options:["She's Maria","He's Maria","Maria she"],answer:0,explain:"\"She is Maria\" também está certo."},
+{kind:"type",prompt:"Escreva: \"Ele é Paul.\"",accept:["He's Paul","He is Paul"],hint:"Use a contração de \"he is\" (ou a forma completa)."}]},
+{id:"g3",title:"Apresentações",skill:"I'm · My name's · Nice to meet you",steps:[
+{kind:"note",title:"O inglês falado encolhe as palavras",body:`Ao se apresentar, nativos quase sempre contraem o verbo <span class="mark">be</span>: <em>My name is Anna</em> vira <em>My name's Anna</em>. Os dois estão certos — <span class="mark">este app aceita os dois, sempre.</span>`},
+{kind:"listen",say:"Hi! I'm Sarah. Nice to meet you.",prompt:"Ouça. Quem está falando?",options:["Sarah","Anna","Mrs. Lee"],answer:0,transcript:"Hi! I'm Sarah. Nice to meet you."},
+{kind:"build",prompt:"Monte a frase.",context:"Anna se apresenta.",bank:["My","name's","name","is","Anna","Your","Hello"],accept:["My name's Anna","My name is Anna"]},
+{kind:"type",prompt:"Anna se apresenta — escreva.",accept:["My name's Anna","My name is Anna","I'm Anna","I am Anna"],hint:"Vale começar com \"My name…\" ou com \"I…\"."},
+{kind:"choice",prompt:"Qual cumprimento serve para uma reunião de trabalho?",options:["Hey! What's up?","Good evening. I'm Daniel Reeves.","Yo — Dan here."],answer:1,explain:"Gírias e formas curtas são para amigos. Frases completas indicam formalidade."},
+{kind:"build",prompt:"Monte a frase.",context:"Você diz de onde vem.",bank:["I'm","I","am","from","Brazil","is","the"],accept:["I'm from Brazil","I am from Brazil"]},
+{kind:"type",prompt:"Pergunte o nome de alguém.",accept:["What's your name","What is your name","May I ask your name","And your name"],hint:"Começa com a WH que pergunta \"qual/o quê\" — com contração."},
+{kind:"choice",prompt:"\"Nice ___ meet you.\"",options:["to","for","at","with"],answer:0,explain:"Frase feita: nice <b>to</b> meet you."},
+{kind:"listen",say:"Nice to meet you too. I'm Tom.",prompt:"Ouça. O que ele disse?",options:["Nice to meet you too. I am Tom.","Nice to meet you two. I'm Tom.","Nice meet you too. I'm Tom."],answer:0,transcript:"Nice to meet you too. I'm Tom."},
+{kind:"type",prompt:"Alguém diz \"Nice to meet you.\" Responda.",accept:["Nice to meet you too","Nice to meet you","Likewise","You too","Pleased to meet you too","The pleasure is mine"],hint:"Devolve o cumprimento — com \"too\" no fim, ou numa palavra só."}]}]},
+{id:"u2",num:2,title:"Sobre você",level:"A1",lessons:[
+{id:"g4",title:"Trabalho e estudo",skill:"'m · 's · 're · profissões",steps:[
+{kind:"note",title:"Contrair o \"be\" com todos os pronomes",body:`<span class="mark">I'm · you're · he's · she's · it's · we're · they're</span> — na fala e na escrita informal, a forma contraída é o padrão, não a exceção.`},
+{kind:"build",prompt:"Monte a frase.",context:"Falando do trabalho da Maria.",bank:["She's","She","is","a","an","nurse","doctor"],accept:["She's a nurse","She is a nurse"]},
+{kind:"type",prompt:"Diga com contração: \"I am a student.\"",accept:["I'm a student","I am a student"],hint:"Junte I + am com apóstrofo."},
+{kind:"choice",prompt:"\"They're ___ doctors.\"",options:["(nada)","a","an"],answer:0,explain:"Sem artigo com profissões no plural: <b>they're doctors</b>."},
+{kind:"listen",say:"We're engineers. We work in Sao Paulo.",prompt:"Ouça. Onde eles trabalham?",options:["São Paulo","Rio de Janeiro","Lisboa"],answer:0,transcript:"We're engineers. We work in São Paulo."},
+{kind:"type",prompt:"Contraia: \"It is not easy.\"",accept:["It's not easy","It isn't easy","It is not easy"],hint:"Duas opções: \"it's not…\" ou \"it isn't…\"."},
+{kind:"build",prompt:"Monte a pergunta.",bank:["Are","you","You","a","student","is","?"],accept:["Are you a student"]},
+{kind:"choice",prompt:"\"She's ___ engineer.\"",options:["an","a"],answer:0,explain:"<b>a</b> ou <b>an</b> depende do <i>som</i>: an engineer."}]},
+{id:"c1",title:"Conversa fiada",skill:"How are you? · I'm good · and you?",steps:[
+{kind:"note",title:"\"How are you?\" é cumprimento",body:`Em inglês, <em>How are you?</em> funciona como um "tudo bem?". Responda curto — <span class="mark">e devolva a pergunta</span>.`},
+{kind:"learn",word:"How are you?",say:"How are you?",pt:"como vai você?",pron:"RRÁU ár IÚ"},
+{kind:"learn",word:"good",say:"Good!",pt:"bom · bem",pron:"GÚD"},
+{kind:"learn",word:"I'm good",say:"I'm good!",pt:"estou bem",pron:"áim GÚD"},
+{kind:"listen",say:"Hi! How are you?",prompt:"Ouça. O que a pessoa está fazendo?",options:["perguntando como você está","se despedindo","agradecendo"],answer:0,transcript:"Hi! How are you?"},
+{kind:"build",prompt:"Monte: \"Como vai você?\"",bank:["How","are","you","is","Hello","?"],accept:["How are you"]},
+{kind:"choice",prompt:"Alguém pergunta \"How are you?\". Boa resposta:",options:["I'm good, thanks!","Goodbye!","My name is Tom."],answer:0},
+{kind:"learn",word:"and you?",say:"And you?",pt:"e você?",pron:"énd IÚ"},
+{kind:"build",prompt:"Monte: \"Estou bem, e você?\"",bank:["I'm","good","and","you","no","Please"],accept:["I'm good and you","I am good and you"]},
+{kind:"learn",word:"fine",say:"I'm fine.",pt:"bem (neutro)",pron:"FÁIN",note:"nem ótimo, nem ruim — só ok"},
+{kind:"listen",say:"I'm fine, thanks. And you?",prompt:"Ouça. Como a pessoa está?",options:["bem","mal","com sono"],answer:0,transcript:"I'm fine, thanks. And you?"},
+{kind:"type",prompt:"Responda \"How are you?\" e devolva a pergunta.",accept:["I'm good and you","I'm fine and you","Good, and you","Fine, and you","I am good and you","I'm good, thanks. And you"],hint:"Diga como está + devolva com \"and you?\"."}]},
+{id:"r1",title:"Rotina diária",skill:"work · study · every day",steps:[
+{kind:"learn",word:"work",say:"I work.",pt:"trabalhar · trabalho",pron:"UÔRK"},
+{kind:"learn",word:"study",say:"I study.",pt:"estudar",pron:"IS-tú-di"},
+{kind:"choice",prompt:"\"study\" significa…",options:["estudar","trabalhar","dormir"],answer:0},
+{kind:"learn",word:"every day",say:"I work every day.",pt:"todo dia",pron:"É-vri dêi"},
+{kind:"build",prompt:"Monte: \"Eu trabalho todo dia.\"",bank:["I","work","every","day","study","and"],accept:["I work every day"]},
+{kind:"learn",word:"in the morning",say:"I study in the morning.",pt:"de manhã",pron:"in dê MÓR-nin"},
+{kind:"build",prompt:"Monte: \"Eu estudo de manhã.\"",bank:["I","study","in","the","morning","work"],accept:["I study in the morning"]},
+{kind:"listen",say:"I work every day.",prompt:"O que você ouviu?",options:["eu trabalho todo dia","eu estudo de manhã","eu trabalho de manhã"],answer:0,transcript:"I work every day."},
+{kind:"choice",prompt:"Qual frase fala sobre estudar?",options:["I study in the morning.","I work every day.","Good morning!"],answer:0},
+{kind:"type",prompt:"Diga: \"Eu estudo todo dia.\"",accept:["I study every day"],hint:"Sujeito + verbo + a expressão de \"todo dia\"."},
+{kind:"type",prompt:"Agora diga que você trabalha de manhã.",accept:["I work in the morning"],hint:"Work + a expressão de \"de manhã\" (3 palavras)."}]},
+{id:"o1",title:"Opiniões",skill:"I like · I love · I hate · because",steps:[
+{kind:"learn",word:"I like",say:"I like coffee.",pt:"eu gosto de",pron:"ái LÁIK"},
+{kind:"learn",word:"I love",say:"I love pizza.",pt:"eu amo",pron:"ái LÂV",note:"mais forte que \"like\""},
+{kind:"learn",word:"I hate",say:"I hate traffic.",pt:"eu odeio",pron:"ái RÉIT"},
+{kind:"choice",prompt:"\"I love music\" significa…",options:["eu amo música","eu odeio música","eu gosto de música"],answer:0},
+{kind:"listen",say:"I like coffee but I don't like tea.",prompt:"O que ela gosta?",options:["café","chá","os dois"],answer:0,transcript:"I like coffee but I don't like tea."},
+{kind:"learn",word:"don't like",say:"I don't like it.",pt:"não gosto",pron:"dôunt LÁIK",note:"\"don't\" é a contração de \"do not\""},
+{kind:"learn",word:"because",say:"I like it because it's fun.",pt:"porque",pron:"bi-CÓZ"},
+{kind:"build",prompt:"Monte: \"Eu amo pizza porque é boa.\"",bank:["I","love","like","pizza","because","it's","good"],accept:["I love pizza because it's good","I love pizza because it is good"]},
+{kind:"choice",prompt:"Como se diz \"eu não gosto de futebol\"?",options:["I don't like football.","I no like football.","I not like football."],answer:0,explain:"Em inglês, a negação precisa de um auxiliar — aqui, \"don't\"."},
+{kind:"type",prompt:"Diga que você ama música.",accept:["I love music","I really love music"],hint:"O verbo de \"amar\" — mais forte que like."},
+{kind:"type",prompt:"Agora diga que você não gosta de café.",accept:["I don't like coffee","I do not like coffee"],hint:"Negação pede auxiliar: don't + like."}]}]},
+{id:"u3",num:3,title:"Comida e compras",level:"A1",lessons:[
+{id:"f1",title:"Comida e bebida",skill:"water · bread · coffee · eat · drink",steps:[
+{kind:"learn",word:"water",say:"Water, please.",pt:"água",pron:"UÓ-ter"},
+{kind:"learn",word:"bread",say:"Bread.",pt:"pão",pron:"BRÉD"},
+{kind:"learn",word:"coffee",say:"Coffee.",pt:"café",pron:"KÓ-fi"},
+{kind:"learn",word:"rice",say:"Rice and beans.",pt:"arroz",pron:"RÁIS",ex:"I like rice and beans."},
+{kind:"choice",prompt:"\"bread\" é…",options:["pão","arroz","café"],answer:0},
+{kind:"listen",say:"I want some water, please.",prompt:"O que a pessoa quer?",options:["água","café","pão"],answer:0,transcript:"I want some water, please."},
+{kind:"learn",word:"eat",say:"I eat bread.",pt:"comer",pron:"ÍT"},
+{kind:"learn",word:"drink",say:"I drink water.",pt:"beber",pron:"DRÍNK"},
+{kind:"build",prompt:"Monte: \"Eu bebo café.\"",bank:["I","drink","eat","coffee","water","the"],accept:["I drink coffee"]},
+{kind:"type",prompt:"Diga: \"Eu como pão.\"",accept:["I eat bread"],hint:"Verbo \"comer\" + a comida — sem artigo."},
+{kind:"listen",say:"I eat rice every day.",prompt:"O que a pessoa come?",options:["arroz","pão","pizza"],answer:0,transcript:"I eat rice every day."},
+{kind:"type",prompt:"Peça água educadamente.",accept:["Water, please","Can I have water","I want water please","Water please"],hint:"A palavra mágica no final torna o pedido educado."}]},
+{id:"fv1",title:"Frutas e vegetais",skill:"apple · banana · tomato · carrot",steps:[
+{kind:"learn",word:"apple",say:"An apple.",pt:"maçã",pron:"É-pol"},
+{kind:"learn",word:"banana",say:"A banana.",pt:"banana",pron:"be-NÉ-ne"},
+{kind:"learn",word:"orange",say:"An orange.",pt:"laranja",pron:"Ó-rindj"},
+{kind:"learn",word:"tomato",say:"A tomato.",pt:"tomate",pron:"tô-MÊI-tôu",note:"nos EUA: \"tô-MÊI-tôu\" · no Reino Unido: \"tô-MA-tôu\""},
+{kind:"choice",prompt:"\"apple\" é…",options:["maçã","laranja","banana"],answer:0},
+{kind:"listen",say:"I eat an apple every day.",prompt:"O que a pessoa come?",options:["maçã","banana","laranja"],answer:0,transcript:"I eat an apple every day."},
+{kind:"learn",word:"carrot",say:"A carrot.",pt:"cenoura",pron:"KÉ-rot"},
+{kind:"learn",word:"potato",say:"A potato.",pt:"batata",pron:"pô-TÊI-tôu"},
+{kind:"build",prompt:"Monte: \"Eu gosto de bananas.\"",bank:["I","like","love","bananas","apple","an"],accept:["I like bananas","I love bananas"]},
+{kind:"choice",prompt:"\"An orange\" ou \"A orange\"?",options:["An orange","A orange","Orange"],answer:0,explain:"Antes de vogal, usamos <b>an</b>."},
+{kind:"type",prompt:"Diga: \"Eu como uma maçã.\"",accept:["I eat an apple","I eat apples"],hint:"Antes de som de vogal, o artigo muda: a → …?"},
+{kind:"type",prompt:"Diga que você gosta de tomate.",accept:["I like tomatoes","I like tomato","I love tomatoes"],hint:"Frutas \"em geral\" vão ao plural: tomato → …?"}]},
+{id:"n2",title:"Números 11–100",skill:"eleven → one hundred",steps:[
+{kind:"learn",word:"eleven (11)",say:"Eleven.",pt:"onze",pron:"i-LÉ-ven"},
+{kind:"learn",word:"twelve (12)",say:"Twelve.",pt:"doze",pron:"TUÉLV"},
+{kind:"learn",word:"thirteen (13)",say:"Thirteen.",pt:"treze",pron:"thôr-TÍIN"},
+{kind:"learn",word:"twenty (20)",say:"Twenty.",pt:"vinte",pron:"TUÉN-ti"},
+{kind:"choice",prompt:"\"twenty\" é…",options:["20","12","13"],answer:0},
+{kind:"listen",say:"Twenty-five.",prompt:"O número é…",options:["25","15","52"],answer:0,transcript:"Twenty-five."},
+{kind:"learn",word:"thirty (30)",say:"Thirty.",pt:"trinta",pron:"THÔR-ti"},
+{kind:"learn",word:"forty (40)",say:"Forty.",pt:"quarenta",pron:"FÓR-ti",note:"sem \"u\"! diferente de \"four\""},
+{kind:"learn",word:"fifty (50)",say:"Fifty.",pt:"cinquenta",pron:"FÍF-ti"},
+{kind:"learn",word:"hundred (100)",say:"One hundred.",pt:"cem",pron:"RRÂN-dred"},
+{kind:"build",prompt:"Monte o número 42.",bank:["forty","fifty","two","three","hundred"],accept:["forty-two","forty two","four two"]},
+{kind:"choice",prompt:"Como se diz \"60\"?",options:["sixty","sixteen","six"],answer:0},
+{kind:"type",prompt:"Escreva \"cem\" em inglês.",accept:["one hundred","hundred"],hint:"\"one\" + a palavra de centena."},
+{kind:"listen",say:"I have fifty dollars.",prompt:"Quantos dólares?",options:["50","15","5"],answer:0,transcript:"I have fifty dollars."}]},
+{id:"r2",title:"No restaurante",skill:"menu · order · bill",steps:[
+{kind:"learn",word:"menu",say:"The menu, please.",pt:"cardápio",pron:"MÉ-niu"},
+{kind:"learn",word:"table",say:"A table for two.",pt:"mesa",pron:"TÊI-bol"},
+{kind:"learn",word:"bill",say:"The bill, please.",pt:"conta",pron:"BÍL",note:"nos EUA usam mais \"check\""},
+{kind:"listen",say:"A table for two, please.",prompt:"Quantas pessoas?",options:["duas","uma","três"],answer:0,transcript:"A table for two, please."},
+{kind:"note",title:"Pedindo com educação",body:`Em vez de "I want", use <span class="mark">Can I have…?</span> ou <span class="mark">I'd like…</span> ("I'd" = "I would").`},
+{kind:"learn",word:"Can I have…?",say:"Can I have the menu?",pt:"Pode me trazer…?",pron:"kén ái RÉV"},
+{kind:"learn",word:"I'd like",say:"I'd like a coffee.",pt:"eu gostaria de",pron:"áid LÁIK"},
+{kind:"build",prompt:"Monte: \"Eu gostaria de um café.\"",bank:["I'd","like","want","a","coffee","water"],accept:["I'd like a coffee","I would like a coffee"]},
+{kind:"choice",prompt:"Como se pede a conta educadamente?",options:["The bill, please.","Give me the bill!","I want bill."],answer:0,explain:"\"please\" torna o pedido educado."},
+{kind:"type",prompt:"Peça o cardápio educadamente.",accept:["The menu please","Can I have the menu","Menu please","I'd like the menu"],hint:"Use a estrutura educada que você acabou de aprender."},
+{kind:"listen",say:"Can I have a coffee, please?",prompt:"O que a pessoa quer?",options:["café","água","chá"],answer:0,transcript:"Can I have a coffee, please?"},
+{kind:"type",prompt:"Peça a conta.",accept:["The bill please","The check please","Can I have the bill","Can I have the check"],hint:"Nos EUA, a \"conta\" atende por outro nome — começa com \"c\"."}]},
+{id:"cl1",title:"Roupas",skill:"shirt · pants · shoes · hat",steps:[
+{kind:"learn",word:"shirt",say:"A blue shirt.",pt:"camisa",pron:"XÕRT"},
+{kind:"learn",word:"pants",say:"Black pants.",pt:"calça",pron:"PÉNTS",note:"nos EUA · no Reino Unido usam \"trousers\""},
+{kind:"learn",word:"shoes",say:"My shoes.",pt:"sapatos",pron:"XÚUZ"},
+{kind:"learn",word:"hat",say:"A red hat.",pt:"chapéu · boné",pron:"RÉT"},
+{kind:"choice",prompt:"\"shoes\" é…",options:["sapatos","camisa","calça"],answer:0},
+{kind:"listen",say:"I'm wearing a blue shirt.",prompt:"O que a pessoa está vestindo?",options:["camisa azul","calça preta","chapéu"],answer:0,transcript:"I'm wearing a blue shirt."},
+{kind:"learn",word:"dress",say:"A beautiful dress.",pt:"vestido",pron:"DRÉS"},
+{kind:"learn",word:"jacket",say:"A warm jacket.",pt:"jaqueta",pron:"DJÉ-kit"},
+{kind:"learn",word:"wearing",say:"I'm wearing…",pt:"estou vestindo",pron:"UÉ-rin"},
+{kind:"build",prompt:"Monte: \"Estou usando sapatos pretos.\"",bank:["I'm","wearing","black","shoes","shirt","a"],accept:["I'm wearing black shoes","I am wearing black shoes"]},
+{kind:"type",prompt:"Diga: \"Eu tenho um vestido vermelho.\"",accept:["I have a red dress"],hint:"Cor vem antes da roupa: red + …"},
+{kind:"type",prompt:"Diga o que você está vestindo agora.",accept:["I'm wearing","I am wearing","I wear"],hint:"\"I'm …\" + o verbo de vestir no -ing."}]},
+{id:"p4",title:"Preços e compras",skill:"how much · dollars · cheap · expensive",steps:[
+{kind:"learn",word:"How much?",say:"How much is it?",pt:"Quanto custa?",pron:"RRÁU MÂTCH"},
+{kind:"learn",word:"dollar",say:"Five dollars.",pt:"dólar",pron:"DÓ-lar"},
+{kind:"listen",say:"How much is it?",prompt:"O que a pessoa está perguntando?",options:["o preço","a hora","seu nome"],answer:0,transcript:"How much is it?"},
+{kind:"learn",word:"cheap",say:"It's cheap.",pt:"barato",pron:"TCHÍIP"},
+{kind:"learn",word:"expensive",say:"It's too expensive.",pt:"caro",pron:"ecs-PÉN-siv"},
+{kind:"choice",prompt:"\"expensive\" é…",options:["caro","barato","grande"],answer:0},
+{kind:"build",prompt:"Monte: \"É caro demais.\"",bank:["It's","is","too","expensive","cheap","very"],accept:["It's too expensive","It is too expensive"]},
+{kind:"listen",say:"It's ten dollars.",prompt:"Quanto custa?",options:["10 dólares","10 reais","2 dólares"],answer:0,transcript:"It's ten dollars."},
+{kind:"type",prompt:"Pergunte o preço de algo.",accept:["How much is it","How much","How much does it cost","What's the price"],hint:"As duas palavras que abrem pergunta de preço."},
+{kind:"type",prompt:"Diga que algo é barato.",accept:["It's cheap","It is cheap","Very cheap","It's very cheap"],hint:"O contrário de expensive."},
+{kind:"type",prompt:"Agora diga que está caro demais.",accept:["It's too expensive","It is too expensive","Too expensive"],hint:"\"Demais\" = too + o contrário de cheap."}]}]},
+{id:"u4",num:4,title:"Descrevendo o mundo",level:"A1-A2",lessons:[
+{id:"c2",title:"Cores e aparência",skill:"red · blue · big · small",steps:[
+{kind:"learn",word:"red",say:"A red car.",pt:"vermelho",pron:"RÉD"},
+{kind:"learn",word:"blue",say:"The sky is blue.",pt:"azul",pron:"BLÚ"},
+{kind:"learn",word:"green",say:"Green grass.",pt:"verde",pron:"GRÍIN"},
+{kind:"learn",word:"black",say:"A black cat.",pt:"preto",pron:"BLÉK"},
+{kind:"learn",word:"white",say:"White paper.",pt:"branco",pron:"UÁIT",note:"o \"h\" é mudo"},
+{kind:"choice",prompt:"\"white\" é a cor…",options:["branca","preta","azul"],answer:0},
+{kind:"listen",say:"She has a blue car.",prompt:"De que cor é o carro?",options:["azul","vermelho","verde"],answer:0,transcript:"She has a blue car."},
+{kind:"learn",word:"big",say:"A big house.",pt:"grande",pron:"BIG"},
+{kind:"learn",word:"small",say:"A small dog.",pt:"pequeno",pron:"SMÓL"},
+{kind:"choice",prompt:"\"big\" é o oposto de…",options:["small","big","green"],answer:0},
+{kind:"build",prompt:"Monte: \"Um cachorro pequeno.\"",bank:["a","the","small","big","dog","cat"],accept:["a small dog","small dog"]},
+{kind:"type",prompt:"Diga: \"Um carro vermelho.\"",accept:["a red car","red car"],hint:"Artigo + cor + substantivo — mesma ordem do português."},
+{kind:"type",prompt:"Diga: \"Uma casa grande.\"",accept:["a big house","big house"],hint:"Artigo + adjetivo + \"house\"."}]},
+{id:"we1",title:"Clima",skill:"It's raining · sunny · windy",steps:[
+{kind:"note",title:"\"It\" para o clima",body:`Em inglês, usamos <span class="mark">it</span> para falar do tempo: <em>It's raining</em>, <em>It's sunny</em>, <em>It's cold</em>.`},
+{kind:"learn",word:"It's raining",say:"It's raining today.",pt:"está chovendo",pron:"íts RÊI-nin"},
+{kind:"learn",word:"It's sunny",say:"It's sunny today.",pt:"está ensolarado",pron:"íts SÂ-ni"},
+{kind:"learn",word:"It's windy",say:"It's windy.",pt:"está ventando",pron:"íts UÍN-di"},
+{kind:"choice",prompt:"\"It's sunny\" significa…",options:["está ensolarado","está chovendo","está ventando"],answer:0},
+{kind:"listen",say:"It's raining today. Bring an umbrella.",prompt:"Como está o tempo?",options:["chovendo","ensolarado","frio"],answer:0,transcript:"It's raining today. Bring an umbrella."},
+{kind:"learn",word:"It's hot",say:"It's hot today.",pt:"está quente",pron:"íts RÓT"},
+{kind:"learn",word:"It's cold",say:"It's very cold.",pt:"está frio",pron:"íts KÔULD"},
+{kind:"learn",word:"It's snowing",say:"It's snowing!",pt:"está nevando",pron:"íts SNÔU-in"},
+{kind:"build",prompt:"Monte: \"Está chovendo hoje.\"",bank:["It's","It","is","raining","today","sunny"],accept:["It's raining today","It is raining today"]},
+{kind:"choice",prompt:"Como se diz \"está nevando\"?",options:["It's snowing.","It's raining.","It's windy."],answer:0},
+{kind:"type",prompt:"Diga: \"Está muito frio hoje.\"",accept:["It's very cold today","It is very cold today","It's cold today"],hint:"Clima sempre abre com \"it\" + very + adjetivo."},
+{kind:"type",prompt:"Diga: \"Está ensolarado.\"",accept:["It's sunny","It is sunny","It's sunny today"],hint:"De \"sun\" vira adjetivo: sun → …?"}]},
+{id:"l1",title:"Lugares na cidade",skill:"school · hospital · store · park",steps:[
+{kind:"learn",word:"school",say:"I go to school.",pt:"escola",pron:"SKÚUL"},
+{kind:"learn",word:"hospital",say:"The hospital.",pt:"hospital",pron:"RÓS-pi-tal"},
+{kind:"learn",word:"store",say:"A grocery store.",pt:"loja",pron:"STÓR"},
+{kind:"learn",word:"park",say:"The park.",pt:"parque",pron:"PÁRK"},
+{kind:"choice",prompt:"\"hospital\" é…",options:["hospital","escola","loja"],answer:0},
+{kind:"listen",say:"I go to school every day.",prompt:"Onde a pessoa vai?",options:["escola","hospital","parque"],answer:0,transcript:"I go to school every day."},
+{kind:"learn",word:"restaurant",say:"A nice restaurant.",pt:"restaurante",pron:"RÉS-tó-rant"},
+{kind:"learn",word:"beach",say:"The beach.",pt:"praia",pron:"BÍTCH",note:"cuidado com a pronúncia!"},
+{kind:"build",prompt:"Monte: \"Eu vou ao parque.\"",bank:["I","go","to","the","park","school","a"],accept:["I go to the park"]},
+{kind:"choice",prompt:"Como se diz \"eu vou à escola\"?",options:["I go to school.","I go school.","I go at school."],answer:0},
+{kind:"type",prompt:"Diga: \"Eu vou ao hospital.\"",accept:["I go to the hospital","I'm going to the hospital"],hint:"\"go\" pede \"to\" + artigo antes do lugar."},
+{kind:"type",prompt:"Diga que você vai à praia.",accept:["I go to the beach","I'm going to the beach"],hint:"Não esqueça o \"the\" antes de beach."}]},
+{id:"w1",title:"Onde é?",skill:"in · on · at · under · next to",steps:[
+{kind:"note",title:"Preposições de lugar",body:`<span class="mark">in</span> = dentro · <span class="mark">on</span> = sobre · <span class="mark">at</span> = em (um ponto) · <span class="mark">under</span> = embaixo · <span class="mark">next to</span> = ao lado.`},
+{kind:"learn",word:"in",say:"The cat is in the box.",pt:"dentro de",pron:"IN"},
+{kind:"learn",word:"on",say:"The book is on the table.",pt:"sobre",pron:"ÓN"},
+{kind:"learn",word:"under",say:"Under the bed.",pt:"embaixo de",pron:"ÂN-der"},
+{kind:"choice",prompt:"\"under\" é…",options:["embaixo","sobre","dentro"],answer:0},
+{kind:"listen",say:"The book is on the table.",prompt:"Onde está o livro?",options:["na mesa","embaixo da mesa","na caixa"],answer:0,transcript:"The book is on the table."},
+{kind:"learn",word:"next to",say:"The store is next to the bank.",pt:"ao lado de",pron:"nékst TU"},
+{kind:"learn",word:"at",say:"I'm at home.",pt:"em (lugar)",pron:"ÉT"},
+{kind:"build",prompt:"Monte: \"O gato está na caixa.\"",bank:["The","cat","is","in","on","the","box"],accept:["The cat is in the box"]},
+{kind:"choice",prompt:"Como se diz \"eu estou em casa\"?",options:["I'm at home.","I'm in home.","I'm on home."],answer:0,explain:"Com \"home\", usamos <b>at</b>."},
+{kind:"type",prompt:"Diga: \"O livro está sobre a mesa.\"",accept:["The book is on the table"],hint:"A preposição de \"sobre\" tem 2 letras: o_."},
+{kind:"type",prompt:"Diga: \"Estou em casa.\"",accept:["I'm at home","I am at home","I'm home"],hint:"Com \"home\" não usamos in nem on — qual sobra?"}]},
+{id:"a1",title:"Adjetivos comuns",skill:"happy · sad · hot · cold · tired",steps:[
+{kind:"learn",word:"happy",say:"I'm happy!",pt:"feliz",pron:"RRÉ-pi"},
+{kind:"learn",word:"sad",say:"He's sad.",pt:"triste",pron:"SÉD"},
+{kind:"learn",word:"tired",say:"I'm tired.",pt:"cansado",pron:"TÁI-erd"},
+{kind:"choice",prompt:"\"tired\" é…",options:["cansado","feliz","triste"],answer:0},
+{kind:"listen",say:"I'm very tired today.",prompt:"Como a pessoa está?",options:["cansada","feliz","triste"],answer:0,transcript:"I'm very tired today."},
+{kind:"learn",word:"hot",say:"It's hot today.",pt:"quente",pron:"RÓT"},
+{kind:"learn",word:"cold",say:"It's cold.",pt:"frio",pron:"KÔULD"},
+{kind:"learn",word:"hungry",say:"I'm hungry.",pt:"com fome",pron:"RRÂN-gri"},
+{kind:"build",prompt:"Monte: \"Estou com fome.\"",bank:["I'm","am","I","hungry","tired","happy"],accept:["I'm hungry","I am hungry"]},
+{kind:"choice",prompt:"Como se diz \"está frio hoje\"?",options:["It's cold today.","It's hot today.","I'm cold."],answer:0,explain:"Usamos <b>it</b> para clima."},
+{kind:"type",prompt:"Diga: \"Estou cansado.\"",accept:["I'm tired","I am tired"],hint:"\"I'm\" + o adjetivo de \"cansado\" (5 letras)."},
+{kind:"type",prompt:"Diga que você está feliz.",accept:["I'm happy","I am happy","I'm very happy"],hint:"O contrário de sad."}]}]},
+{id:"u5",num:5,title:"Tempo e passado",level:"A2",lessons:[
+{id:"d1",title:"Dias da semana",skill:"Monday → Sunday",steps:[
+{kind:"learn",word:"Monday",say:"On Monday.",pt:"segunda-feira",pron:"MÂN-dei"},
+{kind:"learn",word:"Tuesday",say:"On Tuesday.",pt:"terça-feira",pron:"TIÚZ-dei"},
+{kind:"learn",word:"Wednesday",say:"On Wednesday.",pt:"quarta-feira",pron:"UÉNZ-dei",note:"a pronúncia é curta — 2 sílabas"},
+{kind:"learn",word:"Thursday",say:"On Thursday.",pt:"quinta-feira",pron:"THÔRZ-dei"},
+{kind:"learn",word:"Friday",say:"On Friday.",pt:"sexta-feira",pron:"FRÁI-dei"},
+{kind:"choice",prompt:"\"Wednesday\" é…",options:["quarta-feira","quinta-feira","terça-feira"],answer:0},
+{kind:"listen",say:"I work on Monday.",prompt:"Em que dia?",options:["segunda","sexta","quarta"],answer:0,transcript:"I work on Monday."},
+{kind:"learn",word:"Saturday",say:"On Saturday.",pt:"sábado",pron:"SÉ-tur-dei"},
+{kind:"learn",word:"Sunday",say:"On Sunday.",pt:"domingo",pron:"SÂN-dei"},
+{kind:"note",title:"Usamos \"on\" com dias",body:`<span class="mark">on Monday</span>, <span class="mark">on Friday</span>, <span class="mark">on my birthday</span>. Com meses, usamos <em>in</em>.`},
+{kind:"build",prompt:"Monte: \"Eu trabalho na sexta.\"",bank:["I","work","on","in","Friday","Monday"],accept:["I work on Friday"]},
+{kind:"type",prompt:"Diga: \"Eu estudo aos sábados.\"",accept:["I study on Saturday","I study on Saturdays"],hint:"Dia da semana pede qual preposição?"},
+{kind:"type",prompt:"Diga que você não trabalha aos domingos.",accept:["I don't work on Sunday","I do not work on Sunday","I don't work on Sundays"],hint:"Negação com don't + preposição de dia + o dia."}]},
+{id:"m1",title:"Meses e estações",skill:"January → December · spring · summer",steps:[
+{kind:"learn",word:"January",say:"In January.",pt:"janeiro",pron:"DJÉ-niu-éri"},
+{kind:"learn",word:"June",say:"In June.",pt:"junho",pron:"DJÚUN"},
+{kind:"learn",word:"December",say:"In December.",pt:"dezembro",pron:"di-CEM-ber"},
+{kind:"choice",prompt:"\"June\" é…",options:["junho","julho","janeiro"],answer:0},
+{kind:"listen",say:"My birthday is in June.",prompt:"Quando é o aniversário?",options:["junho","janeiro","dezembro"],answer:0,transcript:"My birthday is in June."},
+{kind:"learn",word:"spring",say:"In the spring.",pt:"primavera",pron:"SPRING"},
+{kind:"learn",word:"summer",say:"In the summer.",pt:"verão",pron:"SÂ-mer"},
+{kind:"learn",word:"winter",say:"In the winter.",pt:"inverno",pron:"UÍN-ter"},
+{kind:"note",title:"\"in\" com meses e estações",body:`<span class="mark">in January</span>, <span class="mark">in summer</span>, <span class="mark">in 2024</span>. Com datas exatas, usamos <em>on</em>.`},
+{kind:"build",prompt:"Monte: \"Meu aniversário é em junho.\"",bank:["My","birthday","is","in","on","June","January"],accept:["My birthday is in June"]},
+{kind:"choice",prompt:"Como se diz \"no inverno\"?",options:["in the winter","on the winter","at the winter"],answer:0},
+{kind:"type",prompt:"Diga: \"Eu gosto do verão.\"",accept:["I like summer","I like the summer","I love summer"],hint:"A estação do \"sun\" — com ou sem \"the\"."},
+{kind:"type",prompt:"Diga: \"Está frio no inverno.\"",accept:["It's cold in the winter","It is cold in the winter","It's cold in winter"],hint:"Estações pedem \"in\"."}]},
+{id:"t1",title:"Horas",skill:"What time is it? · o'clock · half past",steps:[
+{kind:"learn",word:"What time is it?",say:"What time is it?",pt:"Que horas são?",pron:"UÓT TÁIM iz it"},
+{kind:"learn",word:"o'clock",say:"It's three o'clock.",pt:"em ponto",pron:"ô-KLÓK"},
+{kind:"listen",say:"It's three o'clock.",prompt:"Que horas são?",options:["3 horas","13 horas","meia-noite"],answer:0,transcript:"It's three o'clock."},
+{kind:"learn",word:"half past",say:"It's half past two.",pt:"e meia",pron:"réf PÁST"},
+{kind:"learn",word:"quarter",say:"A quarter past three.",pt:"quinze (minutos)",pron:"KUÓR-ter",note:"quarter = um quarto (de hora)"},
+{kind:"choice",prompt:"\"It's half past four\" significa…",options:["4 e meia","4 em ponto","5 e meia"],answer:0},
+{kind:"listen",say:"It's half past five.",prompt:"Que horas são?",options:["5:30","5:00","4:30"],answer:0,transcript:"It's half past five."},
+{kind:"build",prompt:"Monte: \"São 8 horas.\"",bank:["It's","It","is","eight","o'clock","half"],accept:["It's eight o'clock","It is eight o'clock"]},
+{kind:"choice",prompt:"Como se pergunta as horas em inglês?",options:["What time is it?","How many hours?","When is it?"],answer:0},
+{kind:"type",prompt:"Diga que são 10 horas.",accept:["It's ten o'clock","It is ten o'clock","Ten o'clock"],hint:"Número + a palavra de \"em ponto\"."},
+{kind:"type",prompt:"Diga que são 2 e meia.",accept:["It's half past two","It is half past two"],hint:"Estrutura \"half past\" + o número."}]},
+{id:"v1",title:"Passado regular",skill:"-ed · worked · studied · played",steps:[
+{kind:"note",title:"Verbos regulares no passado",body:`Adicione <span class="mark">-ed</span> ao verbo: <em>work → worked</em>, <em>study → studied</em>, <em>play → played</em>. Funciona para <b>todas as pessoas</b>.`},
+{kind:"learn",word:"worked",say:"I worked yesterday.",pt:"trabalhei",pron:"UÔRKT"},
+{kind:"learn",word:"studied",say:"I studied last night.",pt:"estudei",pron:"IS-tú-did"},
+{kind:"learn",word:"played",say:"We played soccer.",pt:"jogamos",pron:"PLÊID"},
+{kind:"choice",prompt:"\"I worked\" significa…",options:["eu trabalhei","eu trabalho","eu vou trabalhar"],answer:0},
+{kind:"listen",say:"I studied English last night.",prompt:"O que a pessoa fez?",options:["estudou inglês","trabalhou","jogou"],answer:0,transcript:"I studied English last night."},
+{kind:"learn",word:"yesterday",say:"I worked yesterday.",pt:"ontem",pron:"IÉS-ter-dei"},
+{kind:"learn",word:"last night",say:"Last night.",pt:"ontem à noite",pron:"LÁST NÁIT"},
+{kind:"build",prompt:"Monte: \"Eu estudei ontem.\"",bank:["I","studied","study","work","yesterday","today"],accept:["I studied yesterday"]},
+{kind:"choice",prompt:"Como se diz \"eu trabalhei ontem à noite\"?",options:["I worked last night.","I work last night.","I worked yesterday night."],answer:0},
+{kind:"type",prompt:"Diga: \"Eu joguei futebol ontem.\"",accept:["I played soccer yesterday","I played football yesterday"],hint:"play no passado + \"yesterday\" no fim."},
+{kind:"type",prompt:"Diga: \"Eu estudei inglês.\"",accept:["I studied English","I studied"],hint:"study no passado: o y vira i + ed."}]},
+{id:"v2",title:"Passado irregular",skill:"went · saw · had · ate",steps:[
+{kind:"note",title:"Verbos irregulares — precisam de memória",body:`Estes verbos <b>não</b> terminam em -ed. Cada um tem sua forma: <span class="mark">go → went</span>, <span class="mark">see → saw</span>, <span class="mark">have → had</span>, <span class="mark">eat → ate</span>.`},
+{kind:"learn",word:"went",say:"I went to the beach.",pt:"fui (go)",pron:"UÉNT"},
+{kind:"learn",word:"saw",say:"I saw a movie.",pt:"vi (see)",pron:"SÓ"},
+{kind:"learn",word:"had",say:"I had coffee.",pt:"tive/tomei (have)",pron:"RÉD"},
+{kind:"learn",word:"ate",say:"I ate pizza.",pt:"comi (eat)",pron:"ÊIT"},
+{kind:"choice",prompt:"O passado de \"go\" é…",options:["went","goed","goes"],answer:0},
+{kind:"listen",say:"I went to the park yesterday.",prompt:"Onde a pessoa foi?",options:["parque","praia","escola"],answer:0,transcript:"I went to the park yesterday."},
+{kind:"build",prompt:"Monte: \"Eu vi um filme.\"",bank:["I","saw","see","a","movie","the"],accept:["I saw a movie"]},
+{kind:"choice",prompt:"\"I had coffee\" significa…",options:["eu tomei café","eu tomo café","eu vou tomar café"],answer:0},
+{kind:"build",prompt:"Monte: \"Eu comi pizza ontem.\"",bank:["I","ate","eat","pizza","yesterday","today"],accept:["I ate pizza yesterday"]},
+{kind:"type",prompt:"Diga: \"Eu fui à praia.\"",accept:["I went to the beach"],hint:"O passado irregular de \"go\"."},
+{kind:"type",prompt:"Diga: \"Eu vi um filme.\"",accept:["I saw a movie","I saw a film"],hint:"O passado irregular de \"see\" — 3 letras."}]}]},
+{id:"u6",num:6,title:"Conectando ideias",level:"A2",lessons:[
+{id:"k1",title:"Conjunções",skill:"and · but · because · so",steps:[
+{kind:"learn",word:"and",say:"Coffee and bread.",pt:"e",pron:"ÉND"},
+{kind:"learn",word:"but",say:"I like coffee but I don't like tea.",pt:"mas",pron:"BÂT"},
+{kind:"listen",say:"I'm tired but happy.",prompt:"Como a pessoa está?",options:["cansada mas feliz","só cansada","só feliz"],answer:0,transcript:"I'm tired but happy."},
+{kind:"learn",word:"because",say:"I'm studying because I have a test.",pt:"porque",pron:"bi-CÓZ"},
+{kind:"learn",word:"so",say:"It's late, so I'm going home.",pt:"então",pron:"SÔU"},
+{kind:"choice",prompt:"\"but\" em inglês é…",options:["mas","e","porque"],answer:0},
+{kind:"build",prompt:"Monte: \"Estou cansado, então vou pra casa.\"",bank:["I'm","tired","so","because","I'm","going","home"],accept:["I'm tired so I'm going home","I am tired so I am going home"]},
+{kind:"choice",prompt:"Qual conjunção explica um motivo?",options:["because","but","and"],answer:0,explain:"\"because\" = porque (razão)."},
+{kind:"type",prompt:"Diga: \"Eu gosto de café mas não gosto de chá.\"",accept:["I like coffee but I don't like tea","I like coffee but I do not like tea"],hint:"\"Mas\" em inglês tem 3 letras."},
+{kind:"type",prompt:"Diga: \"Eu estudo porque tenho uma prova.\"",accept:["I study because I have a test","I'm studying because I have a test"],hint:"A conjunção de motivo que você aprendeu."},
+{kind:"type",prompt:"Diga: \"Está tarde, então vou embora.\"",accept:["It's late so I'm leaving","It's late so I'm going home","It is late so I am leaving"],hint:"\"Então\" em inglês tem 2 letras: s_."}]},
+{id:"w2",title:"Perguntas WH",skill:"what · where · when · who · why · how",steps:[
+{kind:"learn",word:"What",say:"What's your name?",pt:"O que · Qual",pron:"UÓT"},
+{kind:"learn",word:"Where",say:"Where are you from?",pt:"Onde",pron:"UÉR"},
+{kind:"learn",word:"When",say:"When is your birthday?",pt:"Quando",pron:"UÉN"},
+{kind:"learn",word:"Who",say:"Who is she?",pt:"Quem",pron:"RRÚ"},
+{kind:"learn",word:"Why",say:"Why are you sad?",pt:"Por que",pron:"UÁI"},
+{kind:"learn",word:"How",say:"How old are you?",pt:"Como",pron:"RRÁU"},
+{kind:"choice",prompt:"\"Where\" pergunta sobre…",options:["lugar","tempo","pessoa"],answer:0},
+{kind:"listen",say:"Where are you from?",prompt:"O que está sendo perguntado?",options:["de onde você é","qual seu nome","quantos anos você tem"],answer:0,transcript:"Where are you from?"},
+{kind:"build",prompt:"Monte: \"Quando é seu aniversário?\"",bank:["When","Where","is","your","birthday","name","?"],accept:["When is your birthday"]},
+{kind:"choice",prompt:"Como se pergunta \"quem é ela?\"",options:["Who is she?","What is she?","Where is she?"],answer:0},
+{kind:"type",prompt:"Pergunte onde alguém mora.",accept:["Where do you live","Where are you from","Where do you live?"],hint:"WH de lugar + \"do you live\"."},
+{kind:"type",prompt:"Pergunte por que alguém está triste.",accept:["Why are you sad","Why are you sad?"],hint:"WH de motivo + a pessoa triste."},
+{kind:"type",prompt:"Pergunte a idade de alguém.",accept:["How old are you","How old are you?"],hint:"\"How\" + o adjetivo de idade."}]},
+{id:"mo1",title:"Modais: can, must, should",skill:"I can · you must · we should",steps:[
+{kind:"note",title:"Verbos modais — não mudam",body:`<span class="mark">can</span> (poder) · <span class="mark">must</span> (dever) · <span class="mark">should</span> (deveria). Eles <b>nunca</b> mudam: "I can", "she can", "we can" — sempre "can".`},
+{kind:"learn",word:"can",say:"I can swim.",pt:"posso · sei",pron:"KÉN"},
+{kind:"learn",word:"can't",say:"I can't drive.",pt:"não posso",pron:"KÉNT",note:"\"cannot\" é a forma sem contração"},
+{kind:"learn",word:"must",say:"You must study.",pt:"deve (obrigação)",pron:"MÂST"},
+{kind:"learn",word:"should",say:"You should rest.",pt:"deveria (conselho)",pron:"XÚD"},
+{kind:"choice",prompt:"\"I can swim\" significa…",options:["eu sei nadar","eu devo nadar","eu deveria nadar"],answer:0},
+{kind:"listen",say:"You must study for the test.",prompt:"É uma…",options:["obrigação","pergunta","sugestão"],answer:0,transcript:"You must study for the test."},
+{kind:"build",prompt:"Monte: \"Eu não posso dirigir.\"",bank:["I","can't","cannot","can","drive","swim"],accept:["I can't drive","I cannot drive"]},
+{kind:"choice",prompt:"Qual modal dá um conselho?",options:["should","must","can"],answer:0,explain:"\"should\" = deveria (conselho) · \"must\" = dever (obrigação)."},
+{kind:"type",prompt:"Diga: \"Eu sei nadar.\"",accept:["I can swim"],hint:"O modal de habilidade — 3 letras."},
+{kind:"type",prompt:"Dê um conselho: \"Você deveria descansar.\"",accept:["You should rest","You should take a rest"],hint:"O modal de conselho — começa com \"s\"."},
+{kind:"type",prompt:"Diga uma obrigação: \"Você deve estudar.\"",accept:["You must study","You have to study"],hint:"O modal de obrigação — começa com \"m\"."}]},
+{id:"f2",title:"Futuro com going to",skill:"I'm going to · plans",steps:[
+{kind:"note",title:"Planos com \"going to\"",body:`Para planos e intenções, use <span class="mark">be + going to + verbo</span>. Ex: <em>I'm going to study</em>, <em>She's going to travel</em>.`},
+{kind:"learn",word:"going to",say:"I'm going to study.",pt:"vou (fazer algo)",pron:"GÔU-in TU"},
+{kind:"learn",word:"I'm going to",say:"I'm going to work.",pt:"eu vou",pron:"áim GÔU-in TU"},
+{kind:"listen",say:"I'm going to travel next month.",prompt:"O que a pessoa vai fazer?",options:["viajar","trabalhar","estudar"],answer:0,transcript:"I'm going to travel next month."},
+{kind:"build",prompt:"Monte: \"Eu vou estudar amanhã.\"",bank:["I'm","going","to","study","work","tomorrow","yesterday"],accept:["I'm going to study tomorrow","I am going to study tomorrow"]},
+{kind:"choice",prompt:"Como se diz \"ela vai trabalhar\"?",options:["She's going to work.","She going to work.","She will going to work."],answer:0},
+{kind:"learn",word:"travel",say:"I'm going to travel.",pt:"viajar",pron:"TRÉ-vel"},
+{kind:"learn",word:"visit",say:"I'm going to visit my family.",pt:"visitar",pron:"VÍ-zit"},
+{kind:"build",prompt:"Monte: \"Nós vamos visitar minha família.\"",bank:["We're","going","to","visit","my","family","I'm"],accept:["We're going to visit my family","We are going to visit my family"]},
+{kind:"type",prompt:"Diga que você vai estudar inglês.",accept:["I'm going to study English","I am going to study English"],hint:"Plano = be + going to + verbo."},
+{kind:"type",prompt:"Diga que ela vai viajar mês que vem.",accept:["She's going to travel next month","She is going to travel next month"],hint:"\"She\" + contração do \"is\" + going to."}]},
+{id:"rev",title:"Revisão final",skill:"tudo junto!",steps:[
+{kind:"note",title:"Parabéns!",body:`Você chegou ao fim do curso básico. Esta lição revisa <span class="mark">tudo que você aprendeu</span> — cumprimentos, apresentações, rotina, opiniões, comida, lugares, passado e futuro. Bora?`},
+{kind:"listen",say:"Hi! My name's Sarah. I'm from Brazil. I'm a student.",prompt:"O que sabemos sobre Sarah?",options:["é estudante e do Brasil","é professora e dos EUA","trabalha em Londres"],answer:0,transcript:"Hi! My name's Sarah. I'm from Brazil. I'm a student."},
+{kind:"type",prompt:"Apresente-se: diga seu nome e de onde você é.",accept:["My name is","My name's","I'm from","I am from"],hint:"Nome primeiro, origem depois — contrações valem."},
+{kind:"choice",prompt:"Como se responde \"How are you?\" educadamente?",options:["I'm good, thanks. And you?","Yes, I am.","No, I'm not."],answer:0},
+{kind:"build",prompt:"Monte: \"Eu não gosto de café porque é amargo.\"",bank:["I","don't","like","coffee","because","it's","bitter"],accept:["I don't like coffee because it's bitter","I do not like coffee because it is bitter"]},
+{kind:"listen",say:"I worked yesterday and I'm tired now.",prompt:"O que a pessoa fez ontem?",options:["trabalhou","estudou","viajou"],answer:0,transcript:"I worked yesterday and I'm tired now."},
+{kind:"type",prompt:"Diga o que você fez ontem (use passado).",accept:["I worked yesterday","I studied yesterday","I went","I saw","I ate","I had"],hint:"Qualquer verbo no passado conta: regular ou irregular."},
+{kind:"build",prompt:"Monte: \"Vou visitar minha família no domingo.\"",bank:["I'm","going","to","visit","my","family","on","Sunday"],accept:["I'm going to visit my family on Sunday","I am going to visit my family on Sunday"]},
+{kind:"type",prompt:"Peça a conta em um restaurante.",accept:["The bill please","The check please","Can I have the bill","Can I have the check"],hint:"bill ou check + a palavra mágica."},
+{kind:"listen",say:"Where are you going?",prompt:"O que a pessoa pergunta?",options:["aonde você vai","como você está","o que você quer"],answer:0,transcript:"Where are you going?"},
+{kind:"type",prompt:"Diga uma coisa que você ama e o motivo.",accept:["I love","because","I really love"],hint:"\"I love …\" + a conjunção de motivo."}]}]}]};
+
 const FLAT=[];
 COURSE.units.forEach(u=>u.lessons.forEach(ls=>FLAT.push({...ls,unit:u})));
 const CONTRACTION_MAP={"won't":"will not","can't":"cannot","shan't":"shall not","let's":"let us"};
-function expandToken(t){t=t.replace(/’/g,"'");if(CONTRACTION_MAP[t])return CONTRACTION_MAP[t];let m;
+function expandToken(t){t=t.replace(/'/g,"'");if(CONTRACTION_MAP[t])return CONTRACTION_MAP[t];let m;
 if((m=t.match(/^(.+?)n't$/))&&m[1].length>1)return m[1]+" not";
 if((m=t.match(/^(.+?)'re$/)))return m[1]+" are";
 if((m=t.match(/^(.+?)'ll$/)))return m[1]+" will";
@@ -742,265 +769,192 @@ if((m=t.match(/^(.+?)'m$/)))return m[1]+" am";
 if((m=t.match(/^(.+?)'d$/)))return m[1]+" would";
 if((m=t.match(/^(.+?)'s$/)))return m[1]+" is";
 return t;}
-function normalize(raw){const s=String(raw||"").toLowerCase().replace(/[’‘`]/g,"'").replace(/[.,!?;:«»"“”()…]/g," ");
+function normalize(raw){const s=String(raw||"").toLowerCase().replace(/[''`]/g,"'").replace(/[.,!?;:«»""()…]/g," ");
 return s.split(/\s+/).map(t=>t.replace(/^'+|'+$/g,"")).filter(Boolean).map(expandToken).join(" ").replace(/\s+/g," ").trim();}
 function dist(a,b){const m=a.length,n=b.length;if(!m)return n;if(!n)return m;
 let prev=[...Array(n+1).keys()];for(let i=1;i<=m;i++){const cur=[i];
 for(let j=1;j<=n;j++)cur[j]=Math.min(prev[j]+1,cur[j-1]+1,prev[j-1]+(a[i-1]===b[j-1]?0:1));prev=cur;}return prev[n];}
 function checkAnswer(input,accepts){const n=normalize(input);if(!n)return{ok:false,empty:true};
 if(accepts.some(a=>normalize(a)===n))return{ok:true};let best=null,bd=Infinity;
-for(const a of accepts){const d=dist(n,normalize(a));if(d<bd){bd=d;best=a;}}return{ok:false,near:(bd<=2&&normalize(best).length>=8)?best:null};}
-/* ================= ÁUDIO — voz da internet primeiro (a que funcionava),
-   navegador como reserva. SEM fala muda de "destravamento" (ela entupia a fila). */
-const HAS_TTS="speechSynthesis" in window;
-const NET_SRC=[
-  "https://api.streamelements.com/kappa/v2/speech?voice=Joanna&text=",
-  "https://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&tl=en&q="
-];
-let voice=null,watchdog=null,speakSeq=0,currentAudio=null;
-const audioCache=new Map();
-function pickVoice(){if(!HAS_TTS)return;let vs;try{vs=speechSynthesis.getVoices();}catch(e){return;}
-if(!vs||!vs.length)return;const en=vs.filter(v=>/^en/i.test(v.lang));if(!en.length)return;
-voice=en.find(v=>/samantha|zira|aria|jenny|female|google/i.test(v.name))||en[0];}
-if(HAS_TTS){speechSynthesis.addEventListener("voiceschanged",pickVoice);pickVoice();}
-function ui(btn,on,seq){if(seq===speakSeq&&btn)btn.classList.toggle("speaking",on);}
-function stopAll(){speakSeq++;clearTimeout(watchdog);
-try{if(HAS_TTS&&(speechSynthesis.speaking||speechSynthesis.pending))speechSynthesis.cancel();}catch(e){}
-if(currentAudio){try{currentAudio.pause();}catch(e){}currentAudio=null;}}
+for(const a of accepts){const d=dist(n,normalize(a));if(d<bd){bd=d;best=a;}}
+return{ok:false,near:(bd<=2&&normalize(best).length>=8)?best:null};}
+
+const audioLog=[];
+function alog(s){audioLog.push(s);if(audioLog.length>60)audioLog.shift();
+const el=document.querySelector("#dbgBox");
+if(el&&el.style.display==="block")el.textContent=audioLog.join("\n");}
+
+let speakSeq=0;
+function stopAll(){speakSeq++;
+try{if(typeof responsiveVoice!=="undefined")responsiveVoice.cancel();}catch(e){}
+try{if(typeof speechSynthesis!=="undefined")speechSynthesis.cancel();}catch(e){}}
+
 function speak(text,rate,btn){
-  if(!store.sound||!text)return;stopAll();
-  const seq=speakSeq;
-  if(navigator.onLine===false){nativeSpeak(text,rate,btn,seq);return;}
-  netSpeak(text,rate,btn,seq,0);}
-function netSpeak(text,rate,btn,seq,idx){
-  if(idx>=NET_SRC.length){nativeSpeak(text,rate,btn,seq);return;}
-  const url=NET_SRC[idx]+encodeURIComponent(text);
-  let a=audioCache.get(url);
-  if(!a){a=new Audio(url);a.preload="auto";audioCache.set(url,a);}
-  currentAudio=a;
-  try{a.preservesPitch=true;}catch(e){}
-  a.playbackRate=rate||1;
-  try{a.currentTime=0;}catch(e){}
-  let chained=false;
-  const fail=()=>{if(chained)return;chained=true;
-    if(currentAudio===a)currentAudio=null;
-    ui(btn,false,seq);
-    netSpeak(text,rate,btn,seq,idx+1);};
-  a.onplaying=()=>ui(btn,true,seq);
-  a.onended=()=>{if(currentAudio===a)currentAudio=null;ui(btn,false,seq);};
-  a.onerror=()=>fail();
-  ui(btn,true,seq);
-  a.play().catch(()=>fail());}
-function prefetchNet(text){try{
-  const url=NET_SRC[0]+encodeURIComponent(text);
-  if(audioCache.has(url))return;
-  const a=new Audio(url);a.preload="auto";audioCache.set(url,a);}catch(e){}}
-function nativeSpeak(text,rate,btn,seq){
-  if(!HAS_TTS){showAudioFallback();return;}
-  try{
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang="en-US";if(voice)u.voice=voice;u.rate=rate||.95;u.volume=1;
-    ui(btn,true,seq);
-    u.onstart=()=>clearTimeout(watchdog);
-    u.onend=()=>{clearTimeout(watchdog);ui(btn,false,seq);};
-    u.onerror=(ev)=>{clearTimeout(watchdog);ui(btn,false,seq);
-      if(ev&&(ev.error==="canceled"||ev.error==="interrupted"))return;
-      showAudioFallback();};
-    speechSynthesis.speak(u);
-    watchdog=setTimeout(()=>{
-      if(seq!==speakSeq)return;
-      if(speechSynthesis.speaking)return;
-      ui(btn,false,seq);
-      try{speechSynthesis.cancel();}catch(e){}
-      showAudioFallback();
-    },1500);
-  }catch(e){showAudioFallback();}}
-function showAudioFallback(){
-  try{if(!L)return;const st=cur();
-  if(st&&st.kind==="listen"&&st.transcript&&!document.querySelector("#exArea .transcript")){
-    const tr=document.createElement("p");tr.className="transcript";
-    tr.innerHTML=`Áudio indisponível — leia: <b>“${st.transcript}”</b>`;
-    const ex=$("#exArea .exercise");ex&&ex.appendChild(tr);}}catch(e){}}
-let AC=null;const store=JSON.parse(localStorage.getItem("fluent.v4")||"{}");
-store.done=store.done||{};store.sound=store.sound!==false;
+if(!store.sound||!text){alog("bloqueado: som="+store.sound);return;}
+stopAll();
+const seq=speakSeq;
+if(btn)btn.classList.add("speaking");
+alog(`▶ "${text}" (${location.protocol}//${location.host||"arquivo"})`);
+if(typeof responsiveVoice!=="undefined"){
+try{alog("usando ResponsiveVoice (US English Female)");
+responsiveVoice.speak(text,"US English Female",{rate:rate||0.9,
+onstart:()=>{if(seq===speakSeq&&btn)btn.classList.add("speaking");alog("✓ ResponsiveVoice: onstart");},
+onend:()=>{if(seq===speakSeq&&btn)btn.classList.remove("speaking");alog("✓ ResponsiveVoice: onend");},
+onerror:(e)=>{alog("✗ ResponsiveVoice erro");fallbackTTS(text,rate,btn,seq);}});
+return;}catch(e){alog("✗ ResponsiveVoice exceção: "+e);}}
+fallbackTTS(text,rate,btn,seq);}
+
+function fallbackTTS(text,rate,btn,seq){
+if(typeof speechSynthesis==="undefined"){alog("✗ sem speechSynthesis");if(btn)btn.classList.remove("speaking");return;}
+try{speechSynthesis.cancel();
+const u=new SpeechSynthesisUtterance(text);
+u.lang="en-US";u.rate=rate||0.95;u.volume=1;
+u.onstart=()=>{if(seq===speakSeq&&btn)btn.classList.add("speaking");alog("✓ speechSynthesis: onstart");};
+u.onend=()=>{if(seq===speakSeq&&btn)btn.classList.remove("speaking");};
+u.onerror=(ev)=>{alog("✗ speechSynthesis erro: "+(ev.error||"?"));if(btn)btn.classList.remove("speaking");};
+speechSynthesis.speak(u);alog("speechSynthesis: speak() chamado");}
+catch(e){alog("✗ speechSynthesis exceção: "+e);if(btn)btn.classList.remove("speaking");}}
+
+let AC=null;
+const store=JSON.parse(localStorage.getItem("fluent.v4")||"{}");
+store.done=store.done||{};store.sound=store.sound!==false;store.streak=store.streak||{count:0,last:""};
 const save=()=>localStorage.setItem("fluent.v4",JSON.stringify(store));
-function tone(f,t0,d,type,g){const o=AC.createOscillator(),v=AC.createGain();
-o.type=type||"sine";o.frequency.value=f;
-v.gain.setValueAtTime(0,t0);v.gain.linearRampToValueAtTime(g||.12,t0+.012);
-v.gain.exponentialRampToValueAtTime(.0001,t0+d);
-o.connect(v).connect(AC.destination);o.start(t0);o.stop(t0+d);}
-function sfx(kind){if(!store.sound)return;try{
-AC=AC||new (window.AudioContext||window.webkitAudioContext)();
-if(AC.state==="suspended"&&AC.resume)AC.resume();const t=AC.currentTime+.02;
+const FLAME=`<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.78-3.12 1.72-.35 3.35-1.21 4.28-2.55.31 1.31.5 2.76.5 4.07 0 2.6-1.94 4.74-4.34 4.74z"/></svg>`;
+function dstr(off){const d=new Date();d.setDate(d.getDate()+(off||0));return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
+function streakEffective(){const s=store.streak;if(s.last!==dstr(0)&&s.last!==dstr(-1))return 0;return s.count;}
+function bumpStreak(){const s=store.streak;const today=dstr(0);if(s.last!==today){s.count=(s.last===dstr(-1))?s.count+1:1;s.last=today;}save();return s.count;}
+function paintStreak(){const eff=streakEffective();const el=document.querySelector("#streakTop");el.innerHTML=FLAME+`<b>${eff}</b>`;el.classList.toggle("zero",eff===0);}
+function tone(f,t0,d,type,g){const o=AC.createOscillator(),v=AC.createGain();o.type=type||"sine";o.frequency.value=f;v.gain.setValueAtTime(0,t0);v.gain.linearRampToValueAtTime(g||.12,t0+.012);v.gain.exponentialRampToValueAtTime(.0001,t0+d);o.connect(v).connect(AC.destination);o.start(t0);o.stop(t0+d);}
+function sfx(kind){if(!store.sound)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended"&&AC.resume)AC.resume();const t=AC.currentTime+.02;
 if(kind==="ok"){tone(660,t,.12,"sine",.16);tone(880,t+.11,.22,"sine",.18);}
 else if(kind==="no"){tone(196,t,.2,"triangle",.17);tone(147,t+.12,.26,"triangle",.15);}
 else if(kind==="tap"){tone(1100,t,.05,"sine",.12);}
-else if(kind==="done"){tone(523,t,.12,"sine",.16);tone(659,t+.1,.12,"sine",.16);tone(784,t+.2,.26,"sine",.18);}
-}catch(e){}}
-document.addEventListener("pointerdown",()=>{try{
-AC=AC||new (window.AudioContext||window.webkitAudioContext)();
-if(AC.state==="suspended"&&AC.resume)AC.resume();}catch(e){}});
+else if(kind==="done"){tone(523,t,.12,"sine",.16);tone(659,t+.1,.12,"sine",.16);tone(784,t+.2,.26,"sine",.18);}}catch(e){}}
+document.addEventListener("pointerdown",()=>{try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();if(AC.state==="suspended"&&AC.resume)AC.resume();}catch(e){}},{passive:true});
 const $=s=>document.querySelector(s);
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-const SVG={
-check:`<svg width="19" height="19" viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+function makeIcon(size){const c=document.createElement("canvas");c.width=size;c.height=size;const x=c.getContext("2d"),r=size*0.22;x.fillStyle="#2A57D9";x.beginPath();x.moveTo(r,0);x.lineTo(size-r,0);x.quadraticCurveTo(size,0,size,r);x.lineTo(size,size-r);x.quadraticCurveTo(size,size,size-r,size);x.lineTo(r,size);x.quadraticCurveTo(0,size,0,size-r);x.lineTo(0,r);x.quadraticCurveTo(0,0,r,0);x.closePath();x.fill();x.fillStyle="#FFFFFF";x.font="800 "+(size*0.52)+"px Arial, sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("f",size*0.46,size*0.55);x.fillStyle="#FFDE52";x.beginPath();x.arc(size*0.72,size*0.72,size*0.07,0,Math.PI*2);x.fill();return c.toDataURL("image/png");}
+let deferredPrompt=null;
+function buildManifest(){const base=(location.origin||"")+location.pathname.replace(/[^/]*$/,"");const i192=makeIcon(192),i512=makeIcon(512);
+const manifest={name:"fluent. — inglês do zero",short_name:"fluent.",description:"Curso de inglês para brasileiros: do zero ao A2, sem conta e sem confete.",lang:"pt-BR",start_url:base,scope:base,display:"standalone",orientation:"any",background_color:"#F5F6F2",theme_color:"#F5F6F2",icons:[{src:i192,sizes:"192x192",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"maskable"}]};
+const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});const url=URL.createObjectURL(blob);
+let link=document.querySelector('link[rel="manifest"]');if(!link){link=document.createElement("link");link.rel="manifest";document.head.appendChild(link);}link.href=url;
+let apple=document.querySelector('link[rel="apple-touch-icon"]');if(!apple){apple=document.createElement("link");apple.rel="apple-touch-icon";document.head.appendChild(apple);}apple.href=i192;}
+function wireInstall(){const btn=$("#installBtn");if(!btn)return;const standalone=window.matchMedia("(display-mode: standalone)").matches||window.navigator.standalone;if(standalone)return;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;btn.classList.add("show");});
+btn.addEventListener("click",async()=>{if(!deferredPrompt)return;deferredPrompt.prompt();try{await deferredPrompt.userChoice;}catch(err){}deferredPrompt=null;btn.classList.remove("show");});
+window.addEventListener("appinstalled",()=>{btn.classList.remove("show");deferredPrompt=null;});}
+const SVG={check:`<svg width="19" height="19" viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 checkSm:`<svg width="15" height="15" viewBox="0 0 24 24"><path d="M4 12.5 9.5 18 20 6.5" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 x:`<svg width="18" height="18" viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
 lock:`<svg width="21" height="21" viewBox="0 0 24 24"><path d="M8 10V8a4 4 0 1 1 8 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h1zm2 0h4V8a2 2 0 1 0-4 0v2z" fill="currentColor"/></svg>`,
 play:`<svg class="tri" width="24" height="24" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span class="eq"><i></i><i></i><i></i></span>`};
 const EYEBROW={learn:"Palavra nova",choice:"Escolha a melhor",listen:"Compreensão auditiva",build:"Monte a frase",type:"Escreva em inglês",note:"Nota rápida"};
-function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
-$("#dock").style.display=(id==="scrLesson")?"block":"none";window.scrollTo(0,0);}
+function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));$("#dock").style.display=(id==="scrLesson")?"block":"none";window.scrollTo(0,0);}
 const unlocked=gi=>gi===0||!!store.done[FLAT[gi-1].id];
-function activeUnit(){const gi=FLAT.findIndex(l=>!store.done[l.id]);
-return(gi===-1?FLAT[FLAT.length-1]:FLAT[gi]).unit;}
-function renderHome(){const u=activeUnit();
-$("#unitKicker").textContent=`Unidade ${u.num} · ${u.level}`;
-const words=u.title.split(" ");
+function activeUnit(){const gi=FLAT.findIndex(l=>!store.done[l.id]);return(gi===-1?FLAT[FLAT.length-1]:FLAT[gi]).unit;}
+function renderHome(){const u=activeUnit();$("#unitKicker").textContent=`Unidade ${u.num} · ${u.level}`;const words=u.title.split(" ");
 $("#unitTitle").innerHTML=words.length>1?`${words[0]} <span class="hl-swipe">${words.slice(1).join(" ")}</span>`:`<span class="hl-swipe">${u.title}</span>`;
-const path=$("#path");path.innerHTML="";
-const offs=[0,104,0,-104];const currentId=(FLAT.find(l=>!store.done[l.id])||{}).id;
-let gi=0,doneCount=0;
-COURSE.units.forEach(unit=>{
-const div=document.createElement("li");div.className="unit-divider";
-div.textContent=`Unidade ${unit.num} · ${unit.title}`;path.appendChild(div);
-unit.lessons.forEach(ls=>{const idx=gi;const done=store.done[ls.id];
-if(done)doneCount++;const isOpen=unlocked(idx);
-const st=done?"done":isOpen?"current":"locked";
-const li=document.createElement("li");li.className="node "+st;
-li.style.setProperty("--off",offs[idx%offs.length]+"px");
+const path=$("#path");path.innerHTML="";const offs=[0,104,0,-104];const currentId=(FLAT.find(l=>!store.done[l.id])||{}).id;let gi=0,doneCount=0;
+COURSE.units.forEach(unit=>{const div=document.createElement("li");div.className="unit-divider";div.textContent=`Unidade ${unit.num} · ${unit.title}`;path.appendChild(div);
+unit.lessons.forEach(ls=>{const idx=gi;const done=store.done[ls.id];if(done)doneCount++;const isOpen=unlocked(idx);const st=done?"done":isOpen?"current":"locked";
+const li=document.createElement("li");li.className="node "+st;li.style.setProperty("--off",offs[idx%offs.length]+"px");
 const inner=done?SVG.check:isOpen?(idx+1):SVG.lock;
 const chip=done?`<span class="badge-chip ok">Feita · ${done.acc}%</span>`:ls.id===currentId?`<span class="badge-chip go">Começar aqui</span>`:`<span class="badge-chip">Bloqueada</span>`;
 li.innerHTML=`<button class="node-btn" aria-label="Lição: ${ls.title}">${inner}</button><div class="node-meta"><h3>${ls.title}</h3><p>${ls.skill}</p></div>${chip}`;
-li.querySelector(".node-btn").addEventListener("click",()=>{
-if(!isOpen){li.querySelector(".node-btn").animate([{transform:"translateX(0)"},{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:260});return;}
-startLesson(idx);});path.appendChild(li);gi++;});});
-$("#courseMeta").textContent=`${doneCount} de ${FLAT.length} lições concluídas`;
-$("#miniFill").style.width=(doneCount/FLAT.length*100)+"%";}
+li.querySelector(".node-btn").addEventListener("click",()=>{if(!isOpen){li.querySelector(".node-btn").animate([{transform:"translateX(0)"},{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:260});return;}startLesson(idx);});
+path.appendChild(li);gi++;});});
+$("#courseMeta").textContent=`${doneCount} de ${FLAT.length} lições concluídas`;$("#miniFill").style.width=(doneCount/FLAT.length*100)+"%";paintStreak();}
 let L=null;const cur=()=>L.ls.steps[L.step];
-function startLesson(gi){L={gi,ls:FLAT[gi],step:0,right:0,answered:0,missed:[],sel:null,placed:[],checked:false};
-show("scrLesson");renderStep();}
-function renderStep(){stopAll();const st=cur();
-$("#pfill").style.width=(L.step/L.ls.steps.length*100)+"%";
-$("#stepCount").textContent=`${L.step+1} / ${L.ls.steps.length}`;
+function startLesson(gi){L={gi,ls:FLAT[gi],step:0,right:0,answered:0,missed:[],sel:null,placed:[],checked:false,opts:null};show("scrLesson");renderStep();}
+function renderStep(){stopAll();const st=cur();$("#pfill").style.width=(L.step/L.ls.steps.length*100)+"%";$("#stepCount").textContent=`${L.step+1} / ${L.ls.steps.length}`;
 L.sel=null;L.placed=[];L.checked=false;
-if(st.say&&navigator.onLine!==false)prefetchNet(st.say);
-const holder=document.createElement("div");holder.className="exercise";
-const area=$("#exArea");area.innerHTML="";
-if(st.kind==="learn"){
-holder.innerHTML=`<div class="eyebrow">${EYEBROW.learn}</div><div class="word-card"><div class="word-row"><button class="play-btn small" id="playBtn" aria-label="Ouvir">${SVG.play}</button><div><div class="big-word">${st.word}</div><div class="pron">lê-se: <b>${st.pron}</b></div></div></div><div class="word-pt"><b>${st.pt}</b></div>${st.note?`<p class="word-note">${st.note}</p>`:""}${st.ex?`<button class="word-ex" id="exBtn">▶ &nbsp;${st.ex}</button>`:""}</div>`;
-area.appendChild(holder);
-holder.querySelector("#playBtn").onclick=e=>{sfx("tap");speak(st.say,.95,e.currentTarget);};
-if(st.ex)holder.querySelector("#exBtn").onclick=e=>speak(st.ex,.95,e.currentTarget);
-setDock({mode:"continue",label:"Entendi"});}
-else if(st.kind==="note"){
-holder.innerHTML=`<div class="note-card"><div class="eyebrow">${EYEBROW.note}</div><h3>${st.title}</h3><p>${st.body}</p></div>`;
-area.appendChild(holder);setDock({mode:"continue",label:"Entendi"});}
-else if(st.kind==="listen"){
-holder.innerHTML=`<div class="eyebrow">${EYEBROW.listen}</div><h2 class="prompt">${st.prompt}</h2><div class="listen-row"><button class="play-btn" id="playBtn" aria-label="Ouvir">${SVG.play}</button><button class="speed-btn" id="slowBtn">🐢 devagar</button><span class="listen-hint">toque para ouvir · teclas 1–${st.options.length}</span></div><div class="opts" id="opts"></div>`;
-area.appendChild(holder);fillOpts(st);
-holder.querySelector("#playBtn").onclick=e=>{sfx("tap");speak(st.say,.97,e.currentTarget);};
-holder.querySelector("#slowBtn").onclick=e=>speak(st.say,.6,e.currentTarget);
-setDock({mode:"check"});}
-else if(st.kind==="choice"){
-holder.innerHTML=`<div class="eyebrow">${EYEBROW.choice}</div><h2 class="prompt">${st.prompt}</h2><div class="opts" id="opts"></div>`;
-area.appendChild(holder);fillOpts(st);setDock({mode:"check"});}
-else if(st.kind==="build"){
-holder.innerHTML=`<div class="eyebrow">${EYEBROW.build}</div><h2 class="prompt">${st.prompt}</h2>${st.context?`<p class="context">${st.context}</p>`:""}<div class="slot" id="slot"><span class="ghost" id="ghost">toque nas palavras abaixo…</span></div><div class="bank" id="bank"></div>`;
+if(st.kind==="choice"||st.kind==="listen"){L.opts=shuffle(st.options.map((t,i)=>({t,ok:i===st.answer})));}
+const holder=document.createElement("div");holder.className="exercise";const area=$("#exArea");area.innerHTML="";
+if(st.kind==="learn"){holder.innerHTML=`<div class="eyebrow">${EYEBROW.learn}</div><div class="word-card"><div class="word-row"><button class="play-btn small" id="playBtn" aria-label="Ouvir">${SVG.play}</button><div><div class="big-word">${st.word}</div><div class="pron">lê-se: <b>${st.pron}</b></div></div></div><div class="word-pt"><b>${st.pt}</b></div>${st.note?`<p class="word-note">${st.note}</p>`:""}${st.ex?`<button class="word-ex" id="exBtn">▶ &nbsp;${st.ex}</button>`:""}</div>`;
+area.appendChild(holder);holder.querySelector("#playBtn").onclick=e=>{sfx("tap");speak(st.say,.95,e.currentTarget);};
+if(st.ex)holder.querySelector("#exBtn").onclick=e=>speak(st.ex,.95,e.currentTarget);setDock({mode:"continue",label:"Entendi"});}
+else if(st.kind==="note"){holder.innerHTML=`<div class="note-card"><div class="eyebrow">${EYEBROW.note}</div><h3>${st.title}</h3><p>${st.body}</p></div>`;area.appendChild(holder);setDock({mode:"continue",label:"Entendi"});}
+else if(st.kind==="listen"){holder.innerHTML=`<div class="eyebrow">${EYEBROW.listen}</div><h2 class="prompt">${st.prompt}</h2><div class="listen-row"><button class="play-btn" id="playBtn" aria-label="Ouvir">${SVG.play}</button><button class="speed-btn" id="slowBtn">🐢 devagar</button><span class="listen-hint">toque para ouvir · teclas 1–${st.options.length}</span></div><div class="opts" id="opts"></div>`;
+area.appendChild(holder);fillOpts();holder.querySelector("#playBtn").onclick=e=>{sfx("tap");speak(st.say,.97,e.currentTarget);};holder.querySelector("#slowBtn").onclick=e=>speak(st.say,.6,e.currentTarget);setDock({mode:"check"});}
+else if(st.kind==="choice"){holder.innerHTML=`<div class="eyebrow">${EYEBROW.choice}</div><h2 class="prompt">${st.prompt}</h2><div class="opts" id="opts"></div>`;area.appendChild(holder);fillOpts();setDock({mode:"check"});}
+else if(st.kind==="build"){holder.innerHTML=`<div class="eyebrow">${EYEBROW.build}</div><h2 class="prompt">${st.prompt}</h2>${st.context?`<p class="context">${st.context}</p>`:""}<div class="slot" id="slot"><span class="ghost" id="ghost">toque nas palavras abaixo…</span></div><div class="bank" id="bank"></div>`;
 area.appendChild(holder);const bank=holder.querySelector("#bank");
-shuffle(st.bank.map((w,i)=>({w,i}))).forEach(item=>{const b=document.createElement("button");
-b.className="tile";b.textContent=item.w;b.dataset.i=item.i;
-b.style.animationDelay=(Math.random()*.12)+"s";b.onclick=()=>placeTile(b);bank.appendChild(b);});
-setDock({mode:"check"});}
-else if(st.kind==="type"){
-holder.innerHTML=`<div class="eyebrow">${EYEBROW.type}</div><h2 class="prompt">${st.prompt}</h2><input id="typeIn" class="type-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite em inglês…">${st.hint?`<p class="hint">${st.hint}</p>`:""}`;
-area.appendChild(holder);
-holder.querySelector("#typeIn").addEventListener("input",()=>setDock({mode:"check"}));
-setTimeout(()=>{const el=$("#typeIn");el&&el.focus();},120);setDock({mode:"check"});}}
-function fillOpts(st){const o=$("#opts");st.options.forEach((txt,idx)=>{
-const b=document.createElement("button");b.className="opt";
-b.innerHTML=`<span class="key">${idx+1}</span><span>${txt}</span>`;
-b.onclick=()=>selectOpt(idx);o.appendChild(b);});}
-function selectOpt(idx){if(L.checked)return;L.sel=idx;sfx("tap");
-document.querySelectorAll("#opts .opt").forEach((b,i)=>b.classList.toggle("sel",i===idx));
-setDock({mode:"check"});}
-function placeTile(btn){if(L.checked)return;const i=+btn.dataset.i;L.placed.push(i);
-btn.classList.add("used");const t=document.createElement("button");
-t.className="tile placed";t.textContent=cur().bank[i];t.dataset.i=i;
-t.onclick=()=>{if(L.checked)return;t.remove();btn.classList.remove("used");
-L.placed=L.placed.filter(x=>x!==i);syncGhost();setDock({mode:"check"});sfx("tap");};
+shuffle(st.bank.map((w,i)=>({w,i}))).forEach(item=>{const b=document.createElement("button");b.className="tile";b.textContent=item.w;b.dataset.i=item.i;b.style.animationDelay=(Math.random()*.12)+"s";b.onclick=()=>placeTile(b);bank.appendChild(b);});setDock({mode:"check"});}
+else if(st.kind==="type"){holder.innerHTML=`<div class="eyebrow">${EYEBROW.type}</div><h2 class="prompt">${st.prompt}</h2><input id="typeIn" class="type-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Digite em inglês…">${st.hint?`<p class="hint">${st.hint}</p>`:""}`;
+area.appendChild(holder);holder.querySelector("#typeIn").addEventListener("input",()=>setDock({mode:"check"}));setTimeout(()=>{const el=$("#typeIn");el&&el.focus();},120);setDock({mode:"check"});}}
+function fillOpts(){const o=$("#opts");L.opts.forEach((item,idx)=>{const b=document.createElement("button");b.className="opt";b.innerHTML=`<span class="key">${idx+1}</span><span>${item.t}</span>`;b.onclick=()=>selectOpt(idx);o.appendChild(b);});}
+function selectOpt(idx){if(L.checked)return;L.sel=idx;sfx("tap");document.querySelectorAll("#opts .opt").forEach((b,i)=>b.classList.toggle("sel",i===idx));setDock({mode:"check"});}
+function placeTile(btn){if(L.checked)return;const i=+btn.dataset.i;L.placed.push(i);btn.classList.add("used");
+const t=document.createElement("button");t.className="tile placed";t.textContent=cur().bank[i];t.dataset.i=i;
+t.onclick=()=>{if(L.checked)return;t.remove();btn.classList.remove("used");L.placed=L.placed.filter(x=>x!==i);syncGhost();setDock({mode:"check"});sfx("tap");};
 $("#slot").appendChild(t);syncGhost();setDock({mode:"check"});sfx("tap");}
 function syncGhost(){const g=$("#ghost");if(g)g.style.display=L.placed.length?"none":"";}
-function hasAnswer(){const st=cur();
-if(st.kind==="choice"||st.kind==="listen")return L.sel!=null;
-if(st.kind==="build")return L.placed.length>0;
-if(st.kind==="type")return($("#typeIn")?.value||"").trim().length>0;return true;}
-function setDock(opts){const dock=$("#dock"),msg=$("#dockMsg"),btn=$("#dockBtn");
-dock.className="";msg.innerHTML="";btn.className="btn primary";
-if(opts.mode==="continue"){btn.textContent=opts.label||"Continuar";
-btn.disabled=false;btn.onclick=doContinue;}
+function hasAnswer(){const st=cur();if(st.kind==="choice"||st.kind==="listen")return L.sel!=null;if(st.kind==="build")return L.placed.length>0;if(st.kind==="type")return($("#typeIn")?.value||"").trim().length>0;return true;}
+function setDock(opts){const dock=$("#dock"),msg=$("#dockMsg"),btn=$("#dockBtn");dock.className="";msg.innerHTML="";btn.className="btn primary";
+if(opts.mode==="continue"){btn.textContent=opts.label||"Continuar";btn.disabled=false;btn.onclick=doContinue;}
 else{btn.textContent="Verificar";btn.disabled=!hasAnswer();btn.onclick=doCheck;}}
-function doCheck(){if(L.checked||!hasAnswer())return;L.checked=true;const st=cur();
-$("#pfill").style.width=((L.step+1)/L.ls.steps.length*100)+"%";let res;
-if(st.kind==="choice"||st.kind==="listen"){const ok=L.sel===st.answer;
-document.querySelectorAll("#opts .opt").forEach((b,i)=>{b.disabled=true;
-if(i===st.answer)b.classList.add("right");else if(i===L.sel)b.classList.add("wrongpick");});
-if(st.kind==="listen"&&!document.querySelector("#exArea .transcript")){
-const tr=document.createElement("p");tr.className="transcript";
-tr.innerHTML=`“${st.transcript}”`;$("#exArea .exercise").appendChild(tr);}
-res={ok,accepts:[st.options[st.answer]]};feedback(res,st.explain);}
+function doCheck(){if(L.checked||!hasAnswer())return;L.checked=true;const st=cur();$("#pfill").style.width=((L.step+1)/L.ls.steps.length*100)+"%";let res;
+if(st.kind==="choice"||st.kind==="listen"){const ok=L.opts[L.sel].ok;
+document.querySelectorAll("#opts .opt").forEach((b,i)=>{b.disabled=true;if(L.opts[i].ok)b.classList.add("right");else if(i===L.sel)b.classList.add("wrongpick");});
+if(st.kind==="listen"&&!document.querySelector("#exArea .transcript")){const tr=document.createElement("p");tr.className="transcript";tr.innerHTML=`"${st.transcript}"`;$("#exArea .exercise").appendChild(tr);}
+res={ok,accepts:[L.opts.find(o=>o.ok).t]};feedback(res,st.explain);}
 else{const input=st.kind==="build"?L.placed.map(i=>st.bank[i]).join(" "):$("#typeIn").value;
 if(st.kind==="type"){$("#typeIn").readOnly=true;}
 if(st.kind==="build"){document.querySelectorAll("#bank .tile, #slot .tile").forEach(t=>t.disabled=true);
-if(!checkAnswer(input,st.accept).ok){const slot=$("#slot");slot.classList.add("shake");
-setTimeout(()=>slot.classList.remove("shake"),450);}}
+if(!checkAnswer(input,st.accept).ok){const slot=$("#slot");slot.classList.add("shake");setTimeout(()=>slot.classList.remove("shake"),450);}}
 res=checkAnswer(input,st.accept);res.accepts=st.accept;res.variants=true;feedback(res);}
-L.answered++;if(res.ok)L.right++;else L.missed.push(st.accepts?st.accepts[0]:st.options[st.answer]);}
-function feedback(res,explain){const dock=$("#dock"),msg=$("#dockMsg"),btn=$("#dockBtn");
-dock.classList.add(res.ok?"good":"bad");sfx(res.ok?"ok":"no");
+L.answered++;if(res.ok)L.right++;else L.missed.push(st.accepts?st.accepts[0]:L.opts.find(o=>o.ok).t);}
+function feedback(res,explain){const dock=$("#dock"),msg=$("#dockMsg"),btn=$("#dockBtn");dock.classList.add(res.ok?"good":"bad");sfx(res.ok?"ok":"no");
 let html=`<div class="t">${res.ok?SVG.check:SVG.x}<span>${res.ok?pick(["Correto!","Isso!","Muito bem!","Exato."]):"Quase."}</span></div>`;
 if(!res.ok){html+=`<div class="d">Resposta: <b>${res.accepts[0]}</b>${res.near?" &nbsp;·&nbsp; Foi por pouco — confira a grafia.":""}</div>`;}
 if(res.variants&&res.accepts.length>1){const rest=res.accepts.slice(1,4);
 html+=`<div class="versions">${res.ok?"Também aceitamos:":"Também vale:"}${rest.map(v=>`<span class="v">${v}</span>`).join("")}${res.accepts.length>4?`<span class="v">+${res.accepts.length-4} mais</span>`:""}</div>`;}
 if(explain)html+=`<div class="d">${explain}</div>`;msg.innerHTML=html;
-btn.textContent="Continuar";btn.disabled=false;btn.className="btn "+(res.ok?"good":"bad");
-btn.onclick=doContinue;btn.focus();}
+btn.textContent="Continuar";btn.disabled=false;btn.className="btn "+(res.ok?"good":"bad");btn.onclick=doContinue;btn.focus();}
 function doContinue(){if(L.step<L.ls.steps.length-1){L.step++;renderStep();}else finish();}
-function finish(){$("#pfill").style.width="100%";stopAll();
-const total=L.answered||1;const acc=Math.round(L.right/total*100);
-store.done[L.ls.id]={acc};save();sfx("done");
+function finish(){$("#pfill").style.width="100%";stopAll();const total=L.answered||1;const acc=Math.round(L.right/total*100);store.done[L.ls.id]={acc};
+const hadToday=store.streak.last===dstr(0);const sk=bumpStreak();sfx("done");
 const phrases=L.ls.steps.filter(s=>s.accept).map(s=>s.accept[0]);
 $("#dAcc").textContent=acc+"%";
-$("#doneSub").textContent=acc===100?`“${L.ls.title}” — perfeita de primeira.`:`${L.missed.length} para revisar — estão na lista abaixo.`;
+$("#doneSub").textContent=acc===100?`"${L.ls.title}" — perfeita de primeira.`:`${L.missed.length} para revisar — estão na lista abaixo.`;
 $("#dSteps").textContent=L.ls.steps.filter(s=>s.kind!=="note"&&s.kind!=="learn").length;
 $("#dNew").textContent=phrases.length;
+$("#sbCount").textContent=sk+(sk===1?" dia seguido":" dias seguidos");
+$("#sbMsg").textContent=hadToday?"já contada hoje — volte amanhã pra manter!":(sk===1?"primeiro dia da sequência. Volte amanhã!":"sequência mantida! Volte amanhã.");
+const banner=$("#streakBanner");banner.style.animation="none";void banner.offsetWidth;banner.style.animation="";
 $("#pbTitle").textContent=L.missed.length?"Revise estas, depois o resto":"Frases desta lição";
 $("#pbList").innerHTML=phrases.length?phrases.map(p=>`<li>${SVG.checkSm}<span>${p}</span></li>`).join(""):`<li>${SVG.checkSm}<span>hello · hi · good morning · good night · goodbye</span></li>`;
-show("scrDone");requestAnimationFrame(()=>requestAnimationFrame(()=>{
-$("#ringFg").style.strokeDashoffset=213.6*(1-acc/100);}));}
+paintStreak();show("scrDone");
+requestAnimationFrame(()=>requestAnimationFrame(()=>{$("#ringFg").style.strokeDashoffset=213.6*(1-acc/100);}));}
 $("#quitBtn").onclick=()=>{stopAll();renderHome();show("scrHome");};
 $("#pathBtn").onclick=()=>{renderHome();show("scrHome");};
 $("#repeatBtn").onclick=()=>startLesson(L.gi);
-document.addEventListener("keydown",e=>{
-if($("#modal").classList.contains("on")){if(e.key==="Escape")closeModal();return;}
+document.addEventListener("keydown",e=>{if($("#modal").classList.contains("on")){if(e.key==="Escape")closeModal();return;}
 if(!$("#scrLesson").classList.contains("on")||!L)return;
 if(e.key==="Enter"){e.preventDefault();const btn=$("#dockBtn");if(!btn.disabled)btn.click();return;}
-const st=cur();if(!L.checked&&(st.kind==="choice"||st.kind==="listen")&&/^[1-9]$/.test(e.key)){
-const i=+e.key-1;if(i<st.options.length)selectOpt(i);}});
-function paintSound(){$("#icoOn").style.display=store.sound?"":"none";
-$("#icoOff").style.display=store.sound?"none":"";}
-$("#sndBtn").onclick=()=>{store.sound=!store.sound;save();paintSound();
-if(store.sound){sfx("ok");speak("Hello! Let's practice.");}};
+const st=cur();if(!L.checked&&(st.kind==="choice"||st.kind==="listen")&&/^[1-9]$/.test(e.key)){const i=+e.key-1;if(i<L.opts.length)selectOpt(i);}});
+function paintSound(){$("#icoOn").style.display=store.sound?"":"none";$("#icoOff").style.display=store.sound?"none":"";}
+$("#sndBtn").onclick=()=>{store.sound=!store.sound;save();paintSound();if(store.sound){sfx("ok");speak("Hello! Let's practice.");}};
 const DEMO_TARGET=["My name's Anna","My name is Anna","I'm Anna","I am Anna"];
 function openModal(){$("#modal").classList.add("on");setTimeout(()=>$("#tryIn").focus(),80);}
 function closeModal(){$("#modal").classList.remove("on");}
 $("#howBtn").onclick=openModal;$("#mClose").onclick=closeModal;
 $("#modal").addEventListener("click",e=>{if(e.target===$("#modal"))closeModal();});
-$("#tryIn").addEventListener("input",e=>{const v=e.target.value,el=$("#verdict");
-if(!v.trim()){el.innerHTML="";return;}const res=checkAnswer(v,DEMO_TARGET);
+$("#tryIn").addEventListener("input",e=>{const v=e.target.value,el=$("#verdict");if(!v.trim()){el.innerHTML="";return;}
+const res=checkAnswer(v,DEMO_TARGET);
 el.innerHTML=res.ok?`<span class="ok">✓ aceitamos</span><span class="norm">normalizado → <code>${normalize(v)}</code></span>`:`<span class="no">✗ não aceita</span><span class="norm">normalizado → <code>${normalize(v)||"—"}</code></span>`;});
-pickVoice();paintSound();renderHome();
+$("#dbgBtn").addEventListener("click",async()=>{const box=$("#dbgBox");box.style.display=box.style.display==="block"?"none":"block";if(box.style.display!=="block")return;
+audioLog.length=0;alog("=== DIAGNÓSTICO v12 ===");
+alog("origem: "+location.protocol+"//"+(location.host||"arquivo local"));
+alog("som ligado: "+(store.sound?"sim":"NÃO"));
+alog("ResponsiveVoice: "+(typeof responsiveVoice!=="undefined"?"sim":"NÃO"));
+alog("speechSynthesis: "+(typeof speechSynthesis!=="undefined"?"sim":"NÃO"));
+alog("--- teste de áudio ---");speak("Audio test. One, two, three.");
+await new Promise(r=>setTimeout(r,4000));alog("=== fim ===");});
+buildManifest();wireInstall();paintSound();paintStreak();renderHome();
+if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
 </script>
 </body>
 </html>
