@@ -1128,7 +1128,7 @@ alog("som ligado: "+(store.sound?"sim":"NÃO"));
 alog("ResponsiveVoice: "+(typeof responsiveVoice!=="undefined"?"sim":"NÃO"));
 alog("speechSynthesis: "+(typeof speechSynthesis!=="undefined"?"sim":"NÃO"));
 alog("--- teste de áudio ---");speak("Audio test. One, two, three.");
-await new Promise(r=>setTimeout(r,4000));alog("=== fim ===");});
+await new Promise(r=>setTimeout(r,4000));alog("== fim ==");});
 buildManifest();wireInstall();paintSound();renderHome();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
 </script>
