@@ -43,7 +43,7 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 @keyframes screenIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 #scrLesson.screen.on{display:flex;flex-direction:column;min-height:calc(100vh - 66px)}
 #exArea{flex:1;display:flex;flex-direction:column;justify-content:center;width:100%;padding:6px 0}
-.unit-head{max-width:640px;margin:6px auto 40px}
+.unit-head{max-width:640px;margin:6px auto 36px}
 .kicker{display:flex;align-items:center;gap:10px;font-size:11px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--pen)}
 .kicker::after{content:"";height:1.5px;width:56px;background:var(--pen);opacity:.35}
 .unit-title{font-family:var(--display);font-weight:800;font-size:clamp(34px,6.4vw,60px);line-height:1.03;letter-spacing:-.02em;margin:12px 0 16px}
@@ -57,7 +57,26 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .course-meta{margin-top:22px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ink-45)}
 .mini-bar{flex:1;max-width:220px;height:7px;border-radius:99px;background:rgba(32,36,44,.12);overflow:hidden}
 .mini-bar i{display:block;height:100%;background:var(--pen);border-radius:99px;transition:width .5s ease}
-.path{list-style:none;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:36px;padding:8px 0 22px}
+/* ---- seletor de sessões (home) ---- */
+.session-cards{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.session-card{display:flex;align-items:center;gap:16px;padding:18px;border:2px solid var(--ink);border-radius:16px;background:var(--card);box-shadow:0 5px 0 rgba(32,36,44,.85);cursor:pointer;transition:.15s;text-align:left;width:100%}
+.session-card:hover{transform:translateY(-2px);box-shadow:0 7px 0 rgba(32,36,44,.85)}
+.session-card:active{transform:translateY(2px);box-shadow:0 2px 0 rgba(32,36,44,.85)}
+.sc-num{width:56px;height:56px;flex:none;border-radius:14px;display:grid;place-items:center;font-family:var(--display);font-weight:800;font-size:19px;background:var(--pen-tint);color:var(--pen-deep);border:2px solid var(--pen-deep)}
+.session-card.done .sc-num{background:var(--good-tint);color:var(--good-deep);border-color:var(--good-deep)}
+.session-card.locked{border-style:dashed;box-shadow:none;opacity:.8;cursor:not-allowed}
+.session-card.locked:hover{transform:none}
+.session-card.locked .sc-num{background:transparent;border-color:var(--ink-45);color:var(--ink-45)}
+.sc-info{flex:1}
+.sc-info b{font-family:var(--display);font-size:18px;display:block;letter-spacing:-.01em}
+.sc-info p{font-size:13px;color:var(--ink-45);margin:2px 0 8px}
+.sc-state{font-size:22px;flex:none}
+/* ---- trilha da sessão ---- */
+.path-head{display:flex;align-items:center;gap:14px;max-width:640px;margin:0 auto 28px}
+.ph-kicker{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--pen);font-weight:700}
+.ph-title{font-family:var(--display);font-size:clamp(20px,4vw,26px);font-weight:800;letter-spacing:-.01em}
+.ph-prog{font-family:var(--display);font-weight:800;color:var(--ink-45);font-size:15px}
+.path{list-style:none;max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:34px;padding:8px 0 22px}
 .unit-divider{display:flex;align-items:center;gap:12px;color:var(--ink-45);font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase}
 .unit-divider::before,.unit-divider::after{content:"";flex:1;height:1.5px;background:var(--line)}
 .node{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transform:translateX(calc(var(--off,0px)*var(--offScale)))}
@@ -216,9 +235,12 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 .logo{font-size:22px}
 .link-btn{font-size:12px}
 .screen{padding:24px 14px 70px}
-.unit-head{margin-bottom:28px}
+.unit-head{margin-bottom:26px}
 .demo-chips .chip{font-size:12.5px;padding:4px 11px}
-.path{gap:30px}
+.session-card{padding:14px}
+.sc-num{width:48px;height:48px;font-size:16px}
+.sc-info b{font-size:16px}
+.path{gap:28px}
 .node-btn{width:58px;height:58px;font-size:19px}
 .node-meta h3{font-size:17px}
 .node-meta p{font-size:12.5px}
@@ -265,19 +287,30 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 </header>
 <main id="scrHome" class="screen on">
   <section class="unit-head">
-    <div class="kicker" id="unitKicker"></div>
-    <h1 class="unit-title" id="unitTitle"></h1>
-    <p class="unit-lede">Do zero até falar de verdade: ouça, repita e aprenda sem respostas rígidas. <b>"My name is"</b> e <b>"My name's"</b> valem igual.</p>
+    <div class="kicker">Curso completo · PT-BR → EN</div>
+    <h1 class="unit-title">Do zero ao <span class="hl-swipe">B1 médio</span></h1>
+    <p class="unit-lede">Duas sessões separadas, 49 lições. Ouça, repita e aprenda sem respostas rígidas — <b>"My name is"</b> e <b>"My name's"</b> valem igual.</p>
     <div class="demo-chips">
       <span class="chip">hello → olá ✓</span>
       <span class="chip">hi → oi ✓</span>
-      <span class="chip alt">6 unidades · 32 lições</span>
+      <span class="chip alt">2 sessões · 49 lições</span>
     </div>
     <div class="course-meta"><span id="courseMeta"></span><div class="mini-bar"><i id="miniFill"></i></div></div>
   </section>
-  <ol class="path" id="path"></ol>
-  <p class="foot"><span class="ver">v12</span> · seu progresso fica neste navegador · <button class="dbg-btn" id="dbgBtn">testar áudio</button></p>
+  <div class="session-cards" id="sessionCards"></div>
+  <p class="foot"><span class="ver">v14</span> · seu progresso fica neste navegador · <button class="dbg-btn" id="dbgBtn">testar áudio</button></p>
   <pre id="dbgBox"></pre>
+</main>
+<main id="scrPath" class="screen">
+  <div class="path-head">
+    <button class="icon-btn" id="backHome" aria-label="Voltar ao início">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <div><div class="ph-kicker" id="phKicker"></div><h2 class="ph-title" id="phTitle"></h2></div>
+    <div class="spacer"></div>
+    <span class="ph-prog" id="phProg"></span>
+  </div>
+  <ol class="path" id="path"></ol>
 </main>
 <main id="scrLesson" class="screen">
   <div class="lesson-top">
@@ -343,7 +376,8 @@ code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;backgroun
 <script>
 "use strict";
 const COURSE={units:[
-{id:"u1",num:1,title:"Primeiras palavras",level:"A0 · do zero",lessons:[
+/* ============ SESSÃO 1 · DO ZERO AO A2 ============ */
+{id:"u1",num:1,session:1,title:"Primeiras palavras",level:"A0 · do zero",lessons:[
 {id:"g1",title:"Cumprimentos",skill:"hello · hi · good morning",steps:[
 {kind:"learn",word:"hello",say:"Hello!",pt:"olá",pron:"ré-LÔU"},
 {kind:"learn",word:"hi",say:"Hi!",pt:"oi",pron:"RÁI",note:"mais informal que hello"},
@@ -430,7 +464,7 @@ const COURSE={units:[
 {kind:"choice",prompt:"\"Nice ___ meet you.\"",options:["to","for","at","with"],answer:0,explain:"Frase feita: nice <b>to</b> meet you."},
 {kind:"listen",say:"Nice to meet you too. I'm Tom.",prompt:"Ouça. O que ele disse?",options:["Nice to meet you too. I am Tom.","Nice to meet you two. I'm Tom.","Nice meet you too. I'm Tom."],answer:0,transcript:"Nice to meet you too. I'm Tom."},
 {kind:"type",prompt:"Alguém diz \"Nice to meet you.\" Responda.",accept:["Nice to meet you too","Nice to meet you","Likewise","You too","Pleased to meet you too","The pleasure is mine"],hint:"Devolve o cumprimento — com \"too\" no fim, ou numa palavra só."}]}]},
-{id:"u2",num:2,title:"Sobre você",level:"A1",lessons:[
+{id:"u2",num:2,session:1,title:"Sobre você",level:"A1",lessons:[
 {id:"g4",title:"Trabalho e estudo",skill:"'m · 's · 're · profissões",steps:[
 {kind:"note",title:"Contrair o \"be\" com todos os pronomes",body:`<span class="mark">I'm · you're · he's · she's · it's · we're · they're</span> — na fala e na escrita informal, a forma contraída é o padrão, não a exceção.`},
 {kind:"build",prompt:"Monte a frase.",context:"Falando do trabalho da Maria.",bank:["She's","She","is","a","an","nurse","doctor"],accept:["She's a nurse","She is a nurse"]},
@@ -477,7 +511,7 @@ const COURSE={units:[
 {kind:"choice",prompt:"Como se diz \"eu não gosto de futebol\"?",options:["I don't like football.","I no like football.","I not like football."],answer:0,explain:"Em inglês, a negação precisa de um auxiliar — aqui, \"don't\"."},
 {kind:"type",prompt:"Diga que você ama música.",accept:["I love music","I really love music"],hint:"O verbo de \"amar\" — mais forte que like."},
 {kind:"type",prompt:"Agora diga que você não gosta de café.",accept:["I don't like coffee","I do not like coffee"],hint:"Negação pede auxiliar: don't + like."}]}]},
-{id:"u3",num:3,title:"Comida e compras",level:"A1",lessons:[
+{id:"u3",num:3,session:1,title:"Comida e compras",level:"A1",lessons:[
 {id:"f1",title:"Comida e bebida",skill:"water · bread · coffee · eat · drink",steps:[
 {kind:"learn",word:"water",say:"Water, please.",pt:"água",pron:"UÓ-ter"},
 {kind:"learn",word:"bread",say:"Bread.",pt:"pão",pron:"BRÉD"},
@@ -557,7 +591,7 @@ const COURSE={units:[
 {kind:"type",prompt:"Pergunte o preço de algo.",accept:["How much is it","How much","How much does it cost","What's the price"],hint:"As duas palavras que abrem pergunta de preço."},
 {kind:"type",prompt:"Diga que algo é barato.",accept:["It's cheap","It is cheap","Very cheap","It's very cheap"],hint:"O contrário de expensive."},
 {kind:"type",prompt:"Agora diga que está caro demais.",accept:["It's too expensive","It is too expensive","Too expensive"],hint:"\"Demais\" = too + o contrário de cheap."}]}]},
-{id:"u4",num:4,title:"Descrevendo o mundo",level:"A1-A2",lessons:[
+{id:"u4",num:4,session:1,title:"Descrevendo o mundo",level:"A1-A2",lessons:[
 {id:"c2",title:"Cores e aparência",skill:"red · blue · big · small",steps:[
 {kind:"learn",word:"red",say:"A red car.",pt:"vermelho",pron:"RÉD"},
 {kind:"learn",word:"blue",say:"The sky is blue.",pt:"azul",pron:"BLÚ"},
@@ -625,7 +659,7 @@ const COURSE={units:[
 {kind:"choice",prompt:"Como se diz \"está frio hoje\"?",options:["It's cold today.","It's hot today.","I'm cold."],answer:0,explain:"Usamos <b>it</b> para clima."},
 {kind:"type",prompt:"Diga: \"Estou cansado.\"",accept:["I'm tired","I am tired"],hint:"\"I'm\" + o adjetivo de \"cansado\" (5 letras)."},
 {kind:"type",prompt:"Diga que você está feliz.",accept:["I'm happy","I am happy","I'm very happy"],hint:"O contrário de sad."}]}]},
-{id:"u5",num:5,title:"Tempo e passado",level:"A2",lessons:[
+{id:"u5",num:5,session:1,title:"Tempo e passado",level:"A2",lessons:[
 {id:"d1",title:"Dias da semana",skill:"Monday → Sunday",steps:[
 {kind:"learn",word:"Monday",say:"On Monday.",pt:"segunda-feira",pron:"MÂN-dei"},
 {kind:"learn",word:"Tuesday",say:"On Tuesday.",pt:"terça-feira",pron:"TIÚZ-dei"},
@@ -692,7 +726,7 @@ const COURSE={units:[
 {kind:"build",prompt:"Monte: \"Eu comi pizza ontem.\"",bank:["I","ate","eat","pizza","yesterday","today"],accept:["I ate pizza yesterday"]},
 {kind:"type",prompt:"Diga: \"Eu fui à praia.\"",accept:["I went to the beach"],hint:"O passado irregular de \"go\"."},
 {kind:"type",prompt:"Diga: \"Eu vi um filme.\"",accept:["I saw a movie","I saw a film"],hint:"O passado irregular de \"see\" — 3 letras."}]}]},
-{id:"u6",num:6,title:"Conectando ideias",level:"A2",lessons:[
+{id:"u6",num:6,session:1,title:"Conectando ideias",level:"A2",lessons:[
 {id:"k1",title:"Conjunções",skill:"and · but · because · so",steps:[
 {kind:"learn",word:"and",say:"Coffee and bread.",pt:"e",pron:"ÉND"},
 {kind:"learn",word:"but",say:"I like coffee but I don't like tea.",pt:"mas",pron:"BÂT"},
@@ -744,8 +778,8 @@ const COURSE={units:[
 {kind:"build",prompt:"Monte: \"Nós vamos visitar minha família.\"",bank:["We're","going","to","visit","my","family","I'm"],accept:["We're going to visit my family","We are going to visit my family"]},
 {kind:"type",prompt:"Diga que você vai estudar inglês.",accept:["I'm going to study English","I am going to study English"],hint:"Plano = be + going to + verbo."},
 {kind:"type",prompt:"Diga que ela vai viajar mês que vem.",accept:["She's going to travel next month","She is going to travel next month"],hint:"\"She\" + contração do \"is\" + going to."}]},
-{id:"rev",title:"Revisão final",skill:"tudo junto!",steps:[
-{kind:"note",title:"Parabéns!",body:`Você chegou ao fim do curso básico. Esta lição revisa <span class="mark">tudo que você aprendeu</span> — cumprimentos, apresentações, rotina, opiniões, comida, lugares, passado e futuro. Bora?`},
+{id:"rev",title:"Revisão final da Sessão 1",skill:"tudo junto!",steps:[
+{kind:"note",title:"Parabéns!",body:`Você chegou ao fim da <span class="mark">Sessão 1</span>. Termine esta revisão para <span class="mark">desbloquear a Sessão 2</span> (A2 → B1 médio)!`},
 {kind:"listen",say:"Hi! My name's Sarah. I'm from Brazil. I'm a student.",prompt:"O que sabemos sobre Sarah?",options:["é estudante e do Brasil","é professora e dos EUA","trabalha em Londres"],answer:0,transcript:"Hi! My name's Sarah. I'm from Brazil. I'm a student."},
 {kind:"type",prompt:"Apresente-se: diga seu nome e de onde você é.",accept:["My name is","My name's","I'm from","I am from"],hint:"Nome primeiro, origem depois — contrações valem."},
 {kind:"choice",prompt:"Como se responde \"How are you?\" educadamente?",options:["I'm good, thanks. And you?","Yes, I am.","No, I'm not."],answer:0},
@@ -755,7 +789,124 @@ const COURSE={units:[
 {kind:"build",prompt:"Monte: \"Vou visitar minha família no domingo.\"",bank:["I'm","going","to","visit","my","family","on","Sunday"],accept:["I'm going to visit my family on Sunday","I am going to visit my family on Sunday"]},
 {kind:"type",prompt:"Peça a conta em um restaurante.",accept:["The bill please","The check please","Can I have the bill","Can I have the check"],hint:"bill ou check + a palavra mágica."},
 {kind:"listen",say:"Where are you going?",prompt:"O que a pessoa pergunta?",options:["aonde você vai","como você está","o que você quer"],answer:0,transcript:"Where are you going?"},
-{kind:"type",prompt:"Diga uma coisa que você ama e o motivo.",accept:["I love","because","I really love"],hint:"\"I love …\" + a conjunção de motivo."}]}]}]};
+{kind:"type",prompt:"Diga uma coisa que você ama e o motivo.",accept:["I love","because","I really love"],hint:"\"I love …\" + a conjunção de motivo."}]}]},
+/* ============ SESSÃO 2 · A2 → B1 MÉDIO ============ */
+{id:"u7",num:7,session:2,title:"Experiências · Present Perfect",level:"A2 → B1",lessons:[
+{id:"h1",title:"Have you ever…?",skill:"ever · never · experiências",steps:[
+{kind:"note",title:"Present Perfect = have/has + particípio",body:`Usamos para <span class="mark">experiências de vida</span>, sem dizer quando: <em>I have been to Rome.</em> (não importa quando — o que importa é que aconteceu).`},
+{kind:"learn",word:"Have you ever…?",say:"Have you ever been to the beach?",pt:"Você já foi à praia?",pron:"rév iú É-ver bin"},
+{kind:"listen",say:"Have you ever eaten sushi?",prompt:"O que a pessoa perguntou?",options:["Se você já comeu sushi","Se você come sushi todo dia","Se você quer sushi"],answer:0,transcript:"Have you ever eaten sushi?"},
+{kind:"choice",prompt:"___ you ever ___ to the USA?",options:["Have / been","Did / been","Has / been"],answer:0,explain:"Com \"you\" usamos <b>have</b>; o particípio de <i>go</i> é <b>been</b>."},
+{kind:"build",prompt:"Monte: \"Você já foi ao Brasil?\"",bank:["Have","you","ever","been","to","Brazil","?"],accept:["Have you ever been to Brazil"]},
+{kind:"learn",word:"never",say:"I have never tried sushi.",pt:"nunca",pron:"NÉ-ver"},
+{kind:"type",prompt:"Diga: \"Eu nunca fui aos EUA.\"",accept:["I have never been to the USA","I've never been to the USA"],hint:"have + never + been."}]},
+{id:"h2",title:"for e since",skill:"duração · ponto de partida",steps:[
+{kind:"note",title:"for × since",body:`<span class="mark">for</span> = duração (<em>for two years</em>). <span class="mark">since</span> = ponto de partida (<em>since 2020</em>).`},
+{kind:"choice",prompt:"I've lived here ___ 2019.",options:["since","for","from"],answer:0,explain:"2019 é um ponto de partida → since."},
+{kind:"choice",prompt:"She's studied English ___ three years.",options:["for","since","from"],answer:0,explain:"\"three years\" é uma duração → for."},
+{kind:"build",prompt:"Monte: \"Ela trabalha aqui desde 2020.\"",bank:["She","has","worked","here","since","for","2020"],accept:["She has worked here since 2020"]},
+{kind:"type",prompt:"Diga: \"Eu moro aqui há dez anos.\"",accept:["I have lived here for ten years","I've lived here for ten years"],hint:"for + duração."},
+{kind:"type",prompt:"Diga: \"Nós nos conhecemos desde 2010.\"",accept:["We have known each other since 2010","We've known each other since 2010"],hint:"since + ano."}]},
+{id:"h3",title:"just · already · yet",skill:"agora mesmo · ainda · já",steps:[
+{kind:"note",title:"just / already / yet",body:`<span class="mark">just</span> = agora mesmo. <span class="mark">already</span> = já (afirmativa). <span class="mark">yet</span> = ainda (negativa/pergunta, no fim).`},
+{kind:"choice",prompt:"I've ___ finished my homework.",options:["just","yet","since"],answer:0},
+{kind:"choice",prompt:"Have you eaten ___?",options:["yet","already","for"],answer:0,explain:"Pergunta + fim da frase → yet."},
+{kind:"choice",prompt:"Don't call him — he has ___ left the office.",options:["just","yet","since"],answer:0},
+{kind:"build",prompt:"Monte: \"Você já fez isso?\"",bank:["Have","you","done","it","yet","?","already"],accept:["Have you done it yet"]},
+{kind:"type",prompt:"Diga: \"Eu já comi.\"",accept:["I have already eaten","I've already eaten"],hint:"already antes do particípio."}]},
+{id:"h4",title:"Present Perfect ou Past?",skill:"quando usar cada um",steps:[
+{kind:"note",title:"A regra de ouro",body:`Tempo específico (<em>yesterday, in 2010</em>) → <span class="mark">Simple Past</span>. Sem tempo específico → <span class="mark">Present Perfect</span>.`},
+{kind:"choice",prompt:"I ___ to Rome in 2019.",options:["went","have gone","have been"],answer:0,explain:"\"in 2019\" é tempo específico → past."},
+{kind:"choice",prompt:"I ___ never ___ sushi.",options:["have / tried","did / tried","did / try"],answer:0},
+{kind:"choice",prompt:"She ___ here since 2020.",options:["has lived","lived","lives"],answer:0},
+{kind:"type",prompt:"Traduza: \"Eu perdi minhas chaves ontem.\"",accept:["I lost my keys yesterday"],hint:"Ontem = passado simples."},
+{kind:"type",prompt:"Agora sem tempo: \"Eu perdi minhas chaves.\"",accept:["I have lost my keys","I've lost my keys"],hint:"Sem quando → present perfect."}]}]},
+{id:"u8",num:8,session:2,title:"Phrasal Verbs",level:"A2 → B1",lessons:[
+{id:"h5",title:"Manhã · phrasals",skill:"wake up · get up · turn on",steps:[
+{kind:"learn",word:"wake up",say:"I wake up at six.",pt:"acordar",pron:"UÊIK âp"},
+{kind:"learn",word:"get up",say:"I get up at seven.",pt:"levantar da cama",pron:"guét âp"},
+{kind:"choice",prompt:"\"wake up\" significa…",options:["acordar","levantar da cama","dormir"],answer:0},
+{kind:"learn",word:"turn on / turn off",say:"Turn on the light.",pt:"ligar / desligar",pron:"târn on / târn óf"},
+{kind:"build",prompt:"Monte: \"Eu acordo às seis.\"",bank:["I","wake","up","at","six","seven"],accept:["I wake up at six"]},
+{kind:"type",prompt:"Diga: \"Eu levanto às sete.\"",accept:["I get up at seven"],hint:"get up + at + hora."}]},
+{id:"h6",title:"Don't give up!",skill:"give up · look for · find out",steps:[
+{kind:"learn",word:"give up",say:"Don't give up!",pt:"desistir",pron:"guív âp"},
+{kind:"learn",word:"look for",say:"I'm looking for my keys.",pt:"procurar",pron:"lûk for"},
+{kind:"learn",word:"find out",say:"I found out the truth.",pt:"descobrir",pron:"fáind áut"},
+{kind:"choice",prompt:"\"I'm looking for my phone.\" significa…",options:["Estou procurando meu telefone","Estou achando meu telefone","Estou olhando meu telefone"],answer:0},
+{kind:"build",prompt:"Monte: \"Não desista!\"",bank:["Don't","give","up","!","look","for"],accept:["Don't give up!","Don't give up"]},
+{kind:"type",prompt:"Diga: \"Eu descobri a verdade.\"",accept:["I found out the truth"],hint:"find out no passado = found out."}]},
+{id:"h7",title:"Phrasals do dia a dia",skill:"come back · look after · put on",steps:[
+{kind:"learn",word:"come back",say:"Come back home!",pt:"voltar",pron:"câm bék"},
+{kind:"learn",word:"look after",say:"She looks after her brother.",pt:"cuidar de",pron:"lûk ÁF-ter"},
+{kind:"learn",word:"put on",say:"Put on your jacket.",pt:"vestir · colocar",pron:"pût on"},
+{kind:"choice",prompt:"\"Put on your jacket.\" significa…",options:["Vista sua jaqueta","Tire sua jaqueta","Compre uma jaqueta"],answer:0},
+{kind:"build",prompt:"Monte: \"Ela cuida do irmão.\"",bank:["She","looks","after","her","brother","him"],accept:["She looks after her brother"]},
+{kind:"type",prompt:"Diga: \"Volte pra casa!\"",accept:["Come back home","Come back home!"],hint:"come back + home."}]}]},
+{id:"u9",num:9,session:2,title:"If… · Condicionais",level:"A2 → B1",lessons:[
+{id:"h8",title:"First Conditional",skill:"futuro real",steps:[
+{kind:"note",title:"First Conditional",body:`<span class="mark">If + presente, will + verbo</span>. Futuro <em>real</em>: <em>If it rains, I'll stay home.</em>`},
+{kind:"choice",prompt:"If it rains, I ___ at home.",options:["will stay","stayed","would stay"],answer:0},
+{kind:"build",prompt:"Monte: \"Se você estudar, vai passar na prova.\"",bank:["If","you","study","you'll","pass","the","test"],accept:["If you study you'll pass the test","If you study, you'll pass the test"]},
+{kind:"choice",prompt:"If she ___ hard, she'll pass.",options:["studies","will study","studied"],answer:0,explain:"Depois do <i>if</i> usamos presente."},
+{kind:"type",prompt:"Diga: \"Se eu tiver tempo, eu te ligo.\"",accept:["If I have time I will call you","If I have time, I will call you","If I have time I'll call you","If I have time, I'll call you"],hint:"if + presente, will + verbo."}]},
+{id:"h9",title:"If I were you…",skill:"hipótese · imaginação",steps:[
+{kind:"note",title:"Second Conditional",body:`<span class="mark">If + passado, would + verbo</span>. Hipótese/imaginação: <em>If I were you, I'd say sorry.</em>`},
+{kind:"choice",prompt:"If I ___ you, I'd say sorry.",options:["were","am","will be"],answer:0,explain:"\"If I were you\" é fixo."},
+{kind:"choice",prompt:"If I had money, I ___ travel the world.",options:["would","will","am"],answer:0},
+{kind:"build",prompt:"Monte: \"Se eu fosse você, eu estudaria mais.\"",bank:["If","I","were","you","I'd","study","more"],accept:["If I were you I'd study more","If I were you, I'd study more"]},
+{kind:"type",prompt:"Diga: \"Se eu morasse perto da praia, eu nadaria todo dia.\"",accept:["If I lived near the beach I would swim every day","If I lived near the beach, I would swim every day","If I lived near the beach, I'd swim every day","If I lived near the beach I'd swim every day"],hint:"if + passado, would + verbo."}]},
+{id:"h10",title:"Prática de condicionais",skill:"real × imaginário",steps:[
+{kind:"choice",prompt:"Real ou imaginário? \"If it's sunny, we'll go to the park.\"",options:["real (1st)","imaginário (2nd)"],answer:0},
+{kind:"choice",prompt:"E agora? \"If I were rich, I'd buy a boat.\"",options:["imaginário (2nd)","real (1st)"],answer:0},
+{kind:"build",prompt:"Monte: \"Se eu tivesse tempo, eu aprenderia francês.\"",bank:["If","I","had","time","I'd","learn","French"],accept:["If I had time I'd learn French","If I had time, I'd learn French"]},
+{kind:"type",prompt:"Complete: \"If we leave now, we will ___ on time.\" (arrive)",accept:["arrive","we will arrive on time","If we leave now we will arrive on time"],hint:"Depois de will, verbo na forma base."}]}]},
+{id:"u10",num:10,session:2,title:"Contando histórias",level:"A2 → B1",lessons:[
+{id:"h11",title:"was/were + -ing",skill:"past continuous",steps:[
+{kind:"note",title:"Past Continuous",body:`<span class="mark">was/were + -ing</span> = ação em andamento no passado: <em>I was sleeping when you called.</em>`},
+{kind:"choice",prompt:"I ___ sleeping when you called.",options:["was","were","am"],answer:0},
+{kind:"choice",prompt:"They ___ playing soccer at 3pm.",options:["were","was","are"],answer:0},
+{kind:"build",prompt:"Monte: \"Eu estava assistindo TV quando você ligou.\"",bank:["I","was","watching","TV","when","you","called"],accept:["I was watching TV when you called"]},
+{kind:"type",prompt:"Diga: \"Ela estava trabalhando ao meio-dia.\"",accept:["She was working at noon"],hint:"was + -ing."}]},
+{id:"h12",title:"used to",skill:"hábitos do passado",steps:[
+{kind:"note",title:"used to",body:`<span class="mark">used to</span> = hábito do passado que <em>não existe mais</em>: <em>I used to play outside.</em>`},
+{kind:"choice",prompt:"I ___ play video games every day (mas não mais).",options:["used to","use to","am used to"],answer:0,explain:"Escrevemos <b>used to</b>."},
+{kind:"choice",prompt:"She didn't ___ like coffee.",options:["use to","used to","uses to"],answer:0,explain:"Depois de <i>didn't</i>, usamos <b>use to</b>."},
+{kind:"build",prompt:"Monte: \"Nós brincávamos fora.\"",bank:["We","used","to","play","outside","use"],accept:["We used to play outside"]},
+{kind:"type",prompt:"Diga: \"Eu morava em São Paulo.\"",accept:["I used to live in São Paulo"],hint:"used to + verbo."}]},
+{id:"h13",title:"while × when",skill:"ação longa × ação curta",steps:[
+{kind:"note",title:"while × when",body:`<span class="mark">while</span> + continuous (ação longa). <span class="mark">when</span> + past (ação curta): <em>While I was cooking, the phone rang.</em>`},
+{kind:"choice",prompt:"___ I was cooking, the phone rang.",options:["While","When","If"],answer:0},
+{kind:"choice",prompt:"I was sleeping ___ the storm started.",options:["when","while","for"],answer:0},
+{kind:"build",prompt:"Monte: \"Enquanto eu cozinhava, o telefone tocou.\"",bank:["While","I","was","cooking","the","phone","rang"],accept:["While I was cooking the phone rang","While I was cooking, the phone rang"]},
+{kind:"type",prompt:"Diga: \"Quando eu era criança, eu amava doce.\"",accept:["When I was a kid I loved candy","When I was a kid, I loved candy"],hint:"when + past, past."}]}]},
+{id:"u11",num:11,session:2,title:"Futuro & comparações",level:"B1 médio",lessons:[
+{id:"h14",title:"will × going to",skill:"decisão × plano",steps:[
+{kind:"note",title:"will × going to",body:`<span class="mark">going to</span> = plano ou evidência visível. <span class="mark">will</span> = decisão na hora, promessa, previsão.`},
+{kind:"choice",prompt:"Look at those clouds! It ___ rain.",options:["is going to","will","would"],answer:0,explain:"Evidência visível → going to."},
+{kind:"choice",prompt:"\"The phone is ringing.\" — \"I ___ get it!\"",options:["will","am going to","would"],answer:0,explain:"Decisão na hora → will."},
+{kind:"build",prompt:"Monte: \"Eu acho que vai chover amanhã.\"",bank:["I","think","it","will","rain","tomorrow"],accept:["I think it will rain tomorrow"]},
+{kind:"type",prompt:"Diga: \"Eu vou visitar minha vó no domingo.\"",accept:["I'm going to visit my grandma on Sunday","I am going to visit my grandma on Sunday"],hint:"plano → going to."}]},
+{id:"h15",title:"might · may",skill:"possibilidade",steps:[
+{kind:"learn",word:"might",say:"It might rain today.",pt:"talvez · pode ser que",pron:"máit"},
+{kind:"choice",prompt:"\"It might snow.\" significa…",options:["Talvez neve","Vai nevar com certeza","Nevou"],answer:0},
+{kind:"choice",prompt:"She ___ come to the party — she's not sure.",options:["might","will","must"],answer:0},
+{kind:"type",prompt:"Diga: \"Talvez eu vá à festa.\"",accept:["I might go to the party"],hint:"might + verbo base."},
+{kind:"choice",prompt:"Qual frase está correta?",options:["I might be late.","I might am late.","I might will be late."],answer:0,explain:"Depois de might, só o verbo base."}]},
+{id:"h16",title:"Comparações",skill:"-er · more · as…as",steps:[
+{kind:"note",title:"Comparativos",body:`Curto → <span class="mark">-er</span> (bigger). Longo → <span class="mark">more</span> (more expensive). Igualdade → <span class="mark">as … as</span>.`},
+{kind:"choice",prompt:"English is ___ than math.",options:["easier","more easy","easy"],answer:0,explain:"easy → easier (y vira i)."},
+{kind:"choice",prompt:"She's as tall ___ her brother.",options:["as","than","more"],answer:0},
+{kind:"build",prompt:"Monte: \"Minha casa é maior que a sua.\"",bank:["My","house","is","bigger","than","yours","smaller"],accept:["My house is bigger than yours"]},
+{kind:"type",prompt:"Diga: \"Hoje é melhor que ontem.\"",accept:["Today is better than yesterday"],hint:"good → better."}]},
+{id:"h17",title:"Revisão B1",skill:"tudo da Sessão 2",steps:[
+{kind:"listen",say:"I've lived here since 2020, and I've never been happier.",prompt:"Qual está correta?",options:["She has lived there since 2020","She lives there since 2020","She lived there since 2020"],answer:0,transcript:"I've lived here since 2020, and I've never been happier."},
+{kind:"type",prompt:"Diga: \"Eu já fui aos EUA duas vezes.\"",accept:["I have been to the USA twice","I've been to the USA twice"],hint:"have been + lugar."},
+{kind:"choice",prompt:"If I ___ more time, I'd travel the world.",options:["had","have","will have"],answer:0},
+{kind:"build",prompt:"Monte: \"Eu odiava café, mas agora eu amo.\"",bank:["I","used","to","hate","coffee","but","now","I","love","it"],accept:["I used to hate coffee but now I love it","I used to hate coffee, but now I love it"]},
+{kind:"type",prompt:"Diga: \"Eu vou continuar estudando inglês.\"",accept:["I'm going to keep studying English","I am going to keep studying English"],hint:"going to + keep + -ing."},
+{kind:"choice",prompt:"Qual está correta?",options:["I might be late.","I might am late.","I might will be late."],answer:0}]}]}
+]};
 
 const FLAT=[];
 COURSE.units.forEach(u=>u.lessons.forEach(ls=>FLAT.push({...ls,unit:u})));
@@ -783,12 +934,10 @@ const audioLog=[];
 function alog(s){audioLog.push(s);if(audioLog.length>60)audioLog.shift();
 const el=document.querySelector("#dbgBox");
 if(el&&el.style.display==="block")el.textContent=audioLog.join("\n");}
-
 let speakSeq=0;
 function stopAll(){speakSeq++;
 try{if(typeof responsiveVoice!=="undefined")responsiveVoice.cancel();}catch(e){}
 try{if(typeof speechSynthesis!=="undefined")speechSynthesis.cancel();}catch(e){}}
-
 function speak(text,rate,btn){
 if(!store.sound||!text){alog("bloqueado: som="+store.sound);return;}
 stopAll();
@@ -800,10 +949,9 @@ try{alog("usando ResponsiveVoice (US English Female)");
 responsiveVoice.speak(text,"US English Female",{rate:rate||0.9,
 onstart:()=>{if(seq===speakSeq&&btn)btn.classList.add("speaking");alog("✓ ResponsiveVoice: onstart");},
 onend:()=>{if(seq===speakSeq&&btn)btn.classList.remove("speaking");alog("✓ ResponsiveVoice: onend");},
-onerror:(e)=>{alog("✗ ResponsiveVoice erro");fallbackTTS(text,rate,btn,seq);}});
+onerror:()=>{alog("✗ ResponsiveVoice erro");fallbackTTS(text,rate,btn,seq);}});
 return;}catch(e){alog("✗ ResponsiveVoice exceção: "+e);}}
 fallbackTTS(text,rate,btn,seq);}
-
 function fallbackTTS(text,rate,btn,seq){
 if(typeof speechSynthesis==="undefined"){alog("✗ sem speechSynthesis");if(btn)btn.classList.remove("speaking");return;}
 try{speechSynthesis.cancel();
@@ -837,7 +985,7 @@ const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()
 function makeIcon(size){const c=document.createElement("canvas");c.width=size;c.height=size;const x=c.getContext("2d"),r=size*0.22;x.fillStyle="#2A57D9";x.beginPath();x.moveTo(r,0);x.lineTo(size-r,0);x.quadraticCurveTo(size,0,size,r);x.lineTo(size,size-r);x.quadraticCurveTo(size,size,size-r,size);x.lineTo(r,size);x.quadraticCurveTo(0,size,0,size-r);x.lineTo(0,r);x.quadraticCurveTo(0,0,r,0);x.closePath();x.fill();x.fillStyle="#FFFFFF";x.font="800 "+(size*0.52)+"px Arial, sans-serif";x.textAlign="center";x.textBaseline="middle";x.fillText("f",size*0.46,size*0.55);x.fillStyle="#FFDE52";x.beginPath();x.arc(size*0.72,size*0.72,size*0.07,0,Math.PI*2);x.fill();return c.toDataURL("image/png");}
 let deferredPrompt=null;
 function buildManifest(){const base=(location.origin||"")+location.pathname.replace(/[^/]*$/,"");const i192=makeIcon(192),i512=makeIcon(512);
-const manifest={name:"fluent. — inglês do zero",short_name:"fluent.",description:"Curso de inglês para brasileiros: do zero ao A2, sem conta e sem confete.",lang:"pt-BR",start_url:base,scope:base,display:"standalone",orientation:"any",background_color:"#F5F6F2",theme_color:"#F5F6F2",icons:[{src:i192,sizes:"192x192",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"maskable"}]};
+const manifest={name:"fluent. — inglês do zero",short_name:"fluent.",description:"Curso de inglês para brasileiros: do zero ao B1 médio, sem conta e sem confete.",lang:"pt-BR",start_url:base,scope:base,display:"standalone",orientation:"any",background_color:"#F5F6F2",theme_color:"#F5F6F2",icons:[{src:i192,sizes:"192x192",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"any"},{src:i512,sizes:"512x512",type:"image/png",purpose:"maskable"}]};
 const blob=new Blob([JSON.stringify(manifest)],{type:"application/manifest+json"});const url=URL.createObjectURL(blob);
 let link=document.querySelector('link[rel="manifest"]');if(!link){link=document.createElement("link");link.rel="manifest";document.head.appendChild(link);}link.href=url;
 let apple=document.querySelector('link[rel="apple-touch-icon"]');if(!apple){apple=document.createElement("link");apple.rel="apple-touch-icon";document.head.appendChild(apple);}apple.href=i192;}
@@ -852,22 +1000,49 @@ lock:`<svg width="21" height="21" viewBox="0 0 24 24"><path d="M8 10V8a4 4 0 1 1
 play:`<svg class="tri" width="24" height="24" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg><span class="eq"><i></i><i></i><i></i></span>`};
 const EYEBROW={learn:"Palavra nova",choice:"Escolha a melhor",listen:"Compreensão auditiva",build:"Monte a frase",type:"Escreva em inglês",note:"Nota rápida"};
 function show(id){document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));$("#dock").style.display=(id==="scrLesson")?"block":"none";window.scrollTo(0,0);}
-const unlocked=gi=>gi===0||!!store.done[FLAT[gi-1].id];
-function activeUnit(){const gi=FLAT.findIndex(l=>!store.done[l.id]);return(gi===-1?FLAT[FLAT.length-1]:FLAT[gi]).unit;}
-function renderHome(){const u=activeUnit();$("#unitKicker").textContent=`Unidade ${u.num} · ${u.level}`;const words=u.title.split(" ");
-$("#unitTitle").innerHTML=words.length>1?`${words[0]} <span class="hl-swipe">${words.slice(1).join(" ")}</span>`:`<span class="hl-swipe">${u.title}</span>`;
-const path=$("#path");path.innerHTML="";const offs=[0,104,0,-104];const currentId=(FLAT.find(l=>!store.done[l.id])||{}).id;let gi=0,doneCount=0;
-COURSE.units.forEach(unit=>{const div=document.createElement("li");div.className="unit-divider";div.textContent=`Unidade ${unit.num} · ${unit.title}`;path.appendChild(div);
-unit.lessons.forEach(ls=>{const idx=gi;const done=store.done[ls.id];if(done)doneCount++;const isOpen=unlocked(idx);const st=done?"done":isOpen?"current":"locked";
-const li=document.createElement("li");li.className="node "+st;li.style.setProperty("--off",offs[idx%offs.length]+"px");
-const inner=done?SVG.check:isOpen?(idx+1):SVG.lock;
-const chip=done?`<span class="badge-chip ok">Feita · ${done.acc}%</span>`:ls.id===currentId?`<span class="badge-chip go">Começar aqui</span>`:`<span class="badge-chip">Bloqueada</span>`;
-li.innerHTML=`<button class="node-btn" aria-label="Lição: ${ls.title}">${inner}</button><div class="node-meta"><h3>${ls.title}</h3><p>${ls.skill}</p></div>${chip}`;
-li.querySelector(".node-btn").addEventListener("click",()=>{if(!isOpen){li.querySelector(".node-btn").animate([{transform:"translateX(0)"},{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:260});return;}startLesson(idx);});
-path.appendChild(li);gi++;});});
-$("#courseMeta").textContent=`${doneCount} de ${FLAT.length} lições concluídas`;$("#miniFill").style.width=(doneCount/FLAT.length*100)+"%";paintStreak();}
+const session1Complete=()=>FLAT.filter(l=>l.unit.session===1).every(l=>store.done[l.id]);
+function unlocked(gi){if(gi===0)return true;const les=FLAT[gi];
+if(les.unit.session===2&&!session1Complete())return false;
+return !!store.done[FLAT[gi-1].id];}
+let viewSession=1;
+function sessionProgress(s){const ls=FLAT.filter(l=>l.unit.session===s);const d=ls.filter(l=>store.done[l.id]).length;return{done:d,total:ls.length,pct:Math.round(d/ls.length*100)};}
+function renderHome(){
+const cards=$("#sessionCards");cards.innerHTML="";
+[1,2].forEach(s=>{
+const p=sessionProgress(s);const open=s===1||session1Complete();
+const card=document.createElement("button");
+card.className="session-card"+(p.pct===100?" done":open?"":" locked");
+const state=p.pct===100?"✓":open?"▶":"🔒";
+card.innerHTML=`<span class="sc-num">S${s}</span><div class="sc-info"><b>${s===1?"Sessão 1 · Do zero ao A2":"Sessão 2 · A2 → B1 médio"}</b><p>${p.done}/${p.total} lições · ${s===1?"comece por aqui":open?"desbloqueada — bom estudo!":"complete a Sessão 1 para desbloquear"}</p><div class="mini-bar"><i style="width:${p.pct}%"></i></div></div><span class="sc-state">${state}</span>`;
+card.onclick=()=>{if(!open){card.animate([{transform:"translateX(0)"},{transform:"translateX(-6px)"},{transform:"translateX(6px)"},{transform:"translateX(0)"}],{duration:260});return;}
+viewSession=s;renderPath();show("scrPath");};
+cards.appendChild(card);});
+const all=FLAT.length;const doneAll=FLAT.filter(l=>store.done[l.id]).length;
+$("#courseMeta").textContent=`${doneAll} de ${all} lições concluídas`;
+$("#miniFill").style.width=(doneAll/all*100)+"%";
+paintStreak();}
+function renderPath(){
+const s=viewSession;
+$("#phKicker").textContent=`Sessão ${s} · ${s===1?"A0 → A2":"A2 → B1 médio"}`;
+$("#phTitle").textContent=s===1?"Do zero ao A2":"A2 → B1 médio";
+const p=sessionProgress(s);$("#phProg").textContent=`${p.done}/${p.total}`;
+const path=$("#path");path.innerHTML="";
+const offs=[0,104,0,-104];
+const firstUndone=(FLAT.filter(l=>l.unit.session===s).find(l=>!store.done[l.id])||{}).id;
+let lastUnit=0,n=0;
+FLAT.forEach((les,gi)=>{
+if(les.unit.session!==s)return;
+if(les.unit.num!==lastUnit){const div=document.createElement("li");div.className="unit-divider";div.textContent=`Unidade ${les.unit.num} · ${les.unit.title}`;path.appendChild(div);lastUnit=les.unit.num;}
+const done=store.done[les.id];const isOpen=unlocked(gi);
+const st=done?"done":isOpen?"current":"locked";
+const li=document.createElement("li");li.className="node "+st;li.style.setProperty("--off",offs[n%4]+"px");
+const inner=done?SVG.check:isOpen?(n+1):SVG.lock;
+const chip=done?`<span class="badge-chip ok">Feita · ${done.acc}%</span>`:les.id===firstUndone?`<span class="badge-chip go">Começar aqui</span>`:`<span class="badge-chip">Bloqueada</span>`;
+li.innerHTML=`<button class="node-btn" aria-label="Lição: ${les.title}">${inner}</button><div class="node-meta"><h3>${les.title}</h3><p>${les.skill}</p></div>${chip}`;
+li.querySelector(".node-btn").addEventListener("click",()=>{if(!isOpen){li.querySelector(".node-btn").animate([{transform:"translateX(0)"},{transform:"translateX(-5px)"},{transform:"translateX(5px)"},{transform:"translateX(0)"}],{duration:260});return;}startLesson(gi);});
+path.appendChild(li);n++;});}
 let L=null;const cur=()=>L.ls.steps[L.step];
-function startLesson(gi){L={gi,ls:FLAT[gi],step:0,right:0,answered:0,missed:[],sel:null,placed:[],checked:false,opts:null};show("scrLesson");renderStep();}
+function startLesson(gi){L={gi,ls:FLAT[gi],sess:FLAT[gi].unit.session,step:0,right:0,answered:0,missed:[],sel:null,placed:[],checked:false,opts:null};show("scrLesson");renderStep();}
 function renderStep(){stopAll();const st=cur();$("#pfill").style.width=(L.step/L.ls.steps.length*100)+"%";$("#stepCount").textContent=`${L.step+1} / ${L.ls.steps.length}`;
 L.sel=null;L.placed=[];L.checked=false;
 if(st.kind==="choice"||st.kind==="listen"){L.opts=shuffle(st.options.map((t,i)=>({t,ok:i===st.answer})));}
@@ -928,8 +1103,9 @@ $("#pbTitle").textContent=L.missed.length?"Revise estas, depois o resto":"Frases
 $("#pbList").innerHTML=phrases.length?phrases.map(p=>`<li>${SVG.checkSm}<span>${p}</span></li>`).join(""):`<li>${SVG.checkSm}<span>hello · hi · good morning · good night · goodbye</span></li>`;
 paintStreak();show("scrDone");
 requestAnimationFrame(()=>requestAnimationFrame(()=>{$("#ringFg").style.strokeDashoffset=213.6*(1-acc/100);}));}
-$("#quitBtn").onclick=()=>{stopAll();renderHome();show("scrHome");};
-$("#pathBtn").onclick=()=>{renderHome();show("scrHome");};
+$("#backHome").onclick=()=>{renderHome();show("scrHome");};
+$("#quitBtn").onclick=()=>{stopAll();viewSession=L?L.sess:1;renderPath();show("scrPath");};
+$("#pathBtn").onclick=()=>{viewSession=L?L.sess:1;renderPath();show("scrPath");};
 $("#repeatBtn").onclick=()=>startLesson(L.gi);
 document.addEventListener("keydown",e=>{if($("#modal").classList.contains("on")){if(e.key==="Escape")closeModal();return;}
 if(!$("#scrLesson").classList.contains("on")||!L)return;
@@ -946,14 +1122,14 @@ $("#tryIn").addEventListener("input",e=>{const v=e.target.value,el=$("#verdict")
 const res=checkAnswer(v,DEMO_TARGET);
 el.innerHTML=res.ok?`<span class="ok">✓ aceitamos</span><span class="norm">normalizado → <code>${normalize(v)}</code></span>`:`<span class="no">✗ não aceita</span><span class="norm">normalizado → <code>${normalize(v)||"—"}</code></span>`;});
 $("#dbgBtn").addEventListener("click",async()=>{const box=$("#dbgBox");box.style.display=box.style.display==="block"?"none":"block";if(box.style.display!=="block")return;
-audioLog.length=0;alog("=== DIAGNÓSTICO v12 ===");
+audioLog.length=0;alog("=== DIAGNÓSTICO v15 ===");
 alog("origem: "+location.protocol+"//"+(location.host||"arquivo local"));
 alog("som ligado: "+(store.sound?"sim":"NÃO"));
 alog("ResponsiveVoice: "+(typeof responsiveVoice!=="undefined"?"sim":"NÃO"));
 alog("speechSynthesis: "+(typeof speechSynthesis!=="undefined"?"sim":"NÃO"));
 alog("--- teste de áudio ---");speak("Audio test. One, two, three.");
 await new Promise(r=>setTimeout(r,4000));alog("=== fim ===");});
-buildManifest();wireInstall();paintSound();paintStreak();renderHome();
+buildManifest();wireInstall();paintSound();renderHome();
 if("serviceWorker" in navigator){window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});}
 </script>
 </body>
