@@ -1,0 +1,16 @@
+{
+  "name": "fluent. — inglês do zero",
+  "short_name": "fluent.",
+  "description": "Curso de inglês para brasileiros: do zero ao A2, sem conta e sem confete.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#F5F6F2",
+  "theme_color": "#F5F6F2",
+  "icons": [
+    {"src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='112'%20fill='%232A57D9'/%3E%3Ctext%20x='256'%20y='352'%20font-family='Arial%2Csans-serif'%20font-size='280'%20font-weight='800'%20text-anchor='middle'%20fill='%23FFFFFF'%3Ef%3Ctspan%20fill='%23FFDE52'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E", "sizes": "192x192", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='112'%20fill='%232A57D9'/%3E%3Ctext%20x='256'%20y='352'%20font-family='Arial%2Csans-serif'%20font-size='280'%20font-weight='800'%20text-anchor='middle'%20fill='%23FFFFFF'%3Ef%3Ctspan%20fill='%23FFDE52'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E", "sizes": "512x512", "type": "image/svg+xml", "purpose": "any"},
+    {"src": "data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20512%20512'%3E%3Crect%20width='512'%20height='512'%20rx='112'%20fill='%232A57D9'/%3E%3Ctext%20x='256'%20y='352'%20font-family='Arial%2Csans-serif'%20font-size='280'%20font-weight='800'%20text-anchor='middle'%20fill='%23FFFFFF'%3Ef%3Ctspan%20fill='%23FFDE52'%3E.%3C/tspan%3E%3C/text%3E%3C/svg%3E", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable"}
+  ]
+}
